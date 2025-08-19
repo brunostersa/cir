@@ -31,18 +31,18 @@ export default function Home() {
         <meta name="keywords" content="gráfica, embalagens personalizadas, sacolas personalizadas, brindes personalizados, comunicação visual, CIR Gráfica" />
         <meta name="author" content="CIR Gráfica" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://cirgrafica.com.br" />
+        <link rel="canonical" href="https://cidades.cirgrafica.com.br" />
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://cirgrafica.com.br" />
+        <meta property="og:url" content="https://cidades.cirgrafica.com.br" />
         <meta property="og:title" content="CIR Gráfica - Embalagens, Impressos gráficos e Sacolas Personalizadas" />
         <meta property="og:description" content="Serviços de gráfica em todo o Brasil. Embalagens e sacolas personalizadas, brindes personalizados e comunicação visual." />
         <meta property="og:image" content="https://www.cirgrafica.com.br/og-image.jpg" />
         
         {/* Twitter Card */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://cirgrafica.com.br" />
+        <meta property="twitter:url" content="https://cidades.cirgrafica.com.br" />
         <meta property="twitter:title" content="CIR Gráfica - Embalagens, Impressões Peronalizadas e Sacolas Personalizadas" />
         <meta property="twitter:description" content="Serviços de gráfica em todo o Brasil. Embalagens e sacolas personalizadas, brindes personalizados e comunicação visual." />
         <meta property="twitter:image" content="https://www.cirgrafica.com.br/og-image.jpg" />

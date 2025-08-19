@@ -34,14 +34,14 @@ export async function getStaticProps({ params }) {
 export default function GraficaEstado({ estado, cidades }) {
   const pageTitle = `Gráfica em ${estado} - Embalagens e Sacolas Personalizadas | CIR Gráfica`;
   const pageDescription = `Serviços de gráfica em ${estado}. Embalagens e sacolas personalizadas, brindes personalizados e comunicação visual em todas as cidades do estado. CIR Gráfica - Qualidade e confiança.`;
-  const canonicalUrl = `https://cirgrafica.com.br/grafica/estado/${estado.toLowerCase()}`;
+  const canonicalUrl = `https://cidades.cirgrafica.com.br/grafica/estado/${estado.toLowerCase()}`;
   
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "CIR Gráfica",
     "description": `Serviços de gráfica e embalagens personalizadas em ${estado}`,
-    "url": "https://www.cirgrafica.com.br",
+            "url": "https://cidades.cirgrafica.com.br",
     "telephone": "+556232021150",
     "email": "atendimento@cirgrafica.com.br",
     "address": {

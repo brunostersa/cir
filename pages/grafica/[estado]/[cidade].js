@@ -47,7 +47,7 @@ export async function getStaticProps({ params }) {
 export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
   const pageTitle = `Gráfica em ${cidade} – Embalagens, Sacolas e Brindes | CIR Gráfica`;
   const pageDescription = `Gráfica em ${cidade}, ${estado}. Embalagens e sacolas personalizadas, brindes personalizados com qualidade e entrega rápida. Solicite seu orçamento agora.`;
-  const canonicalUrl = `https://cirgrafica.com.br/grafica/${estado.toLowerCase()}/${normalizeText(cidade)}`;
+  const canonicalUrl = `https://cidades.cirgrafica.com.br/grafica/${estado.toLowerCase()}/${normalizeText(cidade)}`;
 
   // ✅ Schema.org JSON-LD LocalBusiness + FAQ
   const schemaData = {

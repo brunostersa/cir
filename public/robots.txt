@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://cirgrafica.com.br/sitemap.xml
+Sitemap: https://cidades.cirgrafica.com.br/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1 

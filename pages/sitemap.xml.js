@@ -1,41 +1,75 @@
-import cidades from '../cidades.json'
-import { normalizeText } from '../utils/normalize'
+import fs from 'fs';
+import path from 'path';
 
-const Sitemap = () => { return null }
-
-export const getServerSideProps = async ({ res }) => {
-  const baseUrl = 'https://cirgrafica.com.br'
-  const estados = [...new Set(cidades.map(c => c.estado))]
+function generateSiteMap(cities) {
+  const baseUrl = 'https://cidades.cirgrafica.com.br';
   
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  // URLs estáticas
+  const staticUrls = [
+    {
+      url: baseUrl,
+      lastmod: new Date().toISOString(),
+      changefreq: 'daily',
+      priority: '1.0'
+    }
+  ];
+
+  // URLs de estados
+  const estados = [...new Set(cities.map(city => city.estado))];
+  const estadoUrls = estados.map(estado => ({
+    url: `${baseUrl}/grafica/estado/${estado}`,
+    lastmod: new Date().toISOString(),
+    changefreq: 'weekly',
+    priority: '0.8'
+  }));
+
+  // URLs de cidades
+  const cidadeUrls = cities.map(city => ({
+    url: `${baseUrl}/grafica/${city.estado}/${city.cidade}`,
+    lastmod: new Date().toISOString(),
+    changefreq: 'monthly',
+    priority: '0.6'
+  }));
+
+  const allUrls = [...staticUrls, ...estadoUrls, ...cidadeUrls];
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${baseUrl}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  ${estados.map(estado => `
-  <url>
-    <loc>${baseUrl}/grafica/estado/${estado.toLowerCase()}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`).join('')}
-  ${cidades.map(cidade => `
-  <url>
-    <loc>${baseUrl}/grafica/${cidade.estado.toLowerCase()}/${normalizeText(cidade.cidade)}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>`).join('')}
-</urlset>`
-
-  res.setHeader('Content-Type', 'text/xml')
-  res.write(sitemap)
-  res.end()
-
-  return { props: {}, }
+${allUrls.map(url => `  <url>
+    <loc>${url.url}</loc>
+    <lastmod>${url.lastmod}</lastmod>
+    <changefreq>${url.changefreq}</changefreq>
+    <priority>${url.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
 }
 
-export default Sitemap 
+function SiteMap() {
+  // getServerSideProps will handle the XML generation
+}
+
+export async function getServerSideProps({ res }) {
+  try {
+    // Lê o arquivo cidades.json
+    const cidadesPath = path.join(process.cwd(), 'cidades.json');
+    const cidadesData = fs.readFileSync(cidadesPath, 'utf8');
+    const cities = JSON.parse(cidadesData);
+    
+    const sitemap = generateSiteMap(cities);
+
+    res.setHeader('Content-Type', 'text/xml');
+    res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
+    res.write(sitemap);
+    res.end();
+  } catch (error) {
+    console.error('Erro ao gerar sitemap:', error);
+    res.statusCode = 500;
+    res.end('Erro ao gerar sitemap');
+  }
+
+  return {
+    props: {},
+  };
+}
+
+export default SiteMap;
