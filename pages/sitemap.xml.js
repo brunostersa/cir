@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import cidades from '../cidades.json';
 
 function generateSiteMap(cities) {
   const baseUrl = 'https://cidades.cirgrafica.com.br';
@@ -17,7 +16,7 @@ function generateSiteMap(cities) {
   // URLs de estados
   const estados = [...new Set(cities.map(city => city.estado))];
   const estadoUrls = estados.map(estado => ({
-    url: `${baseUrl}/grafica/estado/${estado}`,
+    url: `${baseUrl}/grafica/estado/${estado.toLowerCase()}`,
     lastmod: new Date().toISOString(),
     changefreq: 'weekly',
     priority: '0.8'
@@ -25,7 +24,7 @@ function generateSiteMap(cities) {
 
   // URLs de cidades
   const cidadeUrls = cities.map(city => ({
-    url: `${baseUrl}/grafica/${city.estado}/${city.cidade}`,
+    url: `${baseUrl}/grafica/${city.estado.toLowerCase()}/${city.cidade.toLowerCase().replace(/\s+/g, '-')}`,
     lastmod: new Date().toISOString(),
     changefreq: 'monthly',
     priority: '0.6'
@@ -50,12 +49,7 @@ function SiteMap() {
 
 export async function getServerSideProps({ res }) {
   try {
-    // Lê o arquivo cidades.json
-    const cidadesPath = path.join(process.cwd(), 'cidades.json');
-    const cidadesData = fs.readFileSync(cidadesPath, 'utf8');
-    const cities = JSON.parse(cidadesData);
-    
-    const sitemap = generateSiteMap(cities);
+    const sitemap = generateSiteMap(cidades);
 
     res.setHeader('Content-Type', 'text/xml');
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
