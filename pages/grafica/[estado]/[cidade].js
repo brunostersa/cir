@@ -129,12 +129,12 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
       <main className="max-w-4xl mx-auto p-6">
 
         {/* ✅ H1 */}
-        <h1 className=”text-4xl font-bold mb-6 text-gray-900”>
-          Atendimento Online de Serviços de Gráfica em <span className=”text-blue-600”>{cidade}</span>
+        <h1 className="text-4xl font-bold mb-6 text-gray-900">
+          Gráfica em <span className="text-blue-600">{cidade}</span> – Atendimento online com qualidade e excelência nos detalhes.
         </h1>
 
         {/* ✅ Introdução */}
-        <p className=”text-lg text-gray-700 mb-6”>
+        <p className="text-lg text-gray-700 mb-6">
           Solicite <strong>embalagens personalizadas, impressões e materiais gráficos</strong> 100% online, sem sair de casa.
           A CIR Gráfica oferece <strong>orçamento rápido e atendimento digital</strong> em {cidade} com entrega em até 24h em muitos serviços.
           Há mais de 20 anos confiamos na qualidade para criar experiências memoráveis com seus clientes.
@@ -272,7 +272,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         <section className="mb-10">
           <h2 className="text-3xl font-bold mb-4">O que nossos clientes dizem</h2>
           <blockquote className="border-l-4 border-blue-600 pl-4 text-gray-700 italic">
-            “Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!”
+            "Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!"
           </blockquote>
           <p className="mt-2 text-gray-600">⭐ Nota média: <strong>4.6/5</strong> (mais de 130 avaliações)</p>
         </section>
