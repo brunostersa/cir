@@ -129,15 +129,15 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
       <main className="max-w-4xl mx-auto p-6">
 
         {/* ✅ H1 */}
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">
-          Gráfica em <span className="text-blue-600">{cidade}</span> – Qualidade para ser Sentida
+        <h1 className=”text-4xl font-bold mb-6 text-gray-900”>
+          Atendimento Online de Serviços de Gráfica em <span className=”text-blue-600”>{cidade}</span>
         </h1>
 
         {/* ✅ Introdução */}
-        <p className="text-lg text-gray-700 mb-6">
-          Há mais de <strong>20 anos</strong>, a CIR Gráfica entrega <strong>impressão de qualidade</strong> em {cidade} e em todo o Brasil. 
-          Nossa filosofia é simples: “<em>Qualidade para ser sentida</em>”. Do cartão de visita ao catálogo empresarial, oferecemos soluções 
-          que unem tecnologia, acabamento impecável e atendimento personalizado.
+        <p className=”text-lg text-gray-700 mb-6”>
+          Solicite <strong>embalagens personalizadas, impressões e materiais gráficos</strong> 100% online, sem sair de casa.
+          A CIR Gráfica oferece <strong>orçamento rápido e atendimento digital</strong> em {cidade} com entrega em até 24h em muitos serviços.
+          Há mais de 20 anos confiamos na qualidade para criar experiências memoráveis com seus clientes.
         </p>
 
         {/* ✅ Imagem Padrão */}
@@ -149,20 +149,21 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
         {/* ✅ Quem Somos */}
         <section className="mb-10">
-          <h2 className="text-3xl font-bold mb-4">Nossa História em Impressão e Qualidade</h2>
+          <h2 className="text-3xl font-bold mb-4">Gráfica Online Confiável em {cidade}</h2>
           <p className="text-gray-700 leading-relaxed">
-            Fundada em 1999, a <strong>CIR Gráfica</strong> começou como um pequeno negócio familiar e se tornou referência nacional. 
-            Com uma trajetória marcada pela dedicação, crescemos lado a lado com nossos clientes, sempre trazendo 
-                         inovação para os serviços de <strong>embalagens e sacolas personalizadas</strong>, <strong>offset</strong> e <strong>comunicação visual</strong>.
+            Desde 1999, a <strong>CIR Gráfica</strong> atende empresas em {cidade} com <strong>soluções digitais simplificadas</strong>.
+            Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas
+            <strong> qualidade garantida</strong> com atendimento rápido via WhatsApp, email e chat.
+            Especialistas em <strong>embalagens personalizadas</strong>, <strong>sacolas</strong>, <strong>cartões</strong> e muito mais.
           </p>
         </section>
 
                  {/* ✅ Serviços */}
          <section className="mb-10">
-           <h2 className="text-3xl font-bold mb-4">Serviços de Impressão em {cidade} com Qualidade e Agilidade</h2>
+           <h2 className="text-3xl font-bold mb-4">Orçamento Online para Qualquer Serviço de Gráfica</h2>
            <p className="text-gray-700 mb-6 leading-relaxed">
-             Na CIR Gráfica, oferecemos uma ampla gama de serviços de impressão em {cidade}, unindo tecnologia de ponta, 
-             atendimento personalizado e prazos flexíveis para atender todas as necessidades da sua empresa.
+             Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário.
+             Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:
            </p>
            
            <div className="grid md:grid-cols-2 gap-6">
@@ -255,12 +256,15 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
         {/* ✅ Facilidade e Suporte */}
         <section className="bg-blue-50 p-6 rounded-lg mb-10">
-          <h2 className="text-2xl font-bold mb-4">Facilidade e Suporte Completo</h2>
+          <h2 className="text-2xl font-bold mb-4">💻 Como Funciona o Atendimento Online</h2>
+          <p className="text-gray-700 mb-4">
+            <strong>1. Solicite seu orçamento</strong> diretamente pelo formulário, WhatsApp ou email sem sair de casa.
+          </p>
+          <p className="text-gray-700 mb-4">
+            <strong>2. Converse com nossos especialistas</strong> online. Orientamos na escolha de materiais, cores, acabamentos e prazos.
+          </p>
           <p className="text-gray-700">
-            Mesmo que você não entenda de impressão, a <strong>CIR Gráfica</strong> torna tudo simples. 
-            Nosso time orienta na escolha do papel, acabamento, cores e até na preparação dos arquivos. 
-            Além disso, temos <strong>orçamento online</strong> e atendimento rápido para que você 
-            economize tempo e receba exatamente o que precisa.
+            <strong>3. Confirme e acompanhe</strong> sua produção em tempo real. Você recebe sua encomenda em {cidade} com segurança.
           </p>
         </section>
 
@@ -275,12 +279,14 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
         {/* ✅ FAQ */}
         <section className="bg-gray-50 p-6 rounded-lg mb-10">
-        <h2 className="text-2xl font-bold mb-4">Perguntas Frequentes</h2>
-        <ul className="list-disc ml-6 space-y-2">
-          <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda a cidade e região.</li>
-          <li><strong>Qual o prazo médio?</strong> O prazo varia conforme o tipo de projeto, mas sempre buscamos entregar com agilidade.</li>
-          <li><strong>Vocês oferecem design também?</strong> Trabalhamos em parceria com designers e podemos indicar profissionais de confiança para criar a arte do seu material.</li>
-          <li><strong>Posso pedir orçamento pelo WhatsApp?</strong> Sim! <a className="text-blue-600 hover:underline" target="_blank" href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!">Clique aqui</a> para ser atendido</li>
+        <h2 className="text-2xl font-bold mb-4">Dúvidas Sobre Nosso Atendimento Online</h2>
+        <ul className="list-disc ml-6 space-y-3">
+          <li><strong>Como faço para solicitar um orçamento online?</strong> Preencha o formulário no site ou envie sua solicitação por WhatsApp. Nós retornamos em até 2 horas.</li>
+          <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda {cidade} e região. Temos parceiros de logística para garantir segurança.</li>
+          <li><strong>Qual o prazo de produção?</strong> Varia conforme o material: alguns itens saem em 24h, outros em 3-5 dias. Você escolhe o prazo que mais convém.</li>
+          <li><strong>Posso acompanhar meu pedido?</strong> Sim! Enviamos atualizações por email e WhatsApp durante toda a produção.</li>
+          <li><strong>Preciso ir presencialmente?</strong> Não! Tudo é feito 100% online. Você só recebe seu material pronto em casa.</li>
+          <li><strong>Vocês oferecem design também?</strong> Sim, indicamos designers parceiros ou você envia o arquivo pronto. Nossa equipe revisa tudo antes de produzir.</li>
         </ul>
       </section>
 
@@ -300,14 +306,14 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
         {/* ✅ CTA */}
         <div className="text-center bg-blue-600 text-white p-8 rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">Precisa de serviços de gráfica em {cidade}?</h2>
-          <p className="text-lg mb-6">Solicite um orçamento rápido e veja por que somos referência em qualidade.</p>
+          <h2 className="text-2xl font-bold mb-4">🌐 Solicite Seu Orçamento 100% Online</h2>
+          <p className="text-lg mb-6">Resposta em até 2 horas. Sem compromisso, sem telefonemas. Apenas gráfica de qualidade entregue em {cidade}.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://www.cirgrafica.com.br/portfolio-de-cases/" target="_blank" rel="noopener noreferrer" className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100">
-              📁 Baixe nosso portfólio de cases
+            <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20meu%20projeto%20de%20gr%C3%A1fica." target="_blank" rel="noopener noreferrer" className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100">
+              💬 WhatsApp Agora
             </a>
             <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-600">
-              💬 Solicite um orçamento rápido
+              📋 Formulário Online
             </a>
           </div>
         </div>
