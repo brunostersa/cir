@@ -282,7 +282,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         <h2 className="text-2xl font-bold mb-4">Dúvidas Sobre Nosso Atendimento Online</h2>
         <ul className="list-disc ml-6 space-y-3">
           <li><strong>Como faço para solicitar um orçamento online?</strong> Preencha o formulário no site ou envie sua solicitação por WhatsApp. Nós retornamos em até 2 horas.</li>
-          <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda {cidade} e região. Temos parceiros de logística para garantir segurança.</li>
+          <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda a cidade e região, fazemos seu atendimento online, refinamos seu material, validamos e enviamos para qualquer lugar do Brasil.</li>
           <li><strong>Qual o prazo de produção?</strong> Varia conforme o material: alguns itens saem em 24h, outros em 3-5 dias. Você escolhe o prazo que mais convém.</li>
           <li><strong>Posso acompanhar meu pedido?</strong> Sim! Enviamos atualizações por email e WhatsApp durante toda a produção.</li>
           <li><strong>Preciso ir presencialmente?</strong> Não! Tudo é feito 100% online. Você só recebe seu material pronto em casa.</li>
