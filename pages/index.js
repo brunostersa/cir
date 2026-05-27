@@ -56,11 +56,11 @@ export default function Home() {
         <div className="bg-gradient-to-br from-blue-50 via-white to-green-50 py-20 px-6">
           <div className="max-w-6xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 leading-tight">
-              CIR Gráfica - <span className="text-blue-600">Embalagens, Impressões Gráficas e Sacolas</span> Personalizadas
+              <span className="text-blue-600">Serviço Completo de Gráfica</span> com Atendimento em Todo o Brasil
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
-                          Serviços completos de gráfica em todo o Brasil. Embalagens e sacolas personalizadas, 
-            brindes personalizados e comunicação visual com qualidade profissional.
+              Embalagens personalizadas, impressões gráficas, sacolas, brindes corporativos e soluções de comunicação visual.
+              Qualidade profissional, entrega rápida e atendimento especializado em 374 cidades.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <a 
