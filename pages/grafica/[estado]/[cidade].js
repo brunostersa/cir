@@ -135,9 +135,9 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
         {/* ✅ Introdução */}
         <p className="text-lg text-gray-700 mb-6">
-          Solicite <strong>embalagens personalizadas, impressões e materiais gráficos</strong> 100% online, sem sair de casa.
-          A CIR Gráfica oferece <strong>orçamento rápido e atendimento digital</strong> em {cidade} com entrega em até 24h em muitos serviços.
-          Há mais de 20 anos confiamos na qualidade para criar experiências memoráveis com seus clientes.
+          Há mais de <strong>20 anos</strong>, a CIR Gráfica atende empresas em <strong>{cidade}</strong> com qualidade reconhecida em todo o Brasil.
+          Nosso atendimento é online e rápido: você solicita, nós refinamos, validamos e entregamos na sua cidade.
+          Do cartão de visita ao catálogo empresarial, unimos tecnologia, acabamento impecável e agilidade para fazer sua marca ser sentida.
         </p>
 
         {/* ✅ Imagem Padrão */}
@@ -285,8 +285,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
           <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda a cidade e região, fazemos seu atendimento online, refinamos seu material, validamos e enviamos para qualquer lugar do Brasil.</li>
           <li><strong>Qual o prazo de produção?</strong> Varia conforme o material: alguns itens saem em 24h, outros em 3-5 dias. Você escolhe o prazo que mais convém.</li>
           <li><strong>Posso acompanhar meu pedido?</strong> Sim! Enviamos atualizações por email e WhatsApp durante toda a produção.</li>
-          <li><strong>Preciso ir presencialmente?</strong> Não! Tudo é feito 100% online. Você só recebe seu material pronto em casa.</li>
-          <li><strong>Vocês oferecem design também?</strong> Sim, indicamos designers parceiros ou você envia o arquivo pronto. Nossa equipe revisa tudo antes de produzir.</li>
+<li><strong>Vocês oferecem design também?</strong> Sim, indicamos designers parceiros ou você envia o arquivo pronto. Nossa equipe revisa tudo antes de produzir.</li>
         </ul>
       </section>
 
