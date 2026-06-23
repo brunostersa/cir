@@ -1,149 +1,83 @@
 import { useState, useEffect } from 'react'
 
-const ImageCarousel = ({ images, title = "Materiais que podem ser solicitados", autoPlay = true, interval = 5000 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(autoPlay)
+const ImageCarousel = ({ images, title, autoPlay = true, interval = 5000 }) => {
+  const [current, setCurrent] = useState(0)
+  const [playing, setPlaying] = useState(autoPlay)
 
-  // Auto-play functionality
   useEffect(() => {
-    if (!isPlaying) return
+    if (!playing) return
+    const t = setInterval(() => setCurrent(i => (i + 1) % images.length), interval)
+    return () => clearInterval(t)
+  }, [playing, interval, images.length])
 
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, interval)
-
-    return () => clearInterval(timer)
-  }, [isPlaying, interval, images.length])
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index)
-    setIsPlaying(false) // Pause auto-play when user interacts
-  }
-
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-    setIsPlaying(false)
-  }
-
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    setIsPlaying(false)
-  }
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying)
-  }
+  const go = (i) => { setCurrent((i + images.length) % images.length); setPlaying(false) }
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto">
-      {/* Título */}
-      {title && (
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-          {title}
-        </h2>
-      )}
+    <div className="ic-wrap">
+      {title && <h2 className="ic-title">{title}</h2>}
 
-      {/* Container do Carrossel */}
-      <div className="relative overflow-hidden rounded-xl shadow-2xl">
-        {/* Imagem Atual */}
-        <div className="relative h-96 md:h-[500px]">
-          <img
-            src={images[currentIndex].src}
-            alt={images[currentIndex].alt}
-            className="w-full h-full object-cover transition-transform duration-500 ease-in-out"
-          />
-          
-          {/* Overlay com informações */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-              <h3 className="text-xl font-semibold mb-2">{images[currentIndex].title}</h3>
-              <p className="text-sm opacity-90">{images[currentIndex].description}</p>
-            </div>
-          </div>
+      <div className="ic-stage">
+        <img
+          key={current}
+          src={images[current].src}
+          alt={images[current].alt}
+          className="ic-img"
+        />
+        <div className="ic-overlay">
+          <h3 className="ic-slide-title">{images[current].title}</h3>
+          <p className="ic-slide-desc">{images[current].description}</p>
         </div>
 
-        {/* Botões de Navegação */}
-        <button
-          onClick={goToPrevious}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Imagem anterior"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+        <button className="ic-nav ic-nav--prev" onClick={() => go(current - 1)} aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button className="ic-nav ic-nav--next" onClick={() => go(current + 1)} aria-label="Próxima">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 5l7 7-7 7"/></svg>
         </button>
 
-        <button
-          onClick={goToNext}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Próxima imagem"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        {/* Botão Play/Pause */}
-        <button
-          onClick={togglePlayPause}
-          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
-          aria-label={isPlaying ? "Pausar" : "Reproduzir"}
-        >
-          {isPlaying ? (
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-            </svg>
-          ) : (
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          )}
-        </button>
-
-        {/* Indicadores */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'bg-white scale-125' 
-                  : 'bg-white/50 hover:bg-white/75'
-              }`}
-              aria-label={`Ir para imagem ${index + 1}`}
-            />
+        <div className="ic-dots">
+          {images.map((_, i) => (
+            <button key={i} className={`ic-dot ${i === current ? 'active' : ''}`} onClick={() => go(i)} aria-label={`Slide ${i + 1}`} />
           ))}
         </div>
 
-        {/* Contador */}
-        <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
+        <span className="ic-counter">{current + 1} / {images.length}</span>
       </div>
 
-      {/* Miniaturas */}
-      <div className="mt-6 flex justify-center space-x-2 overflow-x-auto pb-2">
-        {images.map((image, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-              index === currentIndex 
-                ? 'border-blue-500 scale-110' 
-                : 'border-gray-300 hover:border-gray-400'
-            }`}
-          >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-full object-cover"
-            />
+      <div className="ic-thumbs">
+        {images.map((img, i) => (
+          <button key={i} className={`ic-thumb ${i === current ? 'active' : ''}`} onClick={() => go(i)}>
+            <img src={img.src} alt={img.alt} />
           </button>
         ))}
       </div>
+
+      <style jsx>{`
+        .ic-wrap { width: 100% }
+        .ic-title { font-family: var(--cir-serif); font-size: clamp(1.4rem, 2.2vw, 2.2rem); font-weight: 700; color: inherit; margin-bottom: 2.5rem; line-height: 1.15 }
+        .ic-stage { position: relative; overflow: hidden; height: 480px }
+        .ic-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.75) saturate(.55); display: block }
+        .ic-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem }
+        .ic-slide-title { font-family: var(--cir-serif); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: .4rem }
+        .ic-slide-desc { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: rgba(255,255,255,.75); line-height: 1.6 }
+        .ic-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(12,11,9,.6); border: 1px solid rgba(255,255,255,.12); color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; padding: 0 }
+        .ic-nav svg { width: 18px; height: 18px }
+        .ic-nav:hover { background: rgba(232,97,58,.85) }
+        .ic-nav--prev { left: 1.5rem }
+        .ic-nav--next { right: 1.5rem }
+        .ic-dots { position: absolute; bottom: 1.5rem; right: 2.5rem; display: flex; gap: 6px }
+        .ic-dot { width: 20px; height: 2px; background: rgba(255,255,255,.25); border: none; cursor: pointer; padding: 0; transition: background .3s, width .3s }
+        .ic-dot.active { background: #fff; width: 32px }
+        .ic-counter { position: absolute; top: 1.5rem; left: 2rem; font-family: var(--cir-sans); font-size: .62rem; font-weight: 400; letter-spacing: .14em; color: rgba(255,255,255,.4) }
+        .ic-thumbs { display: flex; gap: 2px; margin-top: 2px; overflow-x: auto }
+        .ic-thumb { flex-shrink: 0; width: 72px; height: 52px; overflow: hidden; border: none; cursor: pointer; padding: 0; opacity: .45; transition: opacity .3s }
+        .ic-thumb.active, .ic-thumb:hover { opacity: 1 }
+        .ic-thumb img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.4) }
+        .ic-thumb.active img, .ic-thumb:hover img { filter: saturate(.8) }
+        @media (max-width: 768px) { .ic-stage { height: 300px } .ic-thumbs { display: none } }
+      `}</style>
     </div>
   )
 }
 
-export default ImageCarousel 
+export default ImageCarousel

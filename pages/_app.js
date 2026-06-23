@@ -1,8 +1,30 @@
 import '../styles/globals.css'
 import '../styles/cir-ds.css'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+function initReveal() {
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target) }
+    }),
+    { threshold: 0.08 }
+  )
+  document.querySelectorAll('.cir-reveal').forEach(el => obs.observe(el))
+  return obs
+}
 
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+
+  useEffect(() => {
+    let obs = initReveal()
+    const onRouteChange = () => { obs.disconnect(); obs = initReveal() }
+    router.events.on('routeChangeComplete', onRouteChange)
+    return () => { obs.disconnect(); router.events.off('routeChangeComplete', onRouteChange) }
+  }, [router.events])
+
   return (
     <>
       <Head>

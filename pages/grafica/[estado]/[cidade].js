@@ -132,7 +132,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         <h1 className="cp-h1">
           Gráfica em <em>{cidade}</em> – Atendimento online com qualidade e excelência nos detalhes.
         </h1>
-        <p className="cp-intro">
+        <p className="cp-intro cir-reveal cir-reveal--d2">
           Há mais de <strong>20 anos</strong>, a CIR Gráfica atende empresas em <strong>{cidade}</strong> com qualidade reconhecida em todo o Brasil.
           Nosso atendimento é online e rápido: você solicita, nós refinamos, validamos e entregamos na sua cidade.
           Do cartão de visita ao catálogo empresarial, unimos tecnologia, acabamento impecável e agilidade para fazer sua marca ser sentida.
@@ -148,8 +148,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Quem somos */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag">Sobre a CIR Gráfica</span>
-        <h2 className="cp-h2">Gráfica Online Confiável em {cidade}</h2>
+        <span className="cir-s-tag cir-reveal">Sobre a CIR Gráfica</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Gráfica Online Confiável em {cidade}</h2>
         <p className="cp-body">
           Desde 1999, a <strong>CIR Gráfica</strong> atende empresas em {cidade} com <strong>soluções digitais simplificadas</strong>.
           Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas
@@ -162,14 +162,14 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Serviços */}
       <div className="cir-section">
-        <span className="cir-s-tag">Serviços</span>
-        <h2 className="cp-h2">Orçamento Online para Qualquer Serviço de Gráfica</h2>
+        <span className="cir-s-tag cir-reveal">Serviços</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Orçamento Online para Qualquer Serviço de Gráfica</h2>
         <p className="cp-body">
           Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário.
           Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:
         </p>
 
-        <div className="cp-services-grid">
+        <div className="cp-services-grid cir-reveal cir-reveal--d1">
           <div className="cp-service">
             <h3>Materiais Institucionais</h3>
             <p>Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.</p>
@@ -256,9 +256,9 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Como funciona */}
       <div className="cir-section">
-        <span className="cir-s-tag">Como funciona</span>
-        <h2 className="cp-h2">Como Funciona o Atendimento Online</h2>
-        <div className="cp-steps">
+        <span className="cir-s-tag cir-reveal">Como funciona</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Como Funciona o Atendimento Online</h2>
+        <div className="cp-steps cir-reveal cir-reveal--d1">
           <div className="cp-step">
             <span className="cp-step-num">01</span>
             <p className="cp-body"><strong>Solicite seu orçamento</strong> diretamente pelo formulário, WhatsApp ou email sem sair de casa.</p>
@@ -278,8 +278,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Depoimentos */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag">Depoimentos</span>
-        <h2 className="cp-h2">O que nossos clientes dizem</h2>
+        <span className="cir-s-tag cir-reveal">Depoimentos</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">O que nossos clientes dizem</h2>
         <div className="cp-blockquote">
           <p>"Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!"</p>
         </div>
@@ -290,8 +290,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* FAQ */}
       <div className="cir-section">
-        <span className="cir-s-tag">Dúvidas frequentes</span>
-        <h2 className="cp-h2">Dúvidas Sobre Nosso Atendimento Online</h2>
+        <span className="cir-s-tag cir-reveal">Dúvidas frequentes</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Dúvidas Sobre Nosso Atendimento Online</h2>
         <ul className="cp-faq">
           <li><strong>Como faço para solicitar um orçamento online?</strong> Preencha o formulário no site ou envie sua solicitação por WhatsApp. Nós retornamos em até 2 horas.</li>
           <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda a cidade e região, fazemos seu atendimento online, refinamos seu material, validamos e enviamos para qualquer lugar do Brasil.</li>
@@ -305,8 +305,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Cidades próximas */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag">Atendemos também em</span>
-        <h2 className="cp-h2">Cidades próximas</h2>
+        <span className="cir-s-tag cir-reveal">Atendemos também em</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Cidades próximas</h2>
         <div className="cp-nearby">
           {cidadesProximas.map((c, i) => (
             <a key={i} href={`/grafica/${c.estado.toLowerCase()}/${normalizeText(c.cidade)}`}>

@@ -127,7 +127,7 @@ export default function GraficaEstado({ estado, cidades }) {
       {/* Hero */}
       <div className="cp-hero">
         <h1 className="cp-h1">Gráfica em <em>{estado}</em></h1>
-        <p className="cp-intro">
+        <p className="cp-intro cir-reveal cir-reveal--d2">
           Serviços de gráfica e embalagens personalizadas em todas as cidades de {estado}.
           Escolha sua cidade para ver nossos serviços específicos.
         </p>
@@ -135,9 +135,9 @@ export default function GraficaEstado({ estado, cidades }) {
 
       {/* Grid de cidades */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag">Cidades atendidas</span>
-        <h2 className="cp-h2">{cidades.length} cidades em {estado}</h2>
-        <div className="ep-cities-grid">
+        <span className="cir-s-tag cir-reveal">Cidades atendidas</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">{cidades.length} cidades em {estado}</h2>
+        <div className="ep-cities-grid cir-reveal cir-reveal--d1">
           {cidades.map((cidade, index) => (
             <a
               key={index}
@@ -155,9 +155,9 @@ export default function GraficaEstado({ estado, cidades }) {
 
       {/* Serviços */}
       <div className="cir-section">
-        <span className="cir-s-tag">Serviços</span>
-        <h2 className="cp-h2">Tudo que você pode solicitar</h2>
-        <div className="cp-services-grid">
+        <span className="cir-s-tag cir-reveal">Serviços</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Tudo que você pode solicitar</h2>
+        <div className="cp-services-grid cir-reveal cir-reveal--d1">
           <div className="cp-service">
             <h3>Materiais Institucionais</h3>
             <p>Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.</p>
@@ -195,8 +195,8 @@ export default function GraficaEstado({ estado, cidades }) {
 
       {/* Contato */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag">Contato</span>
-        <h2 className="cp-h2">Informações de Contato</h2>
+        <span className="cir-s-tag cir-reveal">Contato</span>
+        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Informações de Contato</h2>
         <div className="ep-contact-grid">
           <div>
             <p className="cp-body"><strong>CIR Gráfica</strong></p>
