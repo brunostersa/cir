@@ -113,7 +113,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
   
 
   return (
-    <div>
+    <div className="cir-root">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -123,202 +123,220 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
       </Head>
 
+
       <Favicon />
       <Header />
 
-      <main className="max-w-4xl mx-auto p-6">
-
-        {/* ✅ H1 */}
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">
-          Gráfica em <span className="text-blue-600">{cidade}</span> – Atendimento online com qualidade e excelência nos detalhes.
+      {/* Hero / Intro */}
+      <div className="cp-hero">
+        <h1 className="cp-h1">
+          Gráfica em <em>{cidade}</em> – Atendimento online com qualidade e excelência nos detalhes.
         </h1>
-
-        {/* ✅ Introdução */}
-        <p className="text-lg text-gray-700 mb-6">
+        <p className="cp-intro">
           Há mais de <strong>20 anos</strong>, a CIR Gráfica atende empresas em <strong>{cidade}</strong> com qualidade reconhecida em todo o Brasil.
           Nosso atendimento é online e rápido: você solicita, nós refinamos, validamos e entregamos na sua cidade.
           Do cartão de visita ao catálogo empresarial, unimos tecnologia, acabamento impecável e agilidade para fazer sua marca ser sentida.
         </p>
+      </div>
 
-        {/* ✅ Imagem Padrão */}
-        <img 
-          src="/grafica.jpeg" 
-          alt={`embalagens e sacolas personalizadas em ${cidade}`} 
-          className="w-full h-auto rounded-lg shadow mb-8"
+      {/* Imagem */}
+      <img
+        src="/grafica.jpeg"
+        alt={`embalagens e sacolas personalizadas em ${cidade}`}
+        className="cp-hero-img"
+      />
+
+      {/* Quem somos */}
+      <div className="cir-section cir-section--light">
+        <span className="cir-s-tag">Sobre a CIR Gráfica</span>
+        <h2 className="cp-h2">Gráfica Online Confiável em {cidade}</h2>
+        <p className="cp-body">
+          Desde 1999, a <strong>CIR Gráfica</strong> atende empresas em {cidade} com <strong>soluções digitais simplificadas</strong>.
+          Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas
+          <strong> qualidade garantida</strong> com atendimento rápido via WhatsApp, email e chat.
+          Especialistas em <strong>embalagens personalizadas</strong>, <strong>sacolas</strong>, <strong>cartões</strong> e muito mais.
+        </p>
+      </div>
+
+      <hr className="cir-divider" />
+
+      {/* Serviços */}
+      <div className="cir-section">
+        <span className="cir-s-tag">Serviços</span>
+        <h2 className="cp-h2">Orçamento Online para Qualquer Serviço de Gráfica</h2>
+        <p className="cp-body">
+          Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário.
+          Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:
+        </p>
+
+        <div className="cp-services-grid">
+          <div className="cp-service">
+            <h3>Materiais Institucionais</h3>
+            <p>Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.</p>
+            <ul>
+              <li>Cartões de visita personalizados</li>
+              <li>Papel timbrado e envelopes</li>
+              <li>Pastas executivas</li>
+              <li>Folders institucionais</li>
+            </ul>
+          </div>
+          <div className="cp-service">
+            <h3>Materiais Promocionais</h3>
+            <p>Flyers, banners, adesivos e catálogos para divulgar seus produtos e serviços com impacto.</p>
+            <ul>
+              <li>Flyers e panfletos</li>
+              <li>Banners e faixas</li>
+              <li>Adesivos personalizados</li>
+              <li>Catálogos promocionais</li>
+            </ul>
+          </div>
+          <div className="cp-service">
+            <h3>Impressão Digital e Offset</h3>
+            <p>Soluções rápidas para pequenas tiragens e produções offset para grandes volumes.</p>
+            <ul>
+              <li>Impressão digital rápida</li>
+              <li>Produção offset</li>
+              <li>Pequenas e grandes tiragens</li>
+              <li>Acabamento profissional</li>
+            </ul>
+          </div>
+          <div className="cp-service">
+            <h3>Impressão Editorial</h3>
+            <p>Revistas, livros e apostilas com acabamento impecável.</p>
+            <ul>
+              <li>Revistas e jornais</li>
+              <li>Livros e manuais</li>
+              <li>Apostilas educacionais</li>
+              <li>Publicações corporativas</li>
+            </ul>
+          </div>
+          <div className="cp-service">
+            <h3>Moda e Etiquetas</h3>
+            <p>Tags e etiquetas que valorizam as peças e contam a história da sua marca.</p>
+            <ul>
+              <li>Tags personalizadas</li>
+              <li>Etiquetas de roupas</li>
+              <li>Identificação de produtos</li>
+              <li>Materiais têxteis</li>
+            </ul>
+          </div>
+          <div className="cp-service">
+            <h3>Embalagens e Sacolas</h3>
+            <p>Caixas e sacolas personalizadas para criar experiências únicas na entrega.</p>
+            <ul>
+              <li>Caixas personalizadas</li>
+              <li>Sacolas promocionais</li>
+              <li>Envelopes personalizados</li>
+              <li>Displays promocionais</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="cp-note">
+          <p className="cp-body">
+            <strong>Com uma estrutura moderna e equipamentos de última geração</strong>, realizamos desde pequenas impressões digitais
+            até grandes produções offset, garantindo a melhor relação custo-benefício. Cada projeto recebe atenção aos detalhes
+            para assegurar um acabamento impecável e uma experiência visual diferenciada. Nossa equipe está preparada para
+            oferecer suporte completo, desde a escolha dos materiais até a finalização, proporcionando resultados que fazem a diferença.
+          </p>
+        </div>
+      </div>
+
+      {/* Galeria */}
+      <div className="cir-section cir-section--light">
+        <ImageCarousel
+          images={galleryImages}
+          title={`Materiais que podem ser solicitados em ${cidade}`}
+          autoPlay={true}
+          interval={5000}
         />
+      </div>
 
-        {/* ✅ Quem Somos */}
-        <section className="mb-10">
-          <h2 className="text-3xl font-bold mb-4">Gráfica Online Confiável em {cidade}</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Desde 1999, a <strong>CIR Gráfica</strong> atende empresas em {cidade} com <strong>soluções digitais simplificadas</strong>.
-            Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas
-            <strong> qualidade garantida</strong> com atendimento rápido via WhatsApp, email e chat.
-            Especialistas em <strong>embalagens personalizadas</strong>, <strong>sacolas</strong>, <strong>cartões</strong> e muito mais.
-          </p>
-        </section>
+      <hr className="cir-divider" />
 
-                 {/* ✅ Serviços */}
-         <section className="mb-10">
-           <h2 className="text-3xl font-bold mb-4">Orçamento Online para Qualquer Serviço de Gráfica</h2>
-           <p className="text-gray-700 mb-6 leading-relaxed">
-             Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário.
-             Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:
-           </p>
-           
-           <div className="grid md:grid-cols-2 gap-6">
-             <div className="bg-blue-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Materiais Institucionais</h3>
-               <p className="text-gray-700 mb-3">Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Cartões de visita personalizados</li>
-                 <li>• Papel timbrado e envelopes</li>
-                 <li>• Pastas executivas</li>
-                 <li>• Folders institucionais</li>
-               </ul>
-             </div>
+      {/* Como funciona */}
+      <div className="cir-section">
+        <span className="cir-s-tag">Como funciona</span>
+        <h2 className="cp-h2">Como Funciona o Atendimento Online</h2>
+        <div className="cp-steps">
+          <div className="cp-step">
+            <span className="cp-step-num">01</span>
+            <p className="cp-body"><strong>Solicite seu orçamento</strong> diretamente pelo formulário, WhatsApp ou email sem sair de casa.</p>
+          </div>
+          <div className="cp-step">
+            <span className="cp-step-num">02</span>
+            <p className="cp-body"><strong>Converse com nossos especialistas</strong> online. Orientamos na escolha de materiais, cores, acabamentos e prazos.</p>
+          </div>
+          <div className="cp-step">
+            <span className="cp-step-num">03</span>
+            <p className="cp-body"><strong>Confirme e acompanhe</strong> sua produção em tempo real. Você recebe sua encomenda em {cidade} com segurança.</p>
+          </div>
+        </div>
+      </div>
 
-             <div className="bg-green-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Materiais Promocionais</h3>
-               <p className="text-gray-700 mb-3">Flyers, banners, adesivos e catálogos para divulgar seus produtos e serviços com impacto.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Flyers e panfletos</li>
-                 <li>• Banners e faixas</li>
-                 <li>• Adesivos personalizados</li>
-                 <li>• Catálogos promocionais</li>
-               </ul>
-             </div>
+      <hr className="cir-divider" />
 
-             <div className="bg-yellow-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Impressão Digital e Offset</h3>
-               <p className="text-gray-700 mb-3">Soluções rápidas para pequenas tiragens e produções offset para grandes volumes.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Impressão digital rápida</li>
-                 <li>• Produção offset</li>
-                 <li>• Pequenas e grandes tiragens</li>
-                 <li>• Acabamento profissional</li>
-               </ul>
-             </div>
+      {/* Depoimentos */}
+      <div className="cir-section cir-section--light">
+        <span className="cir-s-tag">Depoimentos</span>
+        <h2 className="cp-h2">O que nossos clientes dizem</h2>
+        <div className="cp-blockquote">
+          <p>"Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!"</p>
+        </div>
+        <p className="cp-rating">Nota média: <strong>4.6/5</strong> (mais de 130 avaliações)</p>
+      </div>
 
-             <div className="bg-purple-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Impressão Editorial</h3>
-               <p className="text-gray-700 mb-3">Revistas, livros e apostilas com acabamento impecável.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Revistas e jornais</li>
-                 <li>• Livros e manuais</li>
-                 <li>• Apostilas educacionais</li>
-                 <li>• Publicações corporativas</li>
-               </ul>
-             </div>
+      <hr className="cir-divider" />
 
-             <div className="bg-pink-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Moda e Etiquetas</h3>
-               <p className="text-gray-700 mb-3">Tags e etiquetas que valorizam as peças e contam a história da sua marca.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Tags personalizadas</li>
-                 <li>• Etiquetas de roupas</li>
-                 <li>• Identificação de produtos</li>
-                 <li>• Materiais têxteis</li>
-               </ul>
-             </div>
-
-             <div className="bg-orange-50 p-6 rounded-lg">
-               <h3 className="text-xl font-semibold mb-4 text-gray-900">✅ Embalagens e Sacolas</h3>
-               <p className="text-gray-700 mb-3">Caixas e sacolas personalizadas para criar experiências únicas na entrega.</p>
-               <ul className="text-sm text-gray-600 space-y-1">
-                 <li>• Caixas personalizadas</li>
-                 <li>• Sacolas promocionais</li>
-                 <li>• Envelopes personalizados</li>
-                 <li>• Displays promocionais</li>
-               </ul>
-             </div>
-           </div>
-
-           <div className="mt-8 bg-gray-50 p-6 rounded-lg">
-             <p className="text-gray-700 leading-relaxed">
-               <strong>Com uma estrutura moderna e equipamentos de última geração</strong>, realizamos desde pequenas impressões digitais 
-               até grandes produções offset, garantindo a melhor relação custo-benefício. Cada projeto recebe atenção aos detalhes 
-               para assegurar um acabamento impecável e uma experiência visual diferenciada. Nossa equipe está preparada para 
-               oferecer suporte completo, desde a escolha dos materiais até a finalização, proporcionando resultados que fazem a diferença.
-             </p>
-           </div>
-         </section>
-
-         {/* ✅ Galeria de Trabalhos */}
-         <section className="mb-10">
-           <ImageCarousel 
-             images={galleryImages} 
-             title={`Materiais que podem ser solicitados em ${cidade}`}
-             autoPlay={true}
-             interval={5000}
-           />
-         </section>
-
-        {/* ✅ Facilidade e Suporte */}
-        <section className="bg-blue-50 p-6 rounded-lg mb-10">
-          <h2 className="text-2xl font-bold mb-4">💻 Como Funciona o Atendimento Online</h2>
-          <p className="text-gray-700 mb-4">
-            <strong>1. Solicite seu orçamento</strong> diretamente pelo formulário, WhatsApp ou email sem sair de casa.
-          </p>
-          <p className="text-gray-700 mb-4">
-            <strong>2. Converse com nossos especialistas</strong> online. Orientamos na escolha de materiais, cores, acabamentos e prazos.
-          </p>
-          <p className="text-gray-700">
-            <strong>3. Confirme e acompanhe</strong> sua produção em tempo real. Você recebe sua encomenda em {cidade} com segurança.
-          </p>
-        </section>
-
-        {/* ✅ Depoimentos */}
-        <section className="mb-10">
-          <h2 className="text-3xl font-bold mb-4">O que nossos clientes dizem</h2>
-          <blockquote className="border-l-4 border-blue-600 pl-4 text-gray-700 italic">
-            "Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!"
-          </blockquote>
-          <p className="mt-2 text-gray-600">⭐ Nota média: <strong>4.6/5</strong> (mais de 130 avaliações)</p>
-        </section>
-
-        {/* ✅ FAQ */}
-        <section className="bg-gray-50 p-6 rounded-lg mb-10">
-        <h2 className="text-2xl font-bold mb-4">Dúvidas Sobre Nosso Atendimento Online</h2>
-        <ul className="list-disc ml-6 space-y-3">
+      {/* FAQ */}
+      <div className="cir-section">
+        <span className="cir-s-tag">Dúvidas frequentes</span>
+        <h2 className="cp-h2">Dúvidas Sobre Nosso Atendimento Online</h2>
+        <ul className="cp-faq">
           <li><strong>Como faço para solicitar um orçamento online?</strong> Preencha o formulário no site ou envie sua solicitação por WhatsApp. Nós retornamos em até 2 horas.</li>
           <li><strong>Vocês entregam em {cidade}?</strong> Sim! Entregamos em toda a cidade e região, fazemos seu atendimento online, refinamos seu material, validamos e enviamos para qualquer lugar do Brasil.</li>
           <li><strong>Qual o prazo de produção?</strong> Varia conforme o material: alguns itens saem em 24h, outros em 3-5 dias. Você escolhe o prazo que mais convém.</li>
           <li><strong>Posso acompanhar meu pedido?</strong> Sim! Enviamos atualizações por email e WhatsApp durante toda a produção.</li>
-<li><strong>Vocês oferecem design também?</strong> Sim, indicamos designers parceiros ou você envia o arquivo pronto. Nossa equipe revisa tudo antes de produzir.</li>
+          <li><strong>Vocês oferecem design também?</strong> Sim, indicamos designers parceiros ou você envia o arquivo pronto. Nossa equipe revisa tudo antes de produzir.</li>
         </ul>
-      </section>
+      </div>
 
-        {/* ✅ Links internos */}
-        <section className="bg-blue-50 p-6 rounded-lg mb-10">
-          <h3 className="text-xl font-semibold mb-4">📍 Atendemos também em cidades próximas:</h3>
-          <ul className="list-disc ml-6">
-            {cidadesProximas.map((c, i) => (
-              <li key={i}>
-                <a href={`/grafica/${c.estado.toLowerCase()}/${normalizeText(c.cidade)}`} className="text-blue-600 hover:underline">
-                  Gráfica em {c.cidade}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+      <hr className="cir-divider" />
 
-        {/* ✅ CTA */}
-        <div className="text-center bg-blue-600 text-white p-8 rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">🌐 Solicite Seu Orçamento 100% Online</h2>
-          <p className="text-lg mb-6">Resposta em até 2 horas. Sem compromisso, sem telefonemas. Apenas gráfica de qualidade entregue em {cidade}.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20meu%20projeto%20de%20gr%C3%A1fica." target="_blank" rel="noopener noreferrer" className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100">
-              💬 WhatsApp Agora
+      {/* Cidades próximas */}
+      <div className="cir-section cir-section--light">
+        <span className="cir-s-tag">Atendemos também em</span>
+        <h2 className="cp-h2">Cidades próximas</h2>
+        <div className="cp-nearby">
+          {cidadesProximas.map((c, i) => (
+            <a key={i} href={`/grafica/${c.estado.toLowerCase()}/${normalizeText(c.cidade)}`}>
+              Gráfica em {c.cidade} →
             </a>
-            <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-600">
-              📋 Formulário Online
-            </a>
-          </div>
+          ))}
         </div>
-      </main>
+      </div>
+
+      {/* CTA final */}
+      <div className="cp-cta">
+        <h2>Solicite Seu Orçamento 100% Online</h2>
+        <p>Resposta em até 2 horas. Sem compromisso, sem telefonemas. Apenas gráfica de qualidade entregue em {cidade}.</p>
+        <div className="cp-cta-btns">
+          <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20meu%20projeto%20de%20gr%C3%A1fica." target="_blank" rel="noopener noreferrer" className="btn-primary">
+            WhatsApp Agora
+          </a>
+          <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+            Formulário Online
+          </a>
+        </div>
+      </div>
 
       <Footer />
+
+      <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" target="_blank" rel="noopener noreferrer" className="cir-wa-fab" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
     </div>
   );
 }

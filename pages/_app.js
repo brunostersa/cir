@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/cir-ds.css'
 import Head from 'next/head'
 
 export default function MyApp({ Component, pageProps }) {

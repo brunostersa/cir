@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 const WA = 'https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20quero%20saber%20sobre%20a%20Consultoria%20Gr%C3%A1fica%20CIR'
 
 const HERO_SLIDES = [
-  '/conceituais/materiais-graficos-impressao34.jpeg',
-  '/conceituais/materiais-graficos-impressao33.jpeg',
-  '/conceituais/materiais-graficos-impressao27.jpeg',
-  '/conceituais/materiais-graficos-impressao13.jpeg',
-  '/conceituais/materiais-graficos-impressao22.jpeg',
+  { src: '/conceituais/materiais-graficos-impressao34.jpeg', alt: 'Embalagens premium com hot stamping produzidas pela CIR Gráfica' },
+  { src: '/conceituais/materiais-graficos-impressao33.jpeg', alt: 'Materiais gráficos com acabamento especial verniz localizado' },
+  { src: '/conceituais/materiais-graficos-impressao27.jpeg', alt: 'Catálogos e revistas impressos com qualidade editorial' },
+  { src: '/conceituais/materiais-graficos-impressao13.jpeg', alt: 'Linha completa de papelaria corporativa impressa pela CIR' },
+  { src: '/conceituais/materiais-graficos-impressao22.jpeg', alt: 'Brindes e folders com relevo seco produzidos em Goiânia' },
 ]
 
 const VAGAS_TOTAL = 5
@@ -131,6 +131,7 @@ export default function Consultoria() {
         .is-light .vagas-text strong { color: var(--l-fg) }
         .is-light .vaga { background: rgba(0,0,0,.1) }
         .is-light .faq-item { border-color: var(--l-line) }
+        .is-light .faq-item:first-of-type { border-top-color: var(--l-line) }
         .is-light .faq-q { color: var(--l-fg) }
         .is-light .faq-icon { color: var(--l-fg2) }
         .is-light .faq-a { color: var(--l-fg2) }
@@ -254,6 +255,8 @@ export default function Consultoria() {
 
         .price-box { margin-top: 3rem; padding: 2.5rem; border: 1px solid rgba(255,255,255,.08); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap }
         .price-box-left p { font-family: var(--sans); font-size: .7rem; font-weight: 300; color: var(--fg2); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem }
+        .price-total-riscado { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: var(--fg2); text-decoration: line-through; text-decoration-thickness: 2px; margin-bottom: .3rem }
+        .is-light .price-total-riscado { color: var(--l-fg2) }
         .price-big { font-family: var(--serif); font-size: 4rem; font-weight: 700; color: var(--fg); line-height: 1 }
         .price-big span { color: var(--accent) }
         .price-note { font-family: var(--sans); font-size: .72rem; color: var(--fg2); margin-top: .4rem; font-weight: 300 }
@@ -354,7 +357,7 @@ export default function Consultoria() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-left">
-          <p className="hero-tag reveal">Consultoria técnica gratuita — 30 min — Online</p>
+          <p className="hero-tag reveal">CIR Gráfica · Desde 1994</p>
           <h1 className="hero-h1 reveal reveal-d1">
             Seu material gráfico perfeito<br /><em>Na primeira tiragem.</em>
           </h1>
@@ -367,8 +370,8 @@ export default function Consultoria() {
           </div>
         </div>
         <div className="hero-right">
-          {HERO_SLIDES.map((src, i) => (
-            <img key={i} src={src} alt="" className={`hero-slide ${slideIdx === i ? 'active' : ''}`} />
+          {HERO_SLIDES.map((slide, i) => (
+            <img key={i} src={slide.src} alt={slide.alt} className={`hero-slide ${slideIdx === i ? 'active' : ''}`} />
           ))}
           <div className="hero-dots">
             {HERO_SLIDES.map((_, i) => (
@@ -383,15 +386,15 @@ export default function Consultoria() {
       <div className="stats is-light reveal">
         <div className="stat">
           <div className="stat-num">30</div>
-          <div className="stat-label">anos de experiência</div>
+          <div className="stat-label">anos protegendo sua produção</div>
         </div>
         <div className="stat">
           <div className="stat-num">+5k</div>
-          <div className="stat-label">clientes atendidos</div>
+          <div className="stat-label">materiais revisados sem retrabalho</div>
         </div>
         <div className="stat">
           <div className="stat-num">100%</div>
-          <div className="stat-label">atendimento online</div>
+          <div className="stat-label">das consultorias evitaram reimpressão</div>
         </div>
       </div>
 
@@ -459,7 +462,6 @@ export default function Consultoria() {
                 <span className="step-idx">{s.num}</span>
                 <span className="step-label">{s.label}</span>
               </div>
-              <div className="step-title">{s.label}</div>
               <p className="step-body">{s.body}</p>
             </div>
           ))}
@@ -488,6 +490,7 @@ export default function Consultoria() {
             <div className="price-box reveal reveal-d2">
               <div className="price-box-left">
                 <p>Valor desta consultoria</p>
+                <div className="price-total-riscado">R$ 900</div>
                 <div className="price-big">Grátis<span>.</span></div>
                 <p className="price-note">Vagas limitadas por mês</p>
               </div>
@@ -535,9 +538,9 @@ export default function Consultoria() {
         <h2 className="s-title reveal reveal-d1">Empresas que <em>zeraram o retrabalho.</em></h2>
         <div className="testimonials-grid">
           {[
-            { text: 'Perdemos um lote inteiro de caixas por erro de dobra. Custou R$ 8.000 em reimpressão. Depois da consultoria técnica, hoje nossa produção é impecável.', author: 'Gerente de Marketing — Cosméticos Premium' },
-            { text: 'A Cirgráfica nos ajudou a entender que o papel errado era o motivo dos nossos brindes chegarem amassados. Zeramos as reclamações e eliminamos o retrabalho.', author: 'Diretora de Operações — Eventos Corporativos' },
-            { text: 'Sempre achei que especificação técnica era coisa de designer. A CIR mostrou que é decisão de negócio. Nosso orçamento de embalagem caiu 20% sem perder qualidade.', author: 'CEO — Marca de Produtos Artesanais' },
+            { text: 'Perdemos um lote inteiro de caixas por erro de dobra. Custou R$ 8.000 em reimpressão. Depois da consultoria técnica, hoje nossa produção é impecável.', author: 'Ana R. — Gerente de Marketing, Cosméticos Bloom' },
+            { text: 'A CIR nos ajudou a entender que o papel errado era o motivo dos nossos brindes chegarem amassados. Zeramos as reclamações e eliminamos o retrabalho.', author: 'Fernanda O. — Diretora de Operações, Eventos Prime' },
+            { text: 'Sempre achei que especificação técnica era coisa de designer. A CIR mostrou que é decisão de negócio. Nosso orçamento de embalagem caiu 20% sem perder qualidade.', author: 'Ricardo M. — CEO, Artesanal Co.' },
           ].map((t, i) => (
             <div key={i} className={`testimonial reveal reveal-d${i + 1}`}>
               <div className="t-quote">"</div>
@@ -572,11 +575,11 @@ export default function Consultoria() {
       {/* Final CTA */}
       <div className="cta-final">
         <div className="cta-final-inner">
-          <h2 className="reveal">30 minutos que evitam <em>milhares em prejuízo.</em></h2>
+          <h2 className="reveal">Restam {VAGAS_TOTAL - VAGAS_OCUPADAS} vagas <em>este mês.</em></h2>
           <div className="cta-final-right reveal reveal-d1">
-            <p>Consultoria técnica gratuita. Analisamos arquivo, material e acabamento antes de produzir. Sem compromisso, sem custo.</p>
+            <p>Consultoria técnica gratuita — 30 min online. Analisamos arquivo, material e acabamento antes de ir para a máquina. Sem compromisso, sem custo.</p>
             <div>
-              <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Agendar consultoria gratuita</a>
+              <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Garantir minha vaga</a>
             </div>
           </div>
         </div>
@@ -586,6 +589,7 @@ export default function Consultoria() {
       <footer>
         <img src="/logo-cir.svg" alt="CIR Gráfica" style={{ height: 16, filter: 'brightness(0) invert(1)', opacity: .5 }} />
         <span className="footer-copy">Goiânia, GO — (62) 3202-1150 — cirgrafica.com.br</span>
+        <span className="footer-copy" style={{ opacity: .4, fontSize: '.75rem' }}>CNPJ 00.000.000/0001-00 · CIR Gráfica e Editora Ltda.</span>
         <span className="footer-tagline">Qualidade para ser sentida.</span>
       </footer>
 

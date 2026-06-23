@@ -24,7 +24,7 @@ export default function Home() {
   }, {});
 
   return (
-    <div>
+    <div className="cir-root">
       <Head>
         <title>CIR Gráfica - Serviços de Impressão Gráfica, Embalagens e Sacolas Personalizadas</title>
         <meta name="description" content="CIR Gráfica oferece serviços de embalagens e sacolas personalizadas, brindes personalizados e comunicação visual em todo o Brasil. Qualidade profissional com entrega rápida." />
@@ -32,275 +32,165 @@ export default function Home() {
         <meta name="author" content="CIR Gráfica" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://cidades.cirgrafica.com.br" />
-        
-        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://cidades.cirgrafica.com.br" />
         <meta property="og:title" content="CIR Gráfica - Embalagens, Impressos gráficos e Sacolas Personalizadas" />
         <meta property="og:description" content="Serviços de gráfica em todo o Brasil. Embalagens e sacolas personalizadas, brindes personalizados e comunicação visual." />
         <meta property="og:image" content="https://www.cirgrafica.com.br/og-image.jpg" />
-        
-        {/* Twitter Card */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://cidades.cirgrafica.com.br" />
-        <meta property="twitter:title" content="CIR Gráfica - Embalagens, Impressões Peronalizadas e Sacolas Personalizadas" />
+        <meta property="twitter:title" content="CIR Gráfica - Embalagens, Impressões Personalizadas e Sacolas Personalizadas" />
         <meta property="twitter:description" content="Serviços de gráfica em todo o Brasil. Embalagens e sacolas personalizadas, brindes personalizados e comunicação visual." />
         <meta property="twitter:image" content="https://www.cirgrafica.com.br/og-image.jpg" />
       </Head>
 
       <Favicon />
       <Header />
-      
-      <main>
-        {/* Hero Section */}
-        <div className="bg-gradient-to-br from-blue-50 via-white to-green-50 py-20 px-6">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 leading-tight">
-              <span className="text-blue-600">Serviço Completo de Gráfica</span> com Atendimento em Todo o Brasil
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Embalagens personalizadas, impressões gráficas, sacolas, brindes corporativos e soluções de comunicação visual.
-              Qualidade profissional, entrega rápida e atendimento especializado em 374 cidades.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <a 
-                href="https://www.cirgrafica.com.br/portfolio-de-cases/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl transition duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
-              >
-                📁 Baixe nosso portfólio
-              </a>
-              <a 
-                href="https://www.cirgrafica.com.br/orcamento-rapido/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-xl transition duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
-              >
-                💬 Solicite um orçamento
-              </a>
-            </div>
-          </div>
+
+      {/* Hero */}
+      <div className="cp-hero">
+        <span className="cir-s-tag">Desde 1994 · Goiânia, GO</span>
+        <h1 className="cp-h1 cp-h1--xl">
+          Serviço Completo de Gráfica<br />
+          <em>com Atendimento em Todo o Brasil</em>
+        </h1>
+        <p className="cp-intro">
+          Embalagens personalizadas, impressões gráficas, sacolas, brindes corporativos e soluções de comunicação visual.
+          Qualidade profissional, entrega rápida e atendimento especializado em 374 cidades.
+        </p>
+        <div className="hp-hero-btns">
+          <a href="https://www.cirgrafica.com.br/portfolio-de-cases/" target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--fill">
+            Baixe nosso portfólio
+          </a>
+          <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--outline">
+            Solicite um orçamento
+          </a>
         </div>
+      </div>
 
-        {/* Conteúdo Principal */}
-        <div className="max-w-6xl mx-auto p-6">
-
-        {/* Estados e Principais Cidades */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-            Serviços de Gráfica por Estado
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Object.keys(cidadesPorEstado).map((estado) => (
-              <div key={estado} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-                <div className="bg-blue-600 text-white p-4">
-                  <h3 className="text-xl font-bold">{estado}</h3>
-                  <p className="text-blue-100 text-sm">
-                    {cidadesPorEstado[estado].length} cidades atendidas
-                  </p>
-                </div>
-                
-                <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-3">Principais cidades:</h4>
-                  <div className="space-y-2">
-                    {principaisCidades[estado].map((cidade, index) => (
-                      <a 
-                        key={index}
-                        href={`/grafica/${estado.toLowerCase()}/${normalizeText(cidade.cidade)}`}
-                        className="block text-blue-600 hover:text-blue-800 hover:underline transition duration-200"
-                      >
-                        • Gráfica em {cidade.cidade}
-                      </a>
-                    ))}
-                  </div>
-                  
-                  {cidadesPorEstado[estado].length > 5 && (
-                    <div className="mt-4 pt-3 border-t border-gray-200">
-                      <a 
-                        href={`/grafica/estado/${estado.toLowerCase()}`}
-                        className="text-sm text-gray-600 hover:text-blue-600 hover:underline"
-                      >
-                        Ver todas as {cidadesPorEstado[estado].length} cidades de {estado} →
-                      </a>
-                    </div>
-                  )}
-                </div>
+      {/* Estados */}
+      <div className="cir-section cir-section--light">
+        <span className="cir-s-tag">Cobertura nacional</span>
+        <h2 className="cp-h2">Serviços de Gráfica por Estado</h2>
+        <div className="hp-states-grid">
+          {Object.keys(cidadesPorEstado).map((estado) => (
+            <div key={estado} className="hp-state-card">
+              <div className="hp-state-header">
+                <h3>{estado}</h3>
+                <span>{cidadesPorEstado[estado].length} cidades</span>
               </div>
-            ))}
-          </div>
+              <div className="hp-state-cities">
+                {principaisCidades[estado].map((cidade, index) => (
+                  <a
+                    key={index}
+                    href={`/grafica/${estado.toLowerCase()}/${normalizeText(cidade.cidade)}`}
+                    className="hp-state-city"
+                  >
+                    Gráfica em {cidade.cidade} →
+                  </a>
+                ))}
+                {cidadesPorEstado[estado].length > 5 && (
+                  <a href={`/grafica/estado/${estado.toLowerCase()}`} className="hp-state-more">
+                    Ver todas as {cidadesPorEstado[estado].length} cidades →
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Galeria de Trabalhos */}
-        <div className="mb-16">
-          <ImageCarousel 
-            images={galleryImages} 
-            title="Materiais que podem ser solicitados"
-            autoPlay={true}
-            interval={4000}
-          />
+      {/* Galeria */}
+      <div className="cir-section">
+        <ImageCarousel
+          images={galleryImages}
+          title="Materiais que podem ser solicitados"
+          autoPlay={true}
+          interval={4000}
+        />
+      </div>
+
+      <hr className="cir-divider" />
+
+      {/* Serviços */}
+      <div className="cir-section cir-section--light">
+        <span className="cir-s-tag">Serviços</span>
+        <h2 className="cp-h2">Nossos Serviços</h2>
+        <div className="cp-services-grid" style={{ background: 'var(--cir-l-line)' }}>
+          {[
+            { title: 'Materiais Institucionais', body: 'Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.', items: ['Cartões de visita', 'Papel timbrado', 'Pastas executivas', 'Folders institucionais'] },
+            { title: 'Materiais Promocionais', body: 'Flyers, banners, adesivos e catálogos para divulgar seus produtos e serviços com impacto.', items: ['Flyers e panfletos', 'Banners e faixas', 'Adesivos personalizados', 'Catálogos promocionais'] },
+            { title: 'Impressão Digital e Offset', body: 'Soluções rápidas para pequenas tiragens e produções offset para grandes volumes com acabamento impecável.', items: ['Impressão digital rápida', 'Produção offset', 'Pequenas e grandes tiragens', 'Acabamento profissional'] },
+            { title: 'Impressão Editorial', body: 'Revistas, livros e apostilas com acabamento impecável para projetos editoriais de qualidade.', items: ['Revistas e jornais', 'Livros e manuais', 'Apostilas educacionais', 'Publicações corporativas'] },
+            { title: 'Moda e Etiquetas', body: 'Tags e etiquetas que valorizam as peças e contam a história da sua marca no setor da moda.', items: ['Tags personalizadas', 'Etiquetas de roupas', 'Identificação de produtos', 'Materiais têxteis'] },
+            { title: 'Embalagens e Sacolas', body: 'Caixas e sacolas personalizadas para criar experiências únicas na entrega e destacar sua marca.', items: ['Caixas personalizadas', 'Sacolas promocionais', 'Envelopes personalizados', 'Displays promocionais'] },
+          ].map((s, i) => (
+            <div key={i} className="cp-service" style={{ background: 'var(--cir-l-bg)' }}>
+              <h3 style={{ color: 'var(--cir-accent)' }}>{s.title}</h3>
+              <p style={{ color: 'var(--cir-l-fg2)' }}>{s.body}</p>
+              <ul>{s.items.map((item, j) => <li key={j} style={{ color: 'var(--cir-l-fg2)' }}>{item}</li>)}</ul>
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Serviços */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-            Nossos Serviços
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">🏢</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Materiais Institucionais</h3>
-              <p className="text-gray-600 mb-4">
-                Cartões de visita, papel timbrado, pastas e folders institucionais 
-                para fortalecer a identidade da sua marca.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Cartões de visita</li>
-                <li>• Papel timbrado</li>
-                <li>• Pastas executivas</li>
-                <li>• Folders institucionais</li>
-              </ul>
-            </div>
+      <hr className="cir-divider" />
 
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Materiais Promocionais</h3>
-              <p className="text-gray-600 mb-4">
-                Flyers, banners, adesivos e catálogos para divulgar seus produtos 
-                e serviços com impacto.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Flyers e panfletos</li>
-                <li>• Banners e faixas</li>
-                <li>• Adesivos personalizados</li>
-                <li>• Catálogos promocionais</li>
-              </ul>
+      {/* Por que CIR */}
+      <div className="cir-section">
+        <span className="cir-s-tag">Por que a CIR</span>
+        <h2 className="cp-h2">Por que escolher a CIR Gráfica?</h2>
+        <div className="hp-reasons">
+          {[
+            { num: '30+', label: 'Anos de mercado', body: 'Experiência consolidada em produção gráfica de alto padrão' },
+            { num: '+5k', label: 'Clientes atendidos', body: 'Empresas de todos os setores confiam na qualidade CIR' },
+            { num: '100%', label: 'Online', body: 'Atendimento digital completo, do orçamento à entrega' },
+            { num: '374', label: 'Cidades', body: 'Cobertura nacional com entrega para todo o Brasil' },
+          ].map((r, i) => (
+            <div key={i} className="hp-reason">
+              <div className="hp-reason-num">{r.num}</div>
+              <div className="hp-reason-label">{r.label}</div>
+              <p className="cp-body">{r.body}</p>
             </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">🖨️</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Impressão Digital e Offset</h3>
-              <p className="text-gray-600 mb-4">
-                Soluções rápidas para pequenas tiragens e produções offset para 
-                grandes volumes com acabamento impecável.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Impressão digital rápida</li>
-                <li>• Produção offset</li>
-                <li>• Pequenas e grandes tiragens</li>
-                <li>• Acabamento profissional</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">📚</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Impressão Editorial</h3>
-              <p className="text-gray-600 mb-4">
-                Revistas, livros e apostilas com acabamento impecável para 
-                projetos editoriais de qualidade.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Revistas e jornais</li>
-                <li>• Livros e manuais</li>
-                <li>• Apostilas educacionais</li>
-                <li>• Publicações corporativas</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">👗</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Moda e Etiquetas</h3>
-              <p className="text-gray-600 mb-4">
-                Tags e etiquetas que valorizam as peças e contam a história 
-                da sua marca no setor da moda.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Tags personalizadas</li>
-                <li>• Etiquetas de roupas</li>
-                <li>• Identificação de produtos</li>
-                <li>• Materiais têxteis</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
-              <div className="text-4xl mb-4">📦</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Embalagens e Sacolas</h3>
-              <p className="text-gray-600 mb-4">
-                Caixas e sacolas personalizadas para criar experiências únicas 
-                na entrega e destacar sua marca.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Caixas personalizadas</li>
-                <li>• Sacolas promocionais</li>
-                <li>• Envelopes personalizados</li>
-                <li>• Displays promocionais</li>
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* Por que escolher a CIR */}
-        <div className="bg-gray-50 p-8 rounded-lg mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-            Por que escolher a CIR Gráfica?
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-3xl mb-3">⚡</div>
-              <h3 className="font-semibold mb-2 text-gray-900">Entrega Rápida</h3>
-              <p className="text-sm text-gray-600">Prazos otimizados para sua necessidade</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-3">🎯</div>
-              <h3 className="font-semibold mb-2 text-gray-900">Qualidade Garantida</h3>
-              <p className="text-sm text-gray-600">Materiais de primeira linha</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-3">💰</div>
-              <h3 className="font-semibold mb-2 text-gray-900">Melhor Preço</h3>
-              <p className="text-sm text-gray-600">Orçamentos competitivos</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-3">🤝</div>
-              <h3 className="font-semibold mb-2 text-gray-900">Atendimento Personalizado</h3>
-              <p className="text-sm text-gray-600">Suporte especializado</p>
-            </div>
-          </div>
+      {/* CTA */}
+      <div className="cp-cta">
+        <h2>Precisa de serviços de gráfica?</h2>
+        <p>Entre em contato conosco e solicite seu orçamento gratuito!</p>
+        <div className="cp-cta-btns">
+          <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="btn-primary">Solicitar Orçamento</a>
+          <a href="https://www.cirgrafica.com.br/portfolio-de-cases/" target="_blank" rel="noopener noreferrer" className="btn-secondary">Ver Portfólio</a>
         </div>
+      </div>
 
-        {/* CTA Final */}
-        <div className="text-center bg-blue-600 text-white p-8 rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">
-            Precisa de serviços de gráfica?
-          </h2>
-          <p className="text-lg mb-6 opacity-90">
-            Entre em contato conosco e solicite seu orçamento gratuito!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="https://www.cirgrafica.com.br/orcamento-rapido/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg transition duration-300 hover:bg-gray-100"
-            >
-              💬 Solicitar Orçamento
-            </a>
-            <a 
-              href="https://www.cirgrafica.com.br/portfolio-de-cases/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-lg transition duration-300 hover:bg-white hover:text-blue-600"
-            >
-              📁 Ver Portfólio
-            </a>
-          </div>
-        </div>
-        </div>
-      </main>
-      
       <Footer />
+
+      <style jsx global>{`
+        .hp-hero-btns { display: flex; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap }
+        .hp-states-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 3rem; background: var(--cir-l-line) }
+        .hp-state-card { background: var(--cir-l-bg); display: flex; flex-direction: column }
+        .hp-state-header { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--cir-l-line); display: flex; align-items: baseline; justify-content: space-between }
+        .hp-state-header h3 { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--cir-l-fg) }
+        .hp-state-header span { font-family: var(--cir-sans); font-size: .65rem; font-weight: 300; color: var(--cir-l-fg2) }
+        .hp-state-cities { padding: 1rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: .4rem }
+        .hp-state-city { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: var(--cir-l-fg2); text-decoration: none; transition: color .2s }
+        .hp-state-city:hover { color: var(--cir-accent) }
+        .hp-state-more { font-family: var(--cir-sans); font-size: .7rem; font-weight: 400; letter-spacing: .08em; color: var(--cir-accent); text-decoration: none; margin-top: .6rem; opacity: .7; transition: opacity .2s }
+        .hp-state-more:hover { opacity: 1 }
+        .hp-reasons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 3rem; background: var(--cir-line) }
+        .hp-reason { background: var(--cir-bg); padding: 3rem 2.5rem }
+        .hp-reason-num { font-family: var(--cir-serif); font-size: 3rem; font-weight: 700; color: var(--cir-fg); line-height: 1; margin-bottom: .4rem }
+        .hp-reason-label { font-family: var(--cir-sans); font-size: .65rem; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--cir-fg2); margin-bottom: 1rem }
+        @media (max-width: 1024px) { .hp-states-grid { grid-template-columns: repeat(2, 1fr) } .hp-reasons { grid-template-columns: repeat(2, 1fr) } }
+        @media (max-width: 768px) { .hp-states-grid { grid-template-columns: 1fr } .hp-reasons { grid-template-columns: 1fr 1fr } .hp-hero-btns { flex-direction: column } }
+      `}</style>
+
+      <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" target="_blank" rel="noopener noreferrer" className="cir-wa-fab" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
     </div>
   )
 }
