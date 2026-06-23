@@ -1,6 +1,8 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ImageCarousel from '../components/ImageCarousel'
+import ProductsCarousel from '../components/ProductsCarousel'
+import AcabamentosSection from '../components/AcabamentosSection'
 import Favicon from '../components/Favicon'
 import cidades from '../cidades.json'
 import { normalizeText } from '../utils/normalize'
@@ -109,6 +111,10 @@ export default function Home() {
           interval={4000}
         />
       </div>
+
+      <AcabamentosSection />
+
+      <ProductsCarousel />
 
       <hr className="cir-divider" />
 

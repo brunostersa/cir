@@ -1,5 +1,7 @@
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
+import ProductsCarousel from '../../../components/ProductsCarousel'
+import AcabamentosSection from '../../../components/AcabamentosSection'
 import Favicon from '../../../components/Favicon'
 import cidades from '../../../cidades.json'
 import Head from 'next/head'
@@ -190,6 +192,10 @@ export default function GraficaEstado({ estado, cidades }) {
           </div>
         </div>
       </div>
+
+      <ProductsCarousel />
+
+      <AcabamentosSection />
 
       <hr className="cir-divider" />
 

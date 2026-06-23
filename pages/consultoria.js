@@ -39,16 +39,30 @@ const FAQS = [
   { q: 'O que acontece se houver algum problema?', a: 'Garantia total de conformidade. Se o produto não atender ao especificado na consultoria, refazemos sem custo adicional.' },
 ]
 
+function shuffle(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 export default function Consultoria() {
   const [openFaq, setOpenFaq] = useState(null)
   const [scrollPct, setScrollPct] = useState(0)
   const [stickyVisible, setStickyVisible] = useState(false)
   const [slideIdx, setSlideIdx] = useState(0)
+  const [slides, setSlides] = useState(HERO_SLIDES)
 
   useEffect(() => {
-    const t = setInterval(() => setSlideIdx(i => (i + 1) % HERO_SLIDES.length), 4000)
-    return () => clearInterval(t)
+    setSlides(shuffle(HERO_SLIDES))
   }, [])
+
+  useEffect(() => {
+    const t = setInterval(() => setSlideIdx(i => (i + 1) % slides.length), 4000)
+    return () => clearInterval(t)
+  }, [slides.length])
 
   useEffect(() => {
     const onScroll = () => {
@@ -370,11 +384,11 @@ export default function Consultoria() {
           </div>
         </div>
         <div className="hero-right">
-          {HERO_SLIDES.map((slide, i) => (
+          {slides.map((slide, i) => (
             <img key={i} src={slide.src} alt={slide.alt} className={`hero-slide ${slideIdx === i ? 'active' : ''}`} />
           ))}
           <div className="hero-dots">
-            {HERO_SLIDES.map((_, i) => (
+            {slides.map((_, i) => (
               <div key={i} className={`hero-dot ${slideIdx === i ? 'active' : ''}`} onClick={() => setSlideIdx(i)} style={{ cursor: 'pointer' }} />
             ))}
           </div>
