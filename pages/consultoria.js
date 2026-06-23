@@ -359,10 +359,10 @@ export default function Consultoria() {
         <div className="hero-left">
           <p className="hero-tag reveal">CIR Gráfica · Desde 1994</p>
           <h1 className="hero-h1 reveal reveal-d1">
-            Seu material gráfico perfeito<br /><em>Na primeira tiragem.</em>
+            Evite prejuízos em seus<br /><em>materiais gráficos.</em>
           </h1>
           <p className="hero-sub reveal reveal-d2">
-            Analisamos arquivo, material e acabamento antes de produzir. Sem reimpressão, sem desperdício, sem surpresa no lote final.
+            Consultoria técnica gratuita de 30 minutos para garantir que suas sacolas, caixas e brindes saiam perfeitos na primeira tiragem — sem reimpressão, sem desperdício.
           </p>
           <div className="hero-actions reveal reveal-d3">
             <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Agendar agora</a>
@@ -420,9 +420,9 @@ export default function Consultoria() {
         <div className="problem-wrap">
           <div className="problem-left">
             <p className="s-tag reveal">O problema</p>
-            <h2 className="s-title reveal reveal-d1">O erro gráfico não avisa. <em>Ele chega com o lote.</em></h2>
+            <h2 className="s-title reveal reveal-d1">Você já sentiu o frio na barriga ao ver um lote chegar <em>com erro?</em></h2>
             <p className="s-body reveal reveal-d2" style={{ marginTop: '1.5rem', maxWidth: 360 }}>
-              Faca errada, gramatura inadequada, cor fora do aprovado. Cada detalhe mal especificado vira prejuízo real — e caro.
+              O erro gráfico não avisa. Ele acontece quando faca, gramatura, cor ou acabamento não foram especificados corretamente — e o prejuízo só aparece com o lote na mão.
             </p>
           </div>
           <ul className="problem-list reveal reveal-d1">
@@ -439,6 +439,38 @@ export default function Consultoria() {
               </li>
             ))}
           </ul>
+          <p className="s-body reveal" style={{ marginTop: '2.5rem', maxWidth: 400, borderTop: '1px solid rgba(255,255,255,.06)', paddingTop: '2rem' }}>
+            O resultado? Você perde o investimento inteiro. Atrasa sua campanha de marketing. Ainda precisa pagar pela reimpressão. <strong style={{ color: 'var(--fg)', fontWeight: 600 }}>É um ciclo de desperdício que drena o orçamento de qualquer empresa.</strong>
+          </p>
+        </div>
+      </div>
+
+      <hr className="divider" />
+
+      {/* Posicionamento */}
+      <div className="section">
+        <div className="problem-wrap">
+          <div className="problem-left">
+            <p className="s-tag reveal">Nossa diferença</p>
+            <h2 className="s-title reveal reveal-d1">Não somos vendedores de papel. <em>Somos especialistas técnicos.</em></h2>
+          </div>
+          <div className="problem-list reveal reveal-d1" style={{ marginTop: '0' }}>
+            {[
+              ['Gramatura e tipo de papel', 'qual aguenta seu acabamento sem quebrar'],
+              ['Facas de corte e dobra', 'para que a caixa saia perfeita, sem torção'],
+              ['Processos de impressão', 'como a cor vai ficar na máquina, não só na tela'],
+              ['Acabamentos especiais', 'relevo, hot stamping, verniz localizado — aplicados certo'],
+              ['Variáveis de produção', 'temperatura, umidade e velocidade que afetam o resultado'],
+            ].map(([title, sub], i) => (
+              <li key={i} className="problem-row">
+                <span className="problem-x" style={{ color: 'var(--gold)' }}>→</span>
+                <span className="problem-text"><strong>{title}</strong> — {sub}</span>
+              </li>
+            ))}
+            <p className="s-body" style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+              Analisamos seu projeto <strong style={{ color: 'var(--fg)', fontWeight: 600 }}>antes de ir para a máquina</strong> — garantindo que o que você aprovou no computador seja exatamente o que chegará na sua mesa.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -538,7 +570,7 @@ export default function Consultoria() {
         <h2 className="s-title reveal reveal-d1">Empresas que <em>zeraram o retrabalho.</em></h2>
         <div className="testimonials-grid">
           {[
-            { text: 'Perdemos um lote inteiro de caixas por erro de dobra. Custou R$ 8.000 em reimpressão. Depois da consultoria técnica, hoje nossa produção é impecável.', author: 'Ana R. — Gerente de Marketing, Cosméticos Bloom' },
+            { text: 'Antes de trabalhar com a CIR, perdemos um lote inteiro de caixas por erro de dobra. Custou R$ 8.000 em reimpressão. Depois da consultoria técnica, entendemos exatamente como especificar nossos projetos. Hoje nossa produção é impecável.', author: 'João S. — Gerente de Marketing, Cosméticos Premium' },
             { text: 'A CIR nos ajudou a entender que o papel errado era o motivo dos nossos brindes chegarem amassados. Zeramos as reclamações e eliminamos o retrabalho.', author: 'Fernanda O. — Diretora de Operações, Eventos Prime' },
             { text: 'Sempre achei que especificação técnica era coisa de designer. A CIR mostrou que é decisão de negócio. Nosso orçamento de embalagem caiu 20% sem perder qualidade.', author: 'Ricardo M. — CEO, Artesanal Co.' },
           ].map((t, i) => (
