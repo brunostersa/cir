@@ -87,7 +87,7 @@ export default function Consultoria() {
     <>
       <Head>
         <title>Consultoria Gráfica Gratuita — CIR Gráfica</title>
-        <meta name="description" content="30 minutos de consultoria técnica gratuita para garantir que seu material gráfico saia perfeito na primeira tiragem. CIR Gráfica, desde 1994." />
+        <meta name="description" content="30 minutos de consultoria técnica gratuita para garantir que seu material gráfico saia perfeito na primeira tiragem. CIR Gráfica, desde 1999." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
@@ -182,8 +182,8 @@ export default function Consultoria() {
         .hero-right { position: relative; overflow: hidden; height: 100%; }
         .hero-tag { font-family: var(--sans); font-size: .66rem; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; color: var(--fg2); margin-bottom: 2rem; opacity: .7 }
         .hero-h1 { font-family: var(--serif); font-size: clamp(2.8rem, 4.5vw, 5.2rem); font-weight: 700; line-height: 1.1; color: var(--fg); letter-spacing: -.02em }
-        .hero-h1 em { font-style: italic; font-weight: 400; color: var(--gold); display: block; font-size: clamp(3rem, 5vw, 5.8rem); line-height: 1.05; letter-spacing: -.02em; margin-top: .1rem }
-        .hero-sub { font-family: var(--sans); font-size: .78rem; font-weight: 300; line-height: 1.85; color: var(--fg2); margin-top: 1.8rem; max-width: 340px; opacity: .75 }
+        .hero-h1 em { font-style: normal; font-weight: 700; color: var(--gold); display: block; letter-spacing: -.02em }
+        .hero-sub { font-family: var(--sans); font-size: 1.15rem; font-weight: 400; line-height: 1.7; color: var(--fg); margin-top: 1.8rem; max-width: 440px; opacity: .9 }
         .hero-actions { margin-top: 3rem; display: flex; align-items: center; gap: 2rem }
         .btn { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: opacity .2s }
         .btn-fill { background: var(--accent); color: #fff; padding: 1rem 2.4rem }
@@ -360,7 +360,7 @@ export default function Consultoria() {
       {/* Nav */}
       <nav>
         <a href="/" className="nav-logo">
-          <img src="/logo-cir.svg" alt="CIR Gráfica" style={{ height: 22, filter: 'brightness(0) invert(1)', opacity: .85 }} />
+          <img src="/logo-cir.svg" alt="CIR Gráfica" style={{ height: 34, filter: 'brightness(0) invert(1)', opacity: .85 }} />
         </a>
         <div className="nav-right">
           <a href="/" className="nav-link">Início</a>
@@ -371,7 +371,7 @@ export default function Consultoria() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-left">
-          <p className="hero-tag reveal">CIR Gráfica · Desde 1994</p>
+          <p className="hero-tag reveal">CIR Gráfica sempre junto · Desde 1999</p>
           <h1 className="hero-h1 reveal reveal-d1">
             Evite prejuízos em seus<br /><em>materiais gráficos.</em>
           </h1>
@@ -392,14 +392,14 @@ export default function Consultoria() {
               <div key={i} className={`hero-dot ${slideIdx === i ? 'active' : ''}`} onClick={() => setSlideIdx(i)} style={{ cursor: 'pointer' }} />
             ))}
           </div>
-          <span className="hero-right-label">Desde 1994</span>
+          <span className="hero-right-label">Desde 1999</span>
         </div>
       </section>
 
       {/* Stats */}
       <div className="stats is-light reveal">
         <div className="stat">
-          <div className="stat-num">30</div>
+          <div className="stat-num">27</div>
           <div className="stat-label">anos protegendo sua produção</div>
         </div>
         <div className="stat">
@@ -443,7 +443,7 @@ export default function Consultoria() {
             {[
               ['Faca de corte errada', 'Caixa sai torta, inútil para venda'],
               ['Papel sem gramatura adequada', 'Quebra no acabamento — perda total do lote'],
-              ['Prova que não bate com a máquina', 'Cor diferente do aprovado, reimpressão cara'],
+              ['Expectativa desalinhada com o resultado da impressão', 'A prova não reflete o que sai da máquina — cor diferente do aprovado'],
               ['Acabamento mal especificado', 'Relevo fraco, hot stamping irregular, verniz inadequado'],
               ['Atraso crítico na entrega', 'Campanha atrasa, você perde vendas e paga reimpressão'],
             ].map(([title, sub], i) => (
