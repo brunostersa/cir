@@ -6,6 +6,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  if (!supabase) {
+    console.error('Failed to save lead: SUPABASE_URL/SUPABASE_ANON_KEY not configured')
+    return res.status(500).json({ error: 'Lead storage not configured' })
+  }
+
   const {
     phone, message, source, cidade, estado, page_url, customer_name, customer_phone,
     customer_email, customer_company,
