@@ -23,7 +23,7 @@ function formatMonthLabel(key) {
 
 export async function getServerSideProps() {
   if (!supabaseAdmin) {
-    return { props: { error: 'SUPABASE_SERVICE_ROLE_KEY não configurada no .env.local.', stats: null } }
+    return { props: { error: 'SUPABASE_URL e/ou SUPABASE_SERVICE_ROLE_KEY não configuradas nas variáveis de ambiente deste servidor.', stats: null } }
   }
 
   const { data, error } = await supabaseAdmin
