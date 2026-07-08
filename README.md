@@ -1,207 +1,79 @@
-# CIR Gráfica - Site SEO Local
+# CIR Gráfica — Site SEO Local (cidades.cirgrafica.com.br)
 
-Site otimizado para SEO local da CIR Gráfica, focado em gerar páginas para busca de termos como "gráfica + nome da cidade".
+Site de SEO local da CIR Gráfica: gera uma página por cidade/estado atendido (ex: "gráfica em Goiânia"), captura leads via WhatsApp e salva tudo no Supabase.
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-### ✅ Implementado
-- **100 páginas de cidade** otimizadas para SEO
-- **Páginas de estado** que listam todas as cidades
-- **Sitemap.xml dinâmico** com todas as URLs
-- **Robots.txt** configurado para indexação
-- **Meta tags completas** (OpenGraph, Twitter Cards)
-- **Schema.org JSON-LD** (LocalBusiness)
-- **Design premium** com Tailwind CSS
-- **CTAs otimizados** para conversão
-- **Layout responsivo** para mobile
+- **478 páginas de cidade** + **27 páginas de estado**, geradas estaticamente (`getStaticPaths`/`getStaticProps`) a partir de `cidades.json`
+- **Captura de lead unificada**: todo botão de WhatsApp do site (header, footer, CTAs, FAB, popup de saída, barra sticky mobile) abre um modal pedindo nome + WhatsApp (com máscara e validação) antes de redirecionar — tudo salvo no Supabase, incluindo UTM de origem
+- **`/portfolio`**: página própria de captura de lead (nome/e-mail/WhatsApp/empresa) que substitui o antigo link externo de download de portfólio
+- **`/admin/leads`**: dashboard protegido por senha (Basic Auth via `middleware.js`) com gráfico de leads por dia/semana/mês, ranking por origem/estado/UTM e tabela de leads recentes
+- **Popup de saída (exit-intent)** e **barra sticky mobile** nas páginas de cidade, com captura de lead embutida
+- **Sitemap.xml dinâmico** e `robots.txt`, com meta tags completas (OpenGraph, Twitter Card, geo tags, Schema.org LocalBusiness/FAQPage) em todas as páginas
 
-### 📊 SEO Implementado
-- Meta tags otimizadas para cada cidade
-- Schema.org LocalBusiness com serviceArea
-- OpenGraph para redes sociais
-- URLs canônicas
-- Geo meta tags
-- Sitemap automático
-- Robots.txt configurado
+## Stack
 
-## 🏗️ Estrutura do Projeto
+- **Next.js 14** (Pages Router), sem TypeScript
+- **Design system próprio** em `styles/cir-ds.css` (CSS custom properties + classes `cir-`/`cp-`, sem Tailwind apesar de instalado) — fontes Josefin Sans (sans) e Courier Prime (serif), paleta escura com acento laranja
+- **Supabase** (Postgres) para a tabela `leads`
+- `/consultoria` é uma landing page à parte com estilos próprios (alias das variáveis do design system global — ver comentário no topo do arquivo)
+
+## Estrutura do projeto
 
 ```
-CIR/
+cidadescir/
 ├── pages/
-│   ├── grafica/
-│   │   ├── [cidade].js          # Páginas de cidade
-│   │   └── estado/
-│   │       └── [estado].js      # Páginas de estado
-│   ├── sitemap.xml.js           # Sitemap dinâmico
-│   └── index.js                 # Página inicial
+│   ├── index.js                        # Home
+│   ├── consultoria.js                  # LP separada (consultoria gráfica)
+│   ├── portfolio.js / portfolio/obrigado.js
+│   ├── admin/leads.js                  # Dashboard de leads (protegido)
+│   ├── api/lead.js                     # Recebe e grava leads no Supabase
+│   ├── sitemap.xml.js
+│   └── grafica/
+│       ├── [estado]/[cidade].js        # Página de cidade
+│       └── estado/[estado].js          # Página de estado
 ├── components/
-│   ├── Header.js               # Header premium
-│   └── Footer.js               # Footer com informações
-├── public/
-│   └── robots.txt              # Robots.txt
-├── cidades.json                # Dados das 100 cidades
-└── README.md                   # Este arquivo
+│   ├── WhatsAppLink.js                 # Botão que abre o modal de captura
+│   ├── WhatsAppModalProvider.js        # Modal global (nome/WhatsApp) + envio
+│   ├── LeadPopup.js                    # Popup de saída (exit-intent)
+│   ├── StickyMobileCTA.js
+│   └── ...
+├── lib/
+│   ├── supabaseClient.js / supabaseAdmin.js
+│   ├── logLead.js, leadValidation.js, leadStats.js
+│   ├── phone.js (máscara), utm.js (captura/persistência de UTM)
+├── middleware.js                       # Basic Auth para /admin
+├── cidades.json                        # Dados de cidade/estado (fonte única)
+└── local-docs/                         # Docs internos/soltos, fora do git
 ```
 
-## 🚀 Hospedagem Recomendada
+## Rodando localmente
 
-### 1. Vercel (Recomendado)
 ```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Configurar domínio personalizado
-vercel domains add cirgrafica.com.br
+npm install
+npm run dev
 ```
 
-**Vantagens:**
-- ✅ Deploy automático do GitHub
-- ✅ SSL gratuito
-- ✅ CDN global
-- ✅ Performance otimizada
-- ✅ Integração nativa com Next.js
+Copie `.env.example` para `.env.local` e preencha:
 
-### 2. Netlify
-```bash
-# Build
-npm run build
-
-# Deploy via Netlify CLI ou drag & drop da pasta .next
-```
-
-### 3. Servidor Próprio
-```bash
-# Build para produção
-npm run build
-npm start
-
-# Usar PM2 para gerenciar processo
-pm2 start npm --name "cir-grafica" -- start
-```
-
-## 📈 Escalabilidade
-
-### Adicionar Novas Cidades
-1. Editar `cidades.json`
-2. Adicionar nova cidade:
-```json
-{
-  "cidade": "Nova Cidade",
-  "estado": "GO"
-}
-```
-3. Deploy automático (Vercel) ou manual
-
-### Performance
-- **Static Generation**: Todas as páginas são geradas em build time
-- **CDN**: Distribuição global de conteúdo
-- **Lazy Loading**: Imagens e componentes otimizados
-- **Caching**: Headers de cache configurados
-
-### Monitoramento
-- Google Search Console
-- Google Analytics
-- Core Web Vitals
-- PageSpeed Insights
-
-## 🎯 Estratégia SEO
-
-### Palavras-chave Alvo
-- "gráfica [cidade]"
-- "impressão digital [cidade]"
-- "banners [cidade]"
-- "brindes personalizados [cidade]"
-- "comunicação visual [cidade]"
-
-### Estrutura de URLs
-- `/grafica/goiania`
-- `/grafica/sao-paulo`
-- `/grafica/estado/goias`
-- `/grafica/estado/sao-paulo`
-
-### Schema.org
-- LocalBusiness com serviceArea
-- OfferCatalog com serviços
-- GeoCoordinates
-- OpeningHours
-
-## 🔧 Configuração
-
-### Variáveis de Ambiente
 ```env
-NEXT_PUBLIC_SITE_URL=https://cirgrafica.com.br
-NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=GA_MEASUREMENT_ID
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+ADMIN_USER=
+ADMIN_PASSWORD=
 ```
 
-### Scripts Disponíveis
-```bash
-npm run dev          # Desenvolvimento
-npm run build        # Build para produção
-npm run start        # Servidor de produção
-npm run export       # Export estático (opcional)
-```
+- `SUPABASE_URL` + `SUPABASE_ANON_KEY`: usados por `pages/api/lead.js` para gravar leads (RLS permite só `INSERT` público).
+- `SUPABASE_SERVICE_ROLE_KEY`: usado só no servidor, por `pages/admin/leads.js`, pra ler os leads (ignora RLS).
+- `ADMIN_USER` / `ADMIN_PASSWORD`: credenciais do `/admin/leads`.
 
-## 📱 Responsividade
+Essas mesmas variáveis precisam estar configuradas no provedor de deploy (Vercel etc.) para **Production** — sem elas o build ainda passa (os clients degradam para `null` em vez de quebrar), mas a captura de lead e o dashboard não funcionam.
 
-- **Mobile First**: Design otimizado para mobile
-- **Tablet**: Layout adaptativo
-- **Desktop**: Layout completo
-- **Acessibilidade**: WCAG 2.1 AA
+## Adicionar novas cidades
 
-## 🎨 Design System
+Edite `cidades.json`, adicionando `{ "cidade": "Nome", "estado": "UF" }`. As rotas usam `utils/normalize.js` (remove acentos/espaços) para gerar o slug — o mesmo normalizador é usado pelo `sitemap.xml.js`, então as URLs do sitemap sempre batem com as rotas reais.
 
-### Cores
-- **Preto**: #000000 (Header, Footer)
-- **Branco**: #FFFFFF (Background)
-- **Verde**: #16A34A (CTAs)
-- **Cinza**: #6B7280 (Texto secundário)
+## Deploy
 
-### Tipografia
-- **Títulos**: Inter, sans-serif
-- **Corpo**: Inter, sans-serif
-- **Hierarquia**: H1 (4xl), H2 (2xl), H3 (xl)
-
-## 📊 Métricas de Sucesso
-
-### SEO
-- Posicionamento para "gráfica [cidade]"
-- Tráfego orgânico crescente
-- Taxa de cliques (CTR)
-- Tempo na página
-
-### Conversão
-- Cliques nos CTAs
-- Downloads do portfólio
-- Solicitações de orçamento
-- Contatos via telefone/email
-
-## 🔄 Atualizações
-
-### Semanais
-- Verificar posicionamento no Google
-- Analisar métricas de performance
-- Otimizar meta descriptions
-
-### Mensais
-- Adicionar novas cidades
-- Atualizar conteúdo
-- Revisar Schema.org
-
-### Trimestrais
-- Análise completa de SEO
-- Otimização de performance
-- Atualização de design
-
-## 📞 Suporte
-
-Para dúvidas ou suporte técnico:
-- **Email**: atendimento@cirgrafica.com.br
-- **Telefone**: (62) 3202-1150
-
----
-
-**CIR Gráfica** - Especialistas em impressão digital e comunicação visual 
+Vercel é o alvo padrão (domínio `cidades.cirgrafica.com.br`). Lembre de configurar as variáveis de ambiente (acima) antes do primeiro deploy, e rodar um novo deploy sempre que elas mudarem.

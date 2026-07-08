@@ -28,6 +28,9 @@ yarn-error.log*
 # Vercel
 .vercel
 
+# Local-only docs/planning/scratch (not part of the app)
+/local-docs/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts 
