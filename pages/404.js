@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Favicon from '../components/Favicon'
+import WhatsAppLink from '../components/WhatsAppLink'
 
 export default function NotFound() {
   return (
@@ -22,9 +23,9 @@ export default function NotFound() {
         </p>
         <div className="nf-actions">
           <a href="/" className="cir-btn cir-btn--fill">Ir para o início</a>
-          <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--outline">
+          <WhatsAppLink message="Olá! vim pelo site gostaria de mais informações!" source="404_page" className="cir-btn cir-btn--outline">
             Falar pelo WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
 
@@ -63,7 +64,7 @@ export default function NotFound() {
         .nf-body {
           font-family: var(--cir-sans);
           font-size: .9rem;
-          font-weight: 300;
+          font-weight: 400;
           line-height: 1.9;
           color: var(--cir-fg2);
           max-width: 480px;

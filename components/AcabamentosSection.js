@@ -118,13 +118,13 @@ export default function AcabamentosSection() {
         .ac-tab.active { color: var(--cir-accent); border-bottom-color: var(--cir-accent); font-weight: 600 }
         .ac-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; animation: ac-fade .35s ease }
         .ac-tagline { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; color: var(--cir-accent); margin-bottom: 1.2rem }
-        .ac-desc { font-family: var(--cir-sans); font-size: .9rem; font-weight: 300; line-height: 1.85; color: var(--cir-l-fg2); margin-bottom: 2rem }
+        .ac-desc { font-family: var(--cir-sans); font-size: .9rem; font-weight: 400; line-height: 1.85; color: var(--cir-l-fg2); margin-bottom: 2rem }
         .ac-benefits { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: .6rem }
         .ac-benefit { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: var(--cir-l-fg); display: flex; align-items: center; gap: .5rem }
         .ac-check { color: var(--cir-accent); font-size: .85rem; flex-shrink: 0 }
         .ac-ideal { border-top: 1px solid var(--cir-l-line); padding-top: 1.5rem }
         .ac-ideal-label { font-family: var(--cir-sans); font-size: .62rem; font-weight: 600; letter-spacing: .14em; color: var(--cir-l-fg2); display: block; margin-bottom: .4rem }
-        .ac-ideal-text { font-family: var(--cir-sans); font-size: .8rem; font-weight: 300; color: var(--cir-l-fg); line-height: 1.6 }
+        .ac-ideal-text { font-family: var(--cir-sans); font-size: .8rem; font-weight: 400; color: var(--cir-l-fg); line-height: 1.6 }
         .ac-img-wrap { position: relative; overflow: hidden }
         .ac-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; filter: saturate(.7) }
         .ac-img-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.5rem; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 100%); font-family: var(--cir-serif); font-size: .9rem; font-weight: 700; color: #fff }

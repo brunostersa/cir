@@ -44,9 +44,20 @@
   background: var(--cir-bg);
   color: var(--cir-fg);
   font-family: var(--cir-sans);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* ── Reset de botão para links que viram <button> (WhatsAppLink) ── */
+.wa-btn-reset {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  text-decoration: inherit;
+  cursor: pointer;
+  display: inline-block;
 }
 
 /* ── Nav ─────────────────────────────────────────────────── */
@@ -71,7 +82,7 @@
 }
 
 .cir-nav__logo img {
-  height: 18px;
+  height: 34px;
   filter: brightness(0) invert(1);
 }
 
@@ -193,7 +204,7 @@
 .cir-s-body {
   font-family: var(--cir-sans);
   font-size: .95rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.9;
   color: var(--cir-fg2);
 }
@@ -228,7 +239,7 @@
 .cir-card__body {
   font-family: var(--cir-sans);
   font-size: .88rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.85;
   color: var(--cir-fg2);
 }
@@ -260,7 +271,7 @@
 .cir-footer__copy {
   font-family: var(--cir-sans);
   font-size: .72rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: .06em;
   color: var(--cir-fg2);
 }
@@ -283,7 +294,7 @@
 .cir-footer__link {
   font-family: var(--cir-sans);
   font-size: .72rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--cir-fg2);
@@ -337,25 +348,34 @@
   fill: #fff;
 }
 
+@media (max-width: 768px) {
+  .cir-wa-fab { bottom: 5.5rem }
+}
+
 /* ── Page utilities (shared across cidade / estado / home) ── */
 .cp-hero { padding: 10rem var(--cir-gutter) 6rem; border-bottom: 1px solid var(--cir-line); max-width: calc(var(--cir-max) + var(--cir-gutter) * 2); margin: 0 auto }
 .cp-h1 { font-family: var(--cir-serif); font-size: clamp(2rem, 3.8vw, 4rem); font-weight: 700; line-height: 1.12; color: var(--cir-fg); letter-spacing: -.02em; margin-bottom: 1.8rem }
 .cp-h1 em { font-style: normal; color: var(--cir-accent) }
 .cp-h1--xl { font-size: clamp(2.6rem, 5vw, 5.5rem) }
-.cp-intro { font-family: var(--cir-sans); font-size: .95rem; font-weight: 300; line-height: 1.9; color: var(--cir-fg2); max-width: 680px }
+.cp-intro { font-family: var(--cir-sans); font-size: .95rem; font-weight: 400; line-height: 1.9; color: var(--cir-fg2); max-width: 680px }
 .cp-hero-img { width: 100%; height: 480px; object-fit: cover; object-position: center; filter: brightness(.7) saturate(.6); display: block }
+.cp-trust-bar { display: flex; justify-content: center; gap: 4rem; padding: 2rem var(--cir-gutter); border-bottom: 1px solid var(--cir-line); background: var(--cir-bg2) }
+.cp-trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3rem }
+.cp-trust-num { font-family: var(--cir-serif); font-size: 1.8rem; font-weight: 700; color: var(--cir-gold); line-height: 1 }
+.cp-trust-label { font-family: var(--cir-sans); font-size: .62rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--cir-fg2) }
+@media (max-width: 640px) { .cp-trust-bar { gap: 1.8rem; flex-wrap: wrap } }
 .cp-h2 { font-family: var(--cir-serif); font-size: clamp(1.6rem, 2.5vw, 2.6rem); font-weight: 700; line-height: 1.15; color: var(--cir-fg); margin-bottom: 1.2rem }
 .cir-section--light .cp-h2 { color: var(--cir-l-fg) }
-.cp-body { font-family: var(--cir-sans); font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--cir-fg2) }
+.cp-body { font-family: var(--cir-sans); font-size: .9rem; font-weight: 400; line-height: 1.9; color: var(--cir-fg2) }
 .cp-body strong { color: var(--cir-fg); font-weight: 600 }
 .cir-section--light .cp-body { color: var(--cir-l-fg2) }
 .cir-section--light .cp-body strong { color: var(--cir-l-fg) }
 .cp-services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 3rem; background: var(--cir-line) }
 .cp-service { background: var(--cir-bg); padding: 2.5rem }
 .cp-service h3 { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--cir-accent); margin-bottom: 1rem }
-.cp-service p { font-family: var(--cir-sans); font-size: .85rem; font-weight: 300; line-height: 1.7; color: var(--cir-fg2); margin-bottom: .8rem }
+.cp-service p { font-family: var(--cir-sans); font-size: .85rem; font-weight: 400; line-height: 1.7; color: var(--cir-fg2); margin-bottom: .8rem }
 .cp-service ul { list-style: none; display: flex; flex-direction: column; gap: .4rem }
-.cp-service ul li { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: var(--cir-fg2); padding-left: 1rem; position: relative }
+.cp-service ul li { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: var(--cir-fg2); padding-left: 1rem; position: relative }
 .cp-service ul li::before { content: '—'; position: absolute; left: 0; color: var(--cir-accent); opacity: .5 }
 .cp-note { border-top: 1px solid var(--cir-line); margin-top: 1px; padding: 2.5rem; background: var(--cir-bg2) }
 .cp-steps { display: flex; flex-direction: column; gap: 0 }
@@ -366,25 +386,25 @@
 .cp-blockquote { border-left: 2px solid var(--cir-accent); padding-left: 1.5rem; margin: 1.5rem 0 }
 .cp-blockquote p { font-family: var(--cir-serif); font-size: 1.05rem; font-style: italic; line-height: 1.75; color: var(--cir-fg2) }
 .cir-section--light .cp-blockquote p { color: var(--cir-l-fg2) }
-.cp-rating { font-family: var(--cir-sans); font-size: .72rem; font-weight: 300; letter-spacing: .06em; color: var(--cir-fg2); margin-top: 1rem }
+.cp-rating { font-family: var(--cir-sans); font-size: .72rem; font-weight: 400; letter-spacing: .06em; color: var(--cir-fg2); margin-top: 1rem }
 .cp-rating strong { color: var(--cir-fg); font-weight: 600 }
 .cir-section--light .cp-rating { color: var(--cir-l-fg2) }
 .cir-section--light .cp-rating strong { color: var(--cir-l-fg) }
 .cp-faq { display: flex; flex-direction: column; gap: 0; list-style: none }
-.cp-faq li { font-family: var(--cir-sans); font-size: .88rem; font-weight: 300; line-height: 1.85; color: var(--cir-fg2); padding: 1.4rem 0; border-top: 1px solid var(--cir-line) }
+.cp-faq li { font-family: var(--cir-sans); font-size: .88rem; font-weight: 400; line-height: 1.85; color: var(--cir-fg2); padding: 1.4rem 0; border-top: 1px solid var(--cir-line) }
 .cp-faq li:last-child { border-bottom: 1px solid var(--cir-line) }
 .cp-faq li strong { color: var(--cir-fg); font-weight: 600; display: block; margin-bottom: .2rem }
 .cp-nearby { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.5rem }
-.cp-nearby a { font-family: var(--cir-sans); font-size: .8rem; font-weight: 300; letter-spacing: .08em; color: var(--cir-fg2); text-decoration: none; transition: color .2s }
+.cp-nearby a { font-family: var(--cir-sans); font-size: .8rem; font-weight: 400; letter-spacing: .08em; color: var(--cir-fg2); text-decoration: none; transition: color .2s }
 .cp-nearby a:hover { color: var(--cir-accent) }
 .cir-section--light .cp-nearby a { color: var(--cir-l-fg2) }
 .cir-section--light .cp-nearby a:hover { color: var(--cir-accent) }
 .cp-cta { background: var(--cir-accent); padding: 6rem var(--cir-gutter); text-align: center }
 .cp-cta h2 { font-family: var(--cir-serif); font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 700; color: #fff; margin-bottom: 1rem }
-.cp-cta p { font-family: var(--cir-sans); font-size: .9rem; font-weight: 300; color: rgba(255,255,255,.8); line-height: 1.8; margin-bottom: 2.5rem }
+.cp-cta p { font-family: var(--cir-sans); font-size: .9rem; font-weight: 400; color: rgba(255,255,255,.8); line-height: 1.8; margin-bottom: 2.5rem }
 .cp-cta-btns { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap }
-.cp-cta-btns a { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.4rem; transition: opacity .2s }
-.cp-cta-btns a:hover { opacity: .85 }
+.cp-cta-btns a, .cp-cta-btns button { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.4rem; transition: opacity .2s }
+.cp-cta-btns a:hover, .cp-cta-btns button:hover { opacity: .85 }
 .cp-cta-btns .btn-primary { background: #fff; color: var(--cir-accent) }
 .cp-cta-btns .btn-secondary { border: 1px solid rgba(255,255,255,.4); color: #fff }
 

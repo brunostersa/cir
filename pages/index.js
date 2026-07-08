@@ -4,6 +4,7 @@ import ImageCarousel from '../components/ImageCarousel'
 import ProductsCarousel from '../components/ProductsCarousel'
 import AcabamentosSection from '../components/AcabamentosSection'
 import Favicon from '../components/Favicon'
+import WhatsAppLink from '../components/WhatsAppLink'
 import cidades from '../cidades.json'
 import { normalizeText } from '../utils/normalize'
 import { galleryImages } from '../data/gallery'
@@ -58,15 +59,15 @@ export default function Home() {
         </h1>
         <p className="cp-intro">
           Embalagens personalizadas, impressões gráficas, sacolas, brindes corporativos e soluções de comunicação visual.
-          Qualidade profissional, entrega rápida e atendimento especializado em 374 cidades.
+          Qualidade profissional, entrega rápida e atendimento especializado em 478 cidades.
         </p>
         <div className="hp-hero-btns">
-          <a href="https://www.cirgrafica.com.br/portfolio-de-cases/" target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--fill">
+          <a href="/portfolio" className="cir-btn cir-btn--fill">
             Baixe nosso portfólio
           </a>
-          <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--outline">
+          <WhatsAppLink message="Olá! vim pelo site gostaria de mais informações!" source="hero_orcamento" className="cir-btn cir-btn--outline">
             Solicite um orçamento
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
 
@@ -151,7 +152,7 @@ export default function Home() {
             { num: '30+', label: 'Anos de mercado', body: 'Experiência consolidada em produção gráfica de alto padrão' },
             { num: '+5k', label: 'Clientes atendidos', body: 'Empresas de todos os setores confiam na qualidade CIR' },
             { num: '100%', label: 'Online', body: 'Atendimento digital completo, do orçamento à entrega' },
-            { num: '374', label: 'Cidades', body: 'Cobertura nacional com entrega para todo o Brasil' },
+            { num: '478', label: 'Cidades', body: 'Cobertura nacional com entrega para todo o Brasil' },
           ].map((r, i) => (
             <div key={i} className="hp-reason">
               <div className="hp-reason-num">{r.num}</div>
@@ -167,8 +168,8 @@ export default function Home() {
         <h2>Precisa de serviços de gráfica?</h2>
         <p>Entre em contato conosco e solicite seu orçamento gratuito!</p>
         <div className="cp-cta-btns">
-          <a href="https://www.cirgrafica.com.br/orcamento-rapido/" target="_blank" rel="noopener noreferrer" className="btn-primary">Solicitar Orçamento</a>
-          <a href="https://www.cirgrafica.com.br/portfolio-de-cases/" target="_blank" rel="noopener noreferrer" className="btn-secondary">Ver Portfólio</a>
+          <WhatsAppLink message="Olá! vim pelo site gostaria de mais informações!" source="cta_final_home_orcamento" className="btn-primary">Solicitar Orçamento</WhatsAppLink>
+          <a href="/portfolio" className="btn-secondary">Ver Portfólio</a>
         </div>
       </div>
 
@@ -180,9 +181,9 @@ export default function Home() {
         .hp-state-card { background: var(--cir-l-bg); display: flex; flex-direction: column }
         .hp-state-header { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--cir-l-line); display: flex; align-items: baseline; justify-content: space-between }
         .hp-state-header h3 { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--cir-l-fg) }
-        .hp-state-header span { font-family: var(--cir-sans); font-size: .65rem; font-weight: 300; color: var(--cir-l-fg2) }
+        .hp-state-header span { font-family: var(--cir-sans); font-size: .65rem; font-weight: 400; color: var(--cir-l-fg2) }
         .hp-state-cities { padding: 1rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: .4rem }
-        .hp-state-city { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: var(--cir-l-fg2); text-decoration: none; transition: color .2s }
+        .hp-state-city { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: var(--cir-l-fg2); text-decoration: none; transition: color .2s }
         .hp-state-city:hover { color: var(--cir-accent) }
         .hp-state-more { font-family: var(--cir-sans); font-size: .7rem; font-weight: 400; letter-spacing: .08em; color: var(--cir-accent); text-decoration: none; margin-top: .6rem; opacity: .7; transition: opacity .2s }
         .hp-state-more:hover { opacity: 1 }
@@ -194,9 +195,9 @@ export default function Home() {
         @media (max-width: 768px) { .hp-states-grid { grid-template-columns: 1fr } .hp-reasons { grid-template-columns: 1fr 1fr } .hp-hero-btns { flex-direction: column } }
       `}</style>
 
-      <a href="https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" target="_blank" rel="noopener noreferrer" className="cir-wa-fab" aria-label="WhatsApp">
+      <WhatsAppLink message="Olá! vim pelo site gostaria de mais informações!" source="fab_home" className="cir-wa-fab" aria-label="WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      </a>
+      </WhatsAppLink>
     </div>
   )
 }

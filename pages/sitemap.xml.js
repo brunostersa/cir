@@ -1,31 +1,31 @@
 import cidades from '../cidades.json';
+import { normalizeText } from '../utils/normalize';
+
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 function generateSiteMap(cities) {
   const baseUrl = 'https://cidades.cirgrafica.com.br';
-  
+
   // URLs estáticas
   const staticUrls = [
-    {
-      url: baseUrl,
-      lastmod: new Date().toISOString(),
-      changefreq: 'daily',
-      priority: '1.0'
-    }
+    { url: baseUrl, lastmod: BUILD_DATE, changefreq: 'daily', priority: '1.0' },
+    { url: `${baseUrl}/portfolio`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/consultoria`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.7' },
   ];
 
   // URLs de estados
   const estados = [...new Set(cities.map(city => city.estado))];
   const estadoUrls = estados.map(estado => ({
     url: `${baseUrl}/grafica/estado/${estado.toLowerCase()}`,
-    lastmod: new Date().toISOString(),
+    lastmod: BUILD_DATE,
     changefreq: 'weekly',
     priority: '0.8'
   }));
 
   // URLs de cidades
   const cidadeUrls = cities.map(city => ({
-    url: `${baseUrl}/grafica/${city.estado.toLowerCase()}/${city.cidade.toLowerCase().replace(/\s+/g, '-')}`,
-    lastmod: new Date().toISOString(),
+    url: `${baseUrl}/grafica/${city.estado.toLowerCase()}/${normalizeText(city.cidade)}`,
+    lastmod: BUILD_DATE,
     changefreq: 'monthly',
     priority: '0.6'
   }));

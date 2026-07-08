@@ -3,6 +3,8 @@ import '../styles/cir-ds.css'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { WhatsAppModalProvider } from '../components/WhatsAppModalProvider'
+import { captureUtms } from '../lib/utm'
 
 function initReveal() {
   const obs = new IntersectionObserver(
@@ -19,8 +21,9 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
 
   useEffect(() => {
+    captureUtms()
     let obs = initReveal()
-    const onRouteChange = () => { obs.disconnect(); obs = initReveal() }
+    const onRouteChange = () => { captureUtms(); obs.disconnect(); obs = initReveal() }
     router.events.on('routeChangeComplete', onRouteChange)
     return () => { obs.disconnect(); router.events.off('routeChangeComplete', onRouteChange) }
   }, [router.events])
@@ -30,7 +33,9 @@ export default function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="google-site-verification" content="ip0QC2xuodmc80u5Y291yiARaLWbF_-b9lWVHlrowFw" />
       </Head>
-      <Component {...pageProps} />
+      <WhatsAppModalProvider>
+        <Component {...pageProps} />
+      </WhatsAppModalProvider>
     </>
   )
 }

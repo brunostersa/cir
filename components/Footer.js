@@ -1,4 +1,6 @@
-const WA = 'https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!'
+import WhatsAppLink from './WhatsAppLink'
+
+const WA_MESSAGE = 'Olá! vim pelo site gostaria de mais informações!'
 
 export default function Footer() {
   return (
@@ -15,17 +17,12 @@ export default function Footer() {
       </div>
 
       <div className="cir-footer__links">
-        <a href={WA} target="_blank" rel="noopener noreferrer" className="cir-footer__link">
+        <WhatsAppLink message={WA_MESSAGE} source="footer" className="cir-footer__link">
           WhatsApp
-        </a>
-        <a
-          href="https://www.cirgrafica.com.br/orcamento-rapido/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cir-footer__link"
-        >
+        </WhatsAppLink>
+        <WhatsAppLink message={WA_MESSAGE} source="footer_orcamento" className="cir-footer__link">
           Orçamento online
-        </a>
+        </WhatsAppLink>
         <a
           href="https://www.cirgrafica.com.br"
           target="_blank"

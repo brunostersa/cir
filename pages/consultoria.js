@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import { useState, useEffect, useRef } from 'react'
+import WhatsAppLink from '../components/WhatsAppLink'
+import Favicon from '../components/Favicon'
 
-const WA = 'https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20quero%20saber%20sobre%20a%20Consultoria%20Gr%C3%A1fica%20CIR'
+const WA_MESSAGE = 'Olá! vim pelo site e quero saber sobre a Consultoria Gráfica CIR'
 
 const HERO_SLIDES = [
   { src: '/conceituais/materiais-graficos-impressao34.jpeg', alt: 'Embalagens premium com hot stamping produzidas pela CIR Gráfica' },
@@ -85,37 +87,52 @@ export default function Consultoria() {
 
   return (
     <>
+      <Favicon />
       <Head>
         <title>Consultoria Gráfica Gratuita — CIR Gráfica</title>
         <meta name="description" content="30 minutos de consultoria técnica gratuita para garantir que seu material gráfico saia perfeito na primeira tiragem. CIR Gráfica, desde 1999." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://cidades.cirgrafica.com.br/consultoria" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://cidades.cirgrafica.com.br/consultoria" />
+        <meta property="og:title" content="Consultoria Gráfica Gratuita — CIR Gráfica" />
+        <meta property="og:description" content="30 minutos de consultoria técnica gratuita para garantir que seu material gráfico saia perfeito na primeira tiragem. CIR Gráfica, desde 1999." />
+        <meta property="og:image" content="https://www.cirgrafica.com.br/og-image.jpg" />
+        <meta property="og:site_name" content="CIR Gráfica" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Consultoria Gráfica Gratuita — CIR Gráfica" />
+        <meta property="twitter:description" content="30 minutos de consultoria técnica gratuita para garantir que seu material gráfico saia perfeito na primeira tiragem. CIR Gráfica, desde 1999." />
+        <meta property="twitter:image" content="https://www.cirgrafica.com.br/og-image.jpg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
       </Head>
 
       <style jsx global>{`
+        /* Alias do design system compartilhado (styles/cir-ds.css) — mantém esta LP em sincronia com o resto do site */
         :root {
-          --bg:      #0c0b09;
-          --bg2:     #111009;
-          --fg:      #eae4d8;
-          --fg2:     #7a7268;
-          --accent:  #e8613a;
-          --gold:    #c9a96e;
-          --serif:   'Courier Prime', monospace;
-          --sans:    'Josefin Sans', sans-serif;
-          --gutter:  5vw;
-          --max:     1200px;
+          --bg:      var(--cir-bg);
+          --bg2:     var(--cir-bg2);
+          --fg:      var(--cir-fg);
+          --fg2:     var(--cir-fg2);
+          --accent:  var(--cir-accent);
+          --gold:    var(--cir-gold);
+          --serif:   var(--cir-serif);
+          --sans:    var(--cir-sans);
+          --gutter:  var(--cir-gutter);
+          --max:     var(--cir-max);
           /* light palette */
-          --l-bg:    #f4f0e8;
-          --l-bg2:   #ece7dd;
-          --l-fg:    #1a1814;
-          --l-fg2:   #6a6460;
-          --l-line:  rgba(0,0,0,.1);
+          --l-bg:    var(--cir-l-bg);
+          --l-bg2:   var(--cir-l-bg2);
+          --l-fg:    var(--cir-l-fg);
+          --l-fg2:   var(--cir-l-fg2);
+          --l-line:  var(--cir-l-line);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
         html { scroll-behavior: smooth }
-        body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased }
+        body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-weight: 400; overflow-x: hidden; -webkit-font-smoothing: antialiased }
 
         /* Light section overrides */
         .is-light { background: var(--l-bg); color: var(--l-fg) }
@@ -208,7 +225,7 @@ export default function Consultoria() {
         .stat { padding: 2.5rem var(--gutter); border-right: 1px solid var(--l-line) }
         .stat:last-child { border-right: none }
         .stat-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: var(--fg); line-height: 1 }
-        .stat-label { font-family: var(--sans); font-size: .7rem; font-weight: 300; letter-spacing: .12em; text-transform: uppercase; color: var(--fg2); margin-top: .6rem }
+        .stat-label { font-family: var(--sans); font-size: .7rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--fg2); margin-top: .6rem }
 
         /* Clients */
         .clients { background: #fff; padding: 3rem var(--gutter); border-bottom: 1px solid rgba(0,0,0,.08) }
@@ -222,7 +239,7 @@ export default function Consultoria() {
         .s-tag { font-family: var(--sans); font-size: .68rem; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: var(--fg2); margin-bottom: 1rem }
         .s-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3.8rem); font-weight: 700; line-height: 1.12; color: var(--fg); letter-spacing: -.01em }
         .s-title em { font-style: italic; font-weight: 400; color: var(--gold) }
-        .s-body { font-family: var(--sans); font-size: .95rem; font-weight: 300; line-height: 1.9; color: var(--fg2) }
+        .s-body { font-family: var(--sans); font-size: .95rem; font-weight: 400; line-height: 1.9; color: var(--fg2) }
         .divider { border: none; border-top: 1px solid rgba(255,255,255,.06); margin: 0 }
 
         /* Problem */
@@ -232,7 +249,7 @@ export default function Consultoria() {
         .problem-row { display: grid; grid-template-columns: 2rem 1fr; gap: 1.5rem; padding: 1.8rem 0; border-top: 1px solid rgba(255,255,255,.06) }
         .problem-row:last-child { border-bottom: 1px solid rgba(255,255,255,.06) }
         .problem-x { font-family: var(--sans); font-size: .8rem; color: var(--accent); font-weight: 600; margin-top: .2rem }
-        .problem-text { font-family: var(--sans); font-size: 1rem; font-weight: 300; line-height: 1.7; color: var(--fg2) }
+        .problem-text { font-family: var(--sans); font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--fg2) }
         .problem-text strong { color: var(--fg); font-weight: 600; display: block; margin-bottom: .2rem; font-size: 1.05rem }
 
         /* Image break */
@@ -248,7 +265,7 @@ export default function Consultoria() {
         .step-idx { font-family: var(--sans); font-size: .65rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--accent) }
         .step-label { font-family: var(--sans); font-size: .72rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--fg2) }
         .step-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--fg); line-height: 1.2; margin-bottom: 1rem }
-        .step-body { font-family: var(--sans); font-size: .9rem; font-weight: 300; line-height: 1.85; color: var(--fg2) }
+        .step-body { font-family: var(--sans); font-size: .9rem; font-weight: 400; line-height: 1.85; color: var(--fg2) }
 
         /* Gallery */
         .gallery { display: grid; grid-template-columns: repeat(6, 1fr); height: 440px; gap: 2px }
@@ -264,23 +281,23 @@ export default function Consultoria() {
         .include-row:last-child { border-bottom: 1px solid rgba(255,255,255,.06) }
         .include-idx { font-family: var(--sans); font-size: .62rem; color: var(--fg2); font-weight: 400 }
         .include-info h4 { font-family: var(--sans); font-size: .9rem; font-weight: 400; color: var(--fg); margin-bottom: .3rem; letter-spacing: .02em }
-        .include-info p { font-family: var(--sans); font-size: .82rem; font-weight: 300; color: var(--fg2); line-height: 1.6 }
+        .include-info p { font-family: var(--sans); font-size: .82rem; font-weight: 400; color: var(--fg2); line-height: 1.6 }
         .include-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: rgba(255,255,255,.18); text-decoration: line-through; text-decoration-thickness: 2px; white-space: nowrap }
 
         .price-box { margin-top: 3rem; padding: 2.5rem; border: 1px solid rgba(255,255,255,.08); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap }
-        .price-box-left p { font-family: var(--sans); font-size: .7rem; font-weight: 300; color: var(--fg2); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem }
+        .price-box-left p { font-family: var(--sans); font-size: .7rem; font-weight: 400; color: var(--fg2); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem }
         .price-total-riscado { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: var(--fg2); text-decoration: line-through; text-decoration-thickness: 2px; margin-bottom: .3rem }
         .is-light .price-total-riscado { color: var(--l-fg2) }
         .price-big { font-family: var(--serif); font-size: 4rem; font-weight: 700; color: var(--fg); line-height: 1 }
         .price-big span { color: var(--accent) }
-        .price-note { font-family: var(--sans); font-size: .72rem; color: var(--fg2); margin-top: .4rem; font-weight: 300 }
+        .price-note { font-family: var(--sans); font-size: .72rem; color: var(--fg2); margin-top: .4rem; font-weight: 400 }
 
         /* Vagas */
         .vagas-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem }
         .vagas-bar { display: flex; gap: 6px }
         .vaga { width: 60px; height: 3px; background: rgba(255,255,255,.08) }
         .vaga.on { background: var(--accent) }
-        .vagas-text { font-family: var(--sans); font-size: .82rem; font-weight: 300; color: var(--fg2); line-height: 1.8 }
+        .vagas-text { font-family: var(--sans); font-size: .82rem; font-weight: 400; color: var(--fg2); line-height: 1.8 }
         .vagas-text strong { color: var(--fg); font-weight: 400 }
 
         /* Testimonials */
@@ -295,12 +312,12 @@ export default function Consultoria() {
         .faq-item { border-top: 1px solid rgba(255,255,255,.06) }
         .faq-item:last-child { border-bottom: 1px solid rgba(255,255,255,.06) }
         .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 1.8rem 0; background: none; border: none; cursor: pointer; text-align: left }
-        .faq-q { font-family: var(--sans); font-size: .95rem; font-weight: 300; color: var(--fg); letter-spacing: .02em; line-height: 1.5 }
+        .faq-q { font-family: var(--sans); font-size: .95rem; font-weight: 400; color: var(--fg); letter-spacing: .02em; line-height: 1.5 }
         .faq-icon { font-family: var(--sans); font-size: 1.4rem; color: var(--fg2); transition: transform .3s; flex-shrink: 0; line-height: 1 }
         .faq-icon.open { transform: rotate(45deg); color: var(--accent) }
         .faq-body { overflow: hidden; max-height: 0; transition: max-height .4s cubic-bezier(.4,0,.2,1) }
         .faq-body.open { max-height: 300px }
-        .faq-a { padding-bottom: 1.8rem; font-family: var(--sans); font-size: .88rem; font-weight: 300; line-height: 1.9; color: var(--fg2) }
+        .faq-a { padding-bottom: 1.8rem; font-family: var(--sans); font-size: .88rem; font-weight: 400; line-height: 1.9; color: var(--fg2) }
 
         /* CTA final */
         .cta-final { background: var(--bg2); border-top: 1px solid rgba(255,255,255,.06); }
@@ -308,18 +325,18 @@ export default function Consultoria() {
         .cta-final h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3.8rem); font-weight: 700; line-height: 1.12; color: var(--fg); letter-spacing: -.01em }
         .cta-final h2 em { font-style: italic; font-weight: 400; color: var(--gold) }
         .cta-final-right { display: flex; flex-direction: column; gap: 2rem }
-        .cta-final-right p { font-family: var(--sans); font-size: .95rem; font-weight: 300; line-height: 1.9; color: var(--fg2) }
+        .cta-final-right p { font-family: var(--sans); font-size: .95rem; font-weight: 400; line-height: 1.9; color: var(--fg2) }
 
         /* Footer */
         footer { border-top: 1px solid rgba(255,255,255,.06); padding: 2.5rem var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap }
-        .footer-copy { font-family: var(--sans); font-size: .68rem; font-weight: 300; letter-spacing: .1em; color: var(--fg2) }
+        .footer-copy { font-family: var(--sans); font-size: .68rem; font-weight: 400; letter-spacing: .1em; color: var(--fg2) }
         .footer-tagline { font-family: var(--serif); font-size: .72rem; font-style: italic; color: var(--fg2) }
 
         /* Sticky mobile */
         .sticky { position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; background: var(--accent); padding: 1rem var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 1rem; transform: translateY(100%); transition: transform .35s cubic-bezier(.2,.7,.2,1) }
         .sticky.show { transform: none }
         .sticky-text { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--bg) }
-        .sticky-text span { font-weight: 300; opacity: .75 }
+        .sticky-text span { font-weight: 400; opacity: .75 }
         .sticky-btn { font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; background: var(--bg); color: var(--fg); padding: .7rem 1.4rem; text-decoration: none; white-space: nowrap }
 
         /* Reveal animation */
@@ -364,7 +381,7 @@ export default function Consultoria() {
         </a>
         <div className="nav-right">
           <a href="/" className="nav-link">Início</a>
-          <a href={WA} target="_blank" rel="noopener noreferrer" className="nav-cta">Agendar consultoria</a>
+          <WhatsAppLink message={WA_MESSAGE} source="consultoria_nav" className="nav-cta">Agendar consultoria</WhatsAppLink>
         </div>
       </nav>
 
@@ -379,7 +396,7 @@ export default function Consultoria() {
             Consultoria técnica gratuita de 30 minutos para garantir que suas sacolas, caixas e brindes saiam perfeitos na primeira tiragem — sem reimpressão, sem desperdício.
           </p>
           <div className="hero-actions reveal reveal-d3">
-            <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Agendar agora</a>
+            <WhatsAppLink message={WA_MESSAGE} source="consultoria_hero" className="btn btn-fill">Agendar agora</WhatsAppLink>
             <a href="#processo" className="btn btn-text">Ver como funciona</a>
           </div>
         </div>
@@ -540,7 +557,7 @@ export default function Consultoria() {
                 <div className="price-big">Grátis<span>.</span></div>
                 <p className="price-note">Vagas limitadas por mês</p>
               </div>
-              <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Agendar agora</a>
+              <WhatsAppLink message={WA_MESSAGE} source="consultoria_includes" className="btn btn-fill">Agendar agora</WhatsAppLink>
             </div>
           </div>
           <div className="includes-list">
@@ -625,7 +642,7 @@ export default function Consultoria() {
           <div className="cta-final-right reveal reveal-d1">
             <p>Consultoria técnica gratuita — 30 min online. Analisamos arquivo, material e acabamento antes de ir para a máquina. Sem compromisso, sem custo.</p>
             <div>
-              <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-fill">Garantir minha vaga</a>
+              <WhatsAppLink message={WA_MESSAGE} source="consultoria_cta_final" className="btn btn-fill">Garantir minha vaga</WhatsAppLink>
             </div>
           </div>
         </div>
@@ -640,18 +657,18 @@ export default function Consultoria() {
       </footer>
 
       {/* WhatsApp FAB */}
-      <a href={WA} target="_blank" rel="noopener noreferrer" className="wa-fab" aria-label="WhatsApp">
+      <WhatsAppLink message={WA_MESSAGE} source="consultoria_fab" className="wa-fab" aria-label="WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-      </a>
+      </WhatsAppLink>
 
       {/* Sticky mobile */}
       <div className={`sticky ${stickyVisible ? 'show' : ''}`}>
         <div className="sticky-text">
           Consultoria gratuita <span>· {VAGAS_TOTAL - VAGAS_OCUPADAS} vagas disponíveis</span>
         </div>
-        <a href={WA} target="_blank" rel="noopener noreferrer" className="sticky-btn">Agendar</a>
+        <WhatsAppLink message={WA_MESSAGE} source="consultoria_sticky" className="sticky-btn">Agendar</WhatsAppLink>
       </div>
     </>
   )

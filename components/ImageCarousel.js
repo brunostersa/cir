@@ -59,7 +59,7 @@ const ImageCarousel = ({ images, title, autoPlay = true, interval = 5000 }) => {
         .ic-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.75) saturate(.55); display: block }
         .ic-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem }
         .ic-slide-title { font-family: var(--cir-serif); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: .4rem }
-        .ic-slide-desc { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: rgba(255,255,255,.75); line-height: 1.6 }
+        .ic-slide-desc { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: rgba(255,255,255,.75); line-height: 1.6 }
         .ic-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(12,11,9,.6); border: 1px solid rgba(255,255,255,.12); color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; padding: 0 }
         .ic-nav svg { width: 18px; height: 18px }
         .ic-nav:hover { background: rgba(232,97,58,.85) }

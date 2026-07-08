@@ -1,5 +1,281 @@
 [
   {
+    "cidade": "Brasiléia",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Cruzeiro do Sul",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Feijó",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Plácido de Castro",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Rio Branco",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Sena Madureira",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Tarauacá",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Xapuri",
+    "estado": "AC"
+  },
+  {
+    "cidade": "Arapiraca",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Coruripe",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Maceió",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Palmeira dos Índios",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Penedo",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Rio Largo",
+    "estado": "AL"
+  },
+  {
+    "cidade": "São Miguel dos Campos",
+    "estado": "AL"
+  },
+  {
+    "cidade": "União dos Palmares",
+    "estado": "AL"
+  },
+  {
+    "cidade": "Coari",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Humaitá",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Itacoatiara",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Manacapuru",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Manaus",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Maués",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Parintins",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Tabatinga",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Tefé",
+    "estado": "AM"
+  },
+  {
+    "cidade": "Laranjal do Jari",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Macapá",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Mazagão",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Oiapoque",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Porto Grande",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Santana",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Tartarugalzinho",
+    "estado": "AP"
+  },
+  {
+    "cidade": "Alagoinhas",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Barreiras",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Camaçari",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Feira de Santana",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Ilhéus",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Itabuna",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Juazeiro",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Lauro de Freitas",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Salvador",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Vitória da Conquista",
+    "estado": "BA"
+  },
+  {
+    "cidade": "Caucaia",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Crato",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Fortaleza",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Iguatu",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Itapipoca",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Juazeiro do Norte",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Maracanaú",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Maranguape",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Sobral",
+    "estado": "CE"
+  },
+  {
+    "cidade": "Brasília",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Ceilândia",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Gama",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Planaltina",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Samambaia",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Santa Maria",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Sobradinho",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Taguatinga",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Águas Claras",
+    "estado": "DF"
+  },
+  {
+    "cidade": "Cachoeiro de Itapemirim",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Cariacica",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Colatina",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Guarapari",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Linhares",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Serra",
+    "estado": "ES"
+  },
+  {
+    "cidade": "São Mateus",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Vila Velha",
+    "estado": "ES"
+  },
+  {
+    "cidade": "Vitória",
+    "estado": "ES"
+  },
+  {
     "cidade": "Abadia de Goiás",
     "estado": "GO"
   },
@@ -13,18 +289,6 @@
   },
   {
     "cidade": "Adelândia",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Água Fria de Goiás",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Água Limpa",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Águas Lindas de Goiás",
     "estado": "GO"
   },
   {
@@ -60,15 +324,15 @@
     "estado": "GO"
   },
   {
-    "cidade": "Anápolis",
-    "estado": "GO"
-  },
-  {
     "cidade": "Anhanguera",
     "estado": "GO"
   },
   {
     "cidade": "Anicuns",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Anápolis",
     "estado": "GO"
   },
   {
@@ -84,10 +348,6 @@
     "estado": "GO"
   },
   {
-    "cidade": "Araçu",
-    "estado": "GO"
-  },
-  {
     "cidade": "Aragarças",
     "estado": "GO"
   },
@@ -97,6 +357,10 @@
   },
   {
     "cidade": "Araguapaz",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Araçu",
     "estado": "GO"
   },
   {
@@ -172,15 +436,11 @@
     "estado": "GO"
   },
   {
-    "cidade": "Cachoeira de Goiás",
-    "estado": "GO"
-  },
-  {
     "cidade": "Cachoeira Dourada",
     "estado": "GO"
   },
   {
-    "cidade": "Caçu",
+    "cidade": "Cachoeira de Goiás",
     "estado": "GO"
   },
   {
@@ -244,6 +504,10 @@
     "estado": "GO"
   },
   {
+    "cidade": "Caçu",
+    "estado": "GO"
+  },
+  {
     "cidade": "Ceres",
     "estado": "GO"
   },
@@ -268,15 +532,11 @@
     "estado": "GO"
   },
   {
-    "cidade": "Córrego do Ouro",
+    "cidade": "Corumbaíba",
     "estado": "GO"
   },
   {
     "cidade": "Corumbá de Goiás",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Corumbaíba",
     "estado": "GO"
   },
   {
@@ -297,6 +557,10 @@
   },
   {
     "cidade": "Cumari",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Córrego do Ouro",
     "estado": "GO"
   },
   {
@@ -364,19 +628,7 @@
     "estado": "GO"
   },
   {
-    "cidade": "Goianápolis",
-    "estado": "GO"
-  },
-  {
     "cidade": "Goiandira",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Goianésia",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Goiânia",
     "estado": "GO"
   },
   {
@@ -384,11 +636,23 @@
     "estado": "GO"
   },
   {
-    "cidade": "Goiás",
+    "cidade": "Goianápolis",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Goianésia",
     "estado": "GO"
   },
   {
     "cidade": "Goiatuba",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Goiás",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Goiânia",
     "estado": "GO"
   },
   {
@@ -400,11 +664,11 @@
     "estado": "GO"
   },
   {
-    "cidade": "Guaraíta",
+    "cidade": "Guarani de Goiás",
     "estado": "GO"
   },
   {
-    "cidade": "Guarani de Goiás",
+    "cidade": "Guaraíta",
     "estado": "GO"
   },
   {
@@ -416,11 +680,11 @@
     "estado": "GO"
   },
   {
-    "cidade": "Hidrolândia",
+    "cidade": "Hidrolina",
     "estado": "GO"
   },
   {
-    "cidade": "Hidrolina",
+    "cidade": "Hidrolândia",
     "estado": "GO"
   },
   {
@@ -852,6 +1116,22 @@
     "estado": "GO"
   },
   {
+    "cidade": "Senador Canedo",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Serranópolis",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Silvânia",
+    "estado": "GO"
+  },
+  {
+    "cidade": "Simolândia",
+    "estado": "GO"
+  },
+  {
     "cidade": "São Domingos",
     "estado": "GO"
   },
@@ -892,22 +1172,6 @@
     "estado": "GO"
   },
   {
-    "cidade": "Senador Canedo",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Serranópolis",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Silvânia",
-    "estado": "GO"
-  },
-  {
-    "cidade": "Simolândia",
-    "estado": "GO"
-  },
-  {
     "cidade": "Sítio d'Abadia",
     "estado": "GO"
   },
@@ -924,10 +1188,6 @@
     "estado": "GO"
   },
   {
-    "cidade": "Três Ranchos",
-    "estado": "GO"
-  },
-  {
     "cidade": "Trindade",
     "estado": "GO"
   },
@@ -936,7 +1196,7 @@
     "estado": "GO"
   },
   {
-    "cidade": "Turvânia",
+    "cidade": "Três Ranchos",
     "estado": "GO"
   },
   {
@@ -944,15 +1204,19 @@
     "estado": "GO"
   },
   {
+    "cidade": "Turvânia",
+    "estado": "GO"
+  },
+  {
     "cidade": "Uirapuru",
     "estado": "GO"
   },
   {
-    "cidade": "Uruaçu",
+    "cidade": "Uruana",
     "estado": "GO"
   },
   {
-    "cidade": "Uruana",
+    "cidade": "Uruaçu",
     "estado": "GO"
   },
   {
@@ -984,163 +1248,27 @@
     "estado": "GO"
   },
   {
-    "cidade": "Rio Branco",
-    "estado": "AC"
+    "cidade": "Água Fria de Goiás",
+    "estado": "GO"
   },
   {
-    "cidade": "Cruzeiro do Sul",
-    "estado": "AC"
+    "cidade": "Água Limpa",
+    "estado": "GO"
   },
   {
-    "cidade": "Sena Madureira",
-    "estado": "AC"
+    "cidade": "Águas Lindas de Goiás",
+    "estado": "GO"
   },
   {
-    "cidade": "Tarauacá",
-    "estado": "AC"
-  },
-  {
-    "cidade": "Maceió",
-    "estado": "AL"
-  },
-  {
-    "cidade": "Arapiraca",
-    "estado": "AL"
-  },
-  {
-    "cidade": "Palmeira dos Índios",
-    "estado": "AL"
-  },
-  {
-    "cidade": "Rio Largo",
-    "estado": "AL"
-  },
-  {
-    "cidade": "Manaus",
-    "estado": "AM"
-  },
-  {
-    "cidade": "Parintins",
-    "estado": "AM"
-  },
-  {
-    "cidade": "Itacoatiara",
-    "estado": "AM"
-  },
-  {
-    "cidade": "Coari",
-    "estado": "AM"
-  },
-  {
-    "cidade": "Manacapuru",
-    "estado": "AM"
-  },
-  {
-    "cidade": "Macapá",
-    "estado": "AP"
-  },
-  {
-    "cidade": "Santana",
-    "estado": "AP"
-  },
-  {
-    "cidade": "Laranjal do Jari",
-    "estado": "AP"
-  },
-  {
-    "cidade": "Salvador",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Feira de Santana",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Vitória da Conquista",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Itabuna",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Ilhéus",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Lauro de Freitas",
-    "estado": "BA"
-  },
-  {
-    "cidade": "Fortaleza",
-    "estado": "CE"
-  },
-  {
-    "cidade": "Caucaia",
-    "estado": "CE"
-  },
-  {
-    "cidade": "Maracanaú",
-    "estado": "CE"
-  },
-  {
-    "cidade": "Sobral",
-    "estado": "CE"
-  },
-  {
-    "cidade": "Juazeiro do Norte",
-    "estado": "CE"
-  },
-  {
-    "cidade": "Brasília",
-    "estado": "DF"
-  },
-  {
-    "cidade": "Ceilândia",
-    "estado": "DF"
-  },
-  {
-    "cidade": "Taguatinga",
-    "estado": "DF"
-  },
-  {
-    "cidade": "Gama",
-    "estado": "DF"
-  },
-  {
-    "cidade": "Samambaia",
-    "estado": "DF"
-  },
-  {
-    "cidade": "Vitória",
-    "estado": "ES"
-  },
-  {
-    "cidade": "Serra",
-    "estado": "ES"
-  },
-  {
-    "cidade": "Cariacica",
-    "estado": "ES"
-  },
-  {
-    "cidade": "Vila Velha",
-    "estado": "ES"
-  },
-  {
-    "cidade": "Guarapari",
-    "estado": "ES"
-  },
-  {
-    "cidade": "São Luís",
+    "cidade": "Açailândia",
     "estado": "MA"
   },
   {
-    "cidade": "Imperatriz",
+    "cidade": "Bacabal",
     "estado": "MA"
   },
   {
-    "cidade": "Timon",
+    "cidade": "Balsas",
     "estado": "MA"
   },
   {
@@ -1148,7 +1276,23 @@
     "estado": "MA"
   },
   {
-    "cidade": "Açailândia",
+    "cidade": "Codó",
+    "estado": "MA"
+  },
+  {
+    "cidade": "Imperatriz",
+    "estado": "MA"
+  },
+  {
+    "cidade": "Santa Inês",
+    "estado": "MA"
+  },
+  {
+    "cidade": "São Luís",
+    "estado": "MA"
+  },
+  {
+    "cidade": "Timon",
     "estado": "MA"
   },
   {
@@ -1156,15 +1300,19 @@
     "estado": "MG"
   },
   {
+    "cidade": "Betim",
+    "estado": "MG"
+  },
+  {
     "cidade": "Contagem",
     "estado": "MG"
   },
   {
-    "cidade": "Uberlândia",
+    "cidade": "Divinópolis",
     "estado": "MG"
   },
   {
-    "cidade": "Uberaba",
+    "cidade": "Ipatinga",
     "estado": "MG"
   },
   {
@@ -1172,23 +1320,31 @@
     "estado": "MG"
   },
   {
-    "cidade": "Betim",
-    "estado": "MG"
-  },
-  {
     "cidade": "Montes Claros",
     "estado": "MG"
   },
   {
+    "cidade": "Ribeirão das Neves",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Sete Lagoas",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Uberaba",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Uberlândia",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Aquidauana",
+    "estado": "MS"
+  },
+  {
     "cidade": "Campo Grande",
-    "estado": "MS"
-  },
-  {
-    "cidade": "Dourados",
-    "estado": "MS"
-  },
-  {
-    "cidade": "Três Lagoas",
     "estado": "MS"
   },
   {
@@ -1196,15 +1352,43 @@
     "estado": "MS"
   },
   {
+    "cidade": "Coxim",
+    "estado": "MS"
+  },
+  {
+    "cidade": "Dourados",
+    "estado": "MS"
+  },
+  {
+    "cidade": "Naviraí",
+    "estado": "MS"
+  },
+  {
+    "cidade": "Nova Andradina",
+    "estado": "MS"
+  },
+  {
     "cidade": "Ponta Porã",
     "estado": "MS"
+  },
+  {
+    "cidade": "Três Lagoas",
+    "estado": "MS"
+  },
+  {
+    "cidade": "Barra do Garças",
+    "estado": "MT"
   },
   {
     "cidade": "Cuiabá",
     "estado": "MT"
   },
   {
-    "cidade": "Várzea Grande",
+    "cidade": "Cáceres",
+    "estado": "MT"
+  },
+  {
+    "cidade": "Primavera do Leste",
     "estado": "MT"
   },
   {
@@ -1216,11 +1400,23 @@
     "estado": "MT"
   },
   {
+    "cidade": "Sorriso",
+    "estado": "MT"
+  },
+  {
     "cidade": "Tangará da Serra",
     "estado": "MT"
   },
   {
-    "cidade": "Belém",
+    "cidade": "Várzea Grande",
+    "estado": "MT"
+  },
+  {
+    "cidade": "Abaetetuba",
+    "estado": "PA"
+  },
+  {
+    "cidade": "Altamira",
     "estado": "PA"
   },
   {
@@ -1228,11 +1424,11 @@
     "estado": "PA"
   },
   {
-    "cidade": "Santarém",
+    "cidade": "Belém",
     "estado": "PA"
   },
   {
-    "cidade": "Marabá",
+    "cidade": "Cametá",
     "estado": "PA"
   },
   {
@@ -1240,11 +1436,27 @@
     "estado": "PA"
   },
   {
+    "cidade": "Marabá",
+    "estado": "PA"
+  },
+  {
     "cidade": "Parauapebas",
     "estado": "PA"
   },
   {
-    "cidade": "João Pessoa",
+    "cidade": "Santarém",
+    "estado": "PA"
+  },
+  {
+    "cidade": "Tucuruí",
+    "estado": "PA"
+  },
+  {
+    "cidade": "Bayeux",
+    "estado": "PB"
+  },
+  {
+    "cidade": "Cabedelo",
     "estado": "PB"
   },
   {
@@ -1252,7 +1464,11 @@
     "estado": "PB"
   },
   {
-    "cidade": "Santa Rita",
+    "cidade": "Guarabira",
+    "estado": "PB"
+  },
+  {
+    "cidade": "João Pessoa",
     "estado": "PB"
   },
   {
@@ -1260,7 +1476,27 @@
     "estado": "PB"
   },
   {
-    "cidade": "Recife",
+    "cidade": "Santa Rita",
+    "estado": "PB"
+  },
+  {
+    "cidade": "Sousa",
+    "estado": "PB"
+  },
+  {
+    "cidade": "Cabo de Santo Agostinho",
+    "estado": "PE"
+  },
+  {
+    "cidade": "Camaragibe",
+    "estado": "PE"
+  },
+  {
+    "cidade": "Caruaru",
+    "estado": "PE"
+  },
+  {
+    "cidade": "Garanhuns",
     "estado": "PE"
   },
   {
@@ -1272,7 +1508,7 @@
     "estado": "PE"
   },
   {
-    "cidade": "Caruaru",
+    "cidade": "Paulista",
     "estado": "PE"
   },
   {
@@ -1280,7 +1516,19 @@
     "estado": "PE"
   },
   {
-    "cidade": "Teresina",
+    "cidade": "Recife",
+    "estado": "PE"
+  },
+  {
+    "cidade": "Barras",
+    "estado": "PI"
+  },
+  {
+    "cidade": "Campo Maior",
+    "estado": "PI"
+  },
+  {
+    "cidade": "Floriano",
     "estado": "PI"
   },
   {
@@ -1292,11 +1540,35 @@
     "estado": "PI"
   },
   {
-    "cidade": "Floriano",
+    "cidade": "Piripiri",
     "estado": "PI"
   },
   {
+    "cidade": "Teresina",
+    "estado": "PI"
+  },
+  {
+    "cidade": "União",
+    "estado": "PI"
+  },
+  {
+    "cidade": "Cascavel",
+    "estado": "PR"
+  },
+  {
+    "cidade": "Colombo",
+    "estado": "PR"
+  },
+  {
     "cidade": "Curitiba",
+    "estado": "PR"
+  },
+  {
+    "cidade": "Foz do Iguaçu",
+    "estado": "PR"
+  },
+  {
+    "cidade": "Guarapuava",
     "estado": "PR"
   },
   {
@@ -1308,16 +1580,44 @@
     "estado": "PR"
   },
   {
-    "cidade": "São José dos Pinhais",
-    "estado": "PR"
-  },
-  {
-    "cidade": "Colombo",
+    "cidade": "Paranaguá",
     "estado": "PR"
   },
   {
     "cidade": "Ponta Grossa",
     "estado": "PR"
+  },
+  {
+    "cidade": "São José dos Pinhais",
+    "estado": "PR"
+  },
+  {
+    "cidade": "Belford Roxo",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Campos dos Goytacazes",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Duque de Caxias",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Macaé",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Niterói",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Nova Iguaçu",
+    "estado": "RJ"
+  },
+  {
+    "cidade": "Petrópolis",
+    "estado": "RJ"
   },
   {
     "cidade": "Rio de Janeiro",
@@ -1328,31 +1628,11 @@
     "estado": "RJ"
   },
   {
-    "cidade": "Duque de Caxias",
+    "cidade": "Volta Redonda",
     "estado": "RJ"
   },
   {
-    "cidade": "Nova Iguaçu",
-    "estado": "RJ"
-  },
-  {
-    "cidade": "Niterói",
-    "estado": "RJ"
-  },
-  {
-    "cidade": "Belford Roxo",
-    "estado": "RJ"
-  },
-  {
-    "cidade": "Natal",
-    "estado": "RN"
-  },
-  {
-    "cidade": "Mossoró",
-    "estado": "RN"
-  },
-  {
-    "cidade": "Parnamirim",
+    "cidade": "Açu",
     "estado": "RN"
   },
   {
@@ -1360,12 +1640,28 @@
     "estado": "RN"
   },
   {
-    "cidade": "Porto Velho",
-    "estado": "RO"
+    "cidade": "Ceará-Mirim",
+    "estado": "RN"
   },
   {
-    "cidade": "Ji-Paraná",
-    "estado": "RO"
+    "cidade": "Currais Novos",
+    "estado": "RN"
+  },
+  {
+    "cidade": "Mossoró",
+    "estado": "RN"
+  },
+  {
+    "cidade": "Natal",
+    "estado": "RN"
+  },
+  {
+    "cidade": "Parnamirim",
+    "estado": "RN"
+  },
+  {
+    "cidade": "São Gonçalo do Amarante",
+    "estado": "RN"
   },
   {
     "cidade": "Ariquemes",
@@ -1376,11 +1672,43 @@
     "estado": "RO"
   },
   {
+    "cidade": "Guajará-Mirim",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Jaru",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Ji-Paraná",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Porto Velho",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Rolim de Moura",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Vilhena",
+    "estado": "RO"
+  },
+  {
+    "cidade": "Alto Alegre",
+    "estado": "RR"
+  },
+  {
     "cidade": "Boa Vista",
     "estado": "RR"
   },
   {
-    "cidade": "Rorainópolis",
+    "cidade": "Bonfim",
+    "estado": "RR"
+  },
+  {
+    "cidade": "Cantá",
     "estado": "RR"
   },
   {
@@ -1388,7 +1716,15 @@
     "estado": "RR"
   },
   {
-    "cidade": "Porto Alegre",
+    "cidade": "Mucajaí",
+    "estado": "RR"
+  },
+  {
+    "cidade": "Rorainópolis",
+    "estado": "RR"
+  },
+  {
+    "cidade": "Canoas",
     "estado": "RS"
   },
   {
@@ -1396,28 +1732,36 @@
     "estado": "RS"
   },
   {
+    "cidade": "Gravataí",
+    "estado": "RS"
+  },
+  {
+    "cidade": "Novo Hamburgo",
+    "estado": "RS"
+  },
+  {
+    "cidade": "Passo Fundo",
+    "estado": "RS"
+  },
+  {
     "cidade": "Pelotas",
     "estado": "RS"
   },
   {
-    "cidade": "Canoas",
+    "cidade": "Porto Alegre",
     "estado": "RS"
   },
   {
-    "cidade": "Gravataí",
+    "cidade": "Santa Maria",
+    "estado": "RS"
+  },
+  {
+    "cidade": "São Leopoldo",
     "estado": "RS"
   },
   {
     "cidade": "Viamão",
     "estado": "RS"
-  },
-  {
-    "cidade": "Florianópolis",
-    "estado": "SC"
-  },
-  {
-    "cidade": "Joinville",
-    "estado": "SC"
   },
   {
     "cidade": "Blumenau",
@@ -1428,7 +1772,31 @@
     "estado": "SC"
   },
   {
+    "cidade": "Criciúma",
+    "estado": "SC"
+  },
+  {
+    "cidade": "Florianópolis",
+    "estado": "SC"
+  },
+  {
     "cidade": "Itajaí",
+    "estado": "SC"
+  },
+  {
+    "cidade": "Joinville",
+    "estado": "SC"
+  },
+  {
+    "cidade": "Lages",
+    "estado": "SC"
+  },
+  {
+    "cidade": "Palhoça",
+    "estado": "SC"
+  },
+  {
+    "cidade": "São José",
     "estado": "SC"
   },
   {
@@ -1436,11 +1804,7 @@
     "estado": "SE"
   },
   {
-    "cidade": "Nossa Senhora do Socorro",
-    "estado": "SE"
-  },
-  {
-    "cidade": "Lagarto",
+    "cidade": "Estância",
     "estado": "SE"
   },
   {
@@ -1448,11 +1812,27 @@
     "estado": "SE"
   },
   {
-    "cidade": "São Paulo",
-    "estado": "SP"
+    "cidade": "Lagarto",
+    "estado": "SE"
   },
   {
-    "cidade": "Guarulhos",
+    "cidade": "Nossa Senhora do Socorro",
+    "estado": "SE"
+  },
+  {
+    "cidade": "Propriá",
+    "estado": "SE"
+  },
+  {
+    "cidade": "São Cristóvão",
+    "estado": "SE"
+  },
+  {
+    "cidade": "Tobias Barreto",
+    "estado": "SE"
+  },
+  {
+    "cidade": "Barueri",
     "estado": "SP"
   },
   {
@@ -1460,11 +1840,27 @@
     "estado": "SP"
   },
   {
+    "cidade": "Guarulhos",
+    "estado": "SP"
+  },
+  {
     "cidade": "Osasco",
     "estado": "SP"
   },
   {
+    "cidade": "Ribeirão Preto",
+    "estado": "SP"
+  },
+  {
     "cidade": "Santo André",
+    "estado": "SP"
+  },
+  {
+    "cidade": "Santos",
+    "estado": "SP"
+  },
+  {
+    "cidade": "Sorocaba",
     "estado": "SP"
   },
   {
@@ -1476,19 +1872,39 @@
     "estado": "SP"
   },
   {
-    "cidade": "Barueri",
+    "cidade": "São José dos Campos",
     "estado": "SP"
   },
   {
-    "cidade": "Palmas",
-    "estado": "TO"
+    "cidade": "São Paulo",
+    "estado": "SP"
   },
   {
     "cidade": "Araguaína",
     "estado": "TO"
   },
   {
+    "cidade": "Colinas do Tocantins",
+    "estado": "TO"
+  },
+  {
+    "cidade": "Formoso do Araguaia",
+    "estado": "TO"
+  },
+  {
+    "cidade": "Guaraí",
+    "estado": "TO"
+  },
+  {
     "cidade": "Gurupi",
+    "estado": "TO"
+  },
+  {
+    "cidade": "Palmas",
+    "estado": "TO"
+  },
+  {
+    "cidade": "Paraíso do Tocantins",
     "estado": "TO"
   },
   {

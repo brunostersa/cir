@@ -1,6 +1,7 @@
 import { useRef } from 'react'
+import WhatsAppLink from './WhatsAppLink'
 
-const WA = 'https://api.whatsapp.com/send?phone=556232021150&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento'
+const WA_MESSAGE = 'Olá! vim pelo site e gostaria de solicitar um orçamento'
 
 const PRODUCTS = [
   {
@@ -88,9 +89,9 @@ export default function ProductsCarousel() {
           <h2 className="cp-h2 pc-h2">O produto certo<br />para cada projeto.</h2>
         </div>
         <div className="pc-controls">
-          <a href={WA} target="_blank" rel="noopener noreferrer" className="cir-btn cir-btn--outline pc-orcamento">
+          <WhatsAppLink message={WA_MESSAGE} source="products_carousel_orcamento" className="cir-btn cir-btn--outline pc-orcamento">
             Solicitar orçamento
-          </a>
+          </WhatsAppLink>
           <div className="pc-nav">
             <button className="pc-arrow" onClick={() => scroll(-1)} aria-label="Anterior">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 19l-7-7 7-7"/></svg>
@@ -104,11 +105,10 @@ export default function ProductsCarousel() {
 
       <div className="pc-track" ref={track}>
         {PRODUCTS.map((p, i) => (
-          <a
+          <WhatsAppLink
             key={i}
-            href={WA}
-            target="_blank"
-            rel="noopener noreferrer"
+            message={`Olá! vim pelo site e gostaria de solicitar um orçamento para ${p.name}`}
+            source="products_carousel_card"
             className="pc-card cir-reveal"
             style={{ animationDelay: `${i * 0.06}s` }}
           >
@@ -124,7 +124,7 @@ export default function ProductsCarousel() {
                 <span className="pc-cta-link">Solicitar →</span>
               </div>
             </div>
-          </a>
+          </WhatsAppLink>
         ))}
       </div>
 
@@ -148,7 +148,7 @@ export default function ProductsCarousel() {
         .pc-badge { position: absolute; top: 1rem; left: 1rem; font-family: var(--cir-sans); font-size: .57rem; font-weight: 600; letter-spacing: .14em; color: var(--cir-bg); background: var(--cir-gold); padding: .22rem .6rem }
         .pc-body { padding: 1.4rem 1.5rem; display: flex; flex-direction: column; flex: 1; background: rgba(255,255,255,.018) }
         .pc-name { font-family: var(--cir-serif); font-size: 1rem; font-weight: 700; color: var(--cir-fg); line-height: 1.2; margin-bottom: .5rem }
-        .pc-desc { font-family: var(--cir-sans); font-size: .78rem; font-weight: 300; color: var(--cir-fg2); line-height: 1.65; margin-bottom: 1.2rem; flex: 1 }
+        .pc-desc { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: var(--cir-fg2); line-height: 1.65; margin-bottom: 1.2rem; flex: 1 }
         .pc-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,.06); padding-top: 1rem }
         .pc-price { font-family: var(--cir-sans); font-size: .68rem; font-weight: 400; color: var(--cir-gold); letter-spacing: .03em }
         .pc-cta-link { font-family: var(--cir-sans); font-size: .68rem; font-weight: 600; letter-spacing: .1em; color: var(--cir-accent); transition: letter-spacing .25s }
