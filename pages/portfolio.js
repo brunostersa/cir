@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import Favicon from '../components/Favicon'
 import ImageCarousel from '../components/ImageCarousel'
 import WhatsAppLink from '../components/WhatsAppLink'
+import GoogleTestimonials from '../components/GoogleTestimonials'
 import { galleryImages } from '../data/gallery'
 import { formatPhoneInput } from '../lib/phone'
 import { getStoredUtms } from '../lib/utm'
@@ -167,12 +168,7 @@ export default function Portfolio() {
       </div>
 
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag cir-reveal">Depoimentos</span>
-        <h2 className="cp-h2 cir-reveal cir-reveal--d1">Depoimentos de clientes</h2>
-        <div className="cp-blockquote cir-reveal cir-reveal--d1">
-          <p>"Agradeço pelo excelente atendimento, pela qualidade do material e das impressões e pelo compromisso com o prazo de entrega. Nota mil pra CIR Gráfica! Adorei e super recomendo."</p>
-        </div>
-        <p className="cp-rating">Nota média: <strong>4.6/5</strong> (mais de 130 avaliações)</p>
+        <GoogleTestimonials />
       </div>
 
       <Footer />

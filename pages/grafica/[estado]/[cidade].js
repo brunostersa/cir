@@ -8,8 +8,11 @@ import Favicon from '../../../components/Favicon'
 import StickyMobileCTA from '../../../components/StickyMobileCTA'
 import LeadPopup from '../../../components/LeadPopup'
 import WhatsAppLink from '../../../components/WhatsAppLink'
+import GoogleTestimonials from '../../../components/GoogleTestimonials'
+import SecondaryCTAs from '../../../components/SecondaryCTAs'
 import cidades from '../../../cidades.json'
 import { galleryImages } from '../../../data/gallery'
+import cityContent from '../../../data/cityContent.json'
 import Head from 'next/head'
 import { normalizeText } from '../../../utils/normalize'
 
@@ -40,18 +43,35 @@ export async function getStaticProps({ params }) {
     .filter(c => c.estado === cidadeData.estado && c.cidade !== cidadeData.cidade)
     .slice(0, 5);
 
+  const contentKey = `${cidadeData.estado.toLowerCase()}_${normalizeText(cidadeData.cidade)}`;
+  const content = cityContent[contentKey] || null;
+
   return {
     props: {
       cidade: cidadeData.cidade,
       estado: cidadeData.estado,
-      cidadesProximas
+      cidadesProximas,
+      content
     }
   };
 }
 
-export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
+// Textos padrão usados só quando uma cidade não tem variação gerada em data/cityContent.json
+function defaultContent(cidade, estado) {
+  return {
+    metaDescription: `Gráfica em ${cidade}, ${estado}. Embalagens e sacolas personalizadas, brindes personalizados com qualidade e entrega rápida. Solicite seu orçamento agora.`,
+    intro: `Há mais de 20 anos, a CIR Gráfica atende empresas em ${cidade} com qualidade reconhecida em todo o Brasil. Nosso atendimento é online e rápido: você solicita, nós refinamos, validamos e entregamos na sua cidade. Do cartão de visita ao catálogo empresarial, unimos tecnologia, acabamento impecável e agilidade para fazer sua marca ser sentida.`,
+    about: `Desde 1999, a CIR Gráfica atende empresas em ${cidade} com soluções digitais simplificadas. Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas qualidade garantida com atendimento rápido via WhatsApp, email e chat. Especialistas em embalagens personalizadas, sacolas, cartões e muito mais.`,
+    servicesIntro: `Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário. Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:`,
+    note: `Com uma estrutura moderna e equipamentos de última geração, realizamos desde pequenas impressões digitais até grandes produções offset, garantindo a melhor relação custo-benefício. Cada projeto recebe atenção aos detalhes para assegurar um acabamento impecável e uma experiência visual diferenciada. Nossa equipe está preparada para oferecer suporte completo, desde a escolha dos materiais até a finalização, proporcionando resultados que fazem a diferença.`,
+    testimonial: `Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!`
+  };
+}
+
+export default function GraficaCidade({ cidade, estado, cidadesProximas, content }) {
+  const copy = content || defaultContent(cidade, estado);
   const pageTitle = `Gráfica em ${cidade} – Embalagens, Sacolas e Brindes | CIR Gráfica`;
-  const pageDescription = `Gráfica em ${cidade}, ${estado}. Embalagens e sacolas personalizadas, brindes personalizados com qualidade e entrega rápida. Solicite seu orçamento agora.`;
+  const pageDescription = copy.metaDescription;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/grafica/${estado.toLowerCase()}/${normalizeText(cidade)}`;
 
   // ✅ Schema.org JSON-LD LocalBusiness + FAQ
@@ -153,11 +173,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         <h1 className="cp-h1">
           Gráfica em <em>{cidade}</em> – Atendimento online com qualidade e excelência nos detalhes.
         </h1>
-        <p className="cp-intro cir-reveal cir-reveal--d2">
-          Há mais de <strong>20 anos</strong>, a CIR Gráfica atende empresas em <strong>{cidade}</strong> com qualidade reconhecida em todo o Brasil.
-          Nosso atendimento é online e rápido: você solicita, nós refinamos, validamos e entregamos na sua cidade.
-          Do cartão de visita ao catálogo empresarial, unimos tecnologia, acabamento impecável e agilidade para fazer sua marca ser sentida.
-        </p>
+        <p className="cp-intro cir-reveal cir-reveal--d2">{copy.intro}</p>
       </div>
 
       {/* Prova social / confiança */}
@@ -187,12 +203,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
       <div className="cir-section cir-section--light">
         <span className="cir-s-tag cir-reveal">Sobre a CIR Gráfica</span>
         <h2 className="cp-h2 cir-reveal cir-reveal--d1">Gráfica Online Confiável em {cidade}</h2>
-        <p className="cp-body">
-          Desde 1999, a <strong>CIR Gráfica</strong> atende empresas em {cidade} com <strong>soluções digitais simplificadas</strong>.
-          Você faz o pedido online, nós cuidamos da produção e entrega. Sem burocracia, sem telefonemas, apenas
-          <strong> qualidade garantida</strong> com atendimento rápido via WhatsApp, email e chat.
-          Especialistas em <strong>embalagens personalizadas</strong>, <strong>sacolas</strong>, <strong>cartões</strong> e muito mais.
-        </p>
+        <p className="cp-body">{copy.about}</p>
       </div>
 
       <hr className="cir-divider" />
@@ -201,10 +212,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
       <div className="cir-section">
         <span className="cir-s-tag cir-reveal">Serviços</span>
         <h2 className="cp-h2 cir-reveal cir-reveal--d1">Orçamento Online para Qualquer Serviço de Gráfica</h2>
-        <p className="cp-body">
-          Solicite seu orçamento online em minutos. Envie seus materiais, especificações e prazos através do nosso formulário.
-          Nossa equipe avalia e retorna com a melhor proposta em até 2 horas. Sem obrigação, sem surpresas. Confira todos os serviços disponíveis:
-        </p>
+        <p className="cp-body">{copy.servicesIntro}</p>
 
         <div className="cp-services-grid cir-reveal cir-reveal--d1">
           <div className="cp-service">
@@ -270,12 +278,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
         </div>
 
         <div className="cp-note">
-          <p className="cp-body">
-            <strong>Com uma estrutura moderna e equipamentos de última geração</strong>, realizamos desde pequenas impressões digitais
-            até grandes produções offset, garantindo a melhor relação custo-benefício. Cada projeto recebe atenção aos detalhes
-            para assegurar um acabamento impecável e uma experiência visual diferenciada. Nossa equipe está preparada para
-            oferecer suporte completo, desde a escolha dos materiais até a finalização, proporcionando resultados que fazem a diferença.
-          </p>
+          <p className="cp-body">{copy.note}</p>
         </div>
       </div>
 
@@ -319,12 +322,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
 
       {/* Depoimentos */}
       <div className="cir-section cir-section--light">
-        <span className="cir-s-tag cir-reveal">Depoimentos</span>
-        <h2 className="cp-h2 cir-reveal cir-reveal--d1">O que nossos clientes dizem</h2>
-        <div className="cp-blockquote">
-          <p>"Excelente atendimento, prazo cumprido e impressão impecável. Recomendo a CIR Gráfica!"</p>
-        </div>
-        <p className="cp-rating">Nota média: <strong>4.6/5</strong> (mais de 130 avaliações)</p>
+        <GoogleTestimonials />
       </div>
 
       <hr className="cir-divider" />
@@ -355,6 +353,11 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas }) {
             </a>
           ))}
         </div>
+      </div>
+
+      {/* Caminhos secundários */}
+      <div className="cir-section">
+        <SecondaryCTAs />
       </div>
 
       {/* CTA final */}

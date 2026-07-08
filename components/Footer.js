@@ -17,12 +17,11 @@ export default function Footer() {
       </div>
 
       <div className="cir-footer__links">
-        <WhatsAppLink message={WA_MESSAGE} source="footer" className="cir-footer__link">
-          WhatsApp
-        </WhatsAppLink>
         <WhatsAppLink message={WA_MESSAGE} source="footer_orcamento" className="cir-footer__link">
-          Orçamento online
+          Orçamento Rápido
         </WhatsAppLink>
+        <a href="/portfolio" className="cir-footer__link">Baixar Portfólio</a>
+        <a href="/consultoria" className="cir-footer__link">Consultoria Técnica</a>
         <a
           href="https://www.cirgrafica.com.br"
           target="_blank"
