@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CIR Gráfica · Leads</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0;--s1:#fff;--s2:#f0efeb;--s3:#e8e7e2;
+  --border:rgba(11,11,11,.1);--border-s:rgba(11,11,11,.18);
+  --t1:#0b0b0b;--t2:#52514e;--t3:#898781;
+  --accent:#2a78d6;--accent-bg:#e6f1fb;--accent-t:#185fa5;
+  --danger:#e34948;--green:#1baf7a;--amber:#eda100;--purple:#4a3aa7;
+  --radius:7px;--shadow:0 1px 4px rgba(0,0,0,.07);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#111110;--s1:#1a1a19;--s2:#222221;--s3:#2c2c2a;
+  --border:rgba(255,255,255,.09);--border-s:rgba(255,255,255,.16);
+  --t1:#fff;--t2:#c3c2b7;--t3:#898781;
+  --accent-bg:#0c447c33;--accent-t:#85b7eb;
+}}
+
+body{background:var(--bg);color:var(--t1);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;line-height:1.5}
+
+/* ── Auth ── */
+#overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:200}
+.auth-card{background:var(--s1);border:0.5px solid var(--border-s);border-radius:12px;padding:2rem;width:300px;box-shadow:var(--shadow)}
+.auth-card h2{font-size:14px;font-weight:500;margin-bottom:1.25rem}
+.auth-card label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:.3rem}
+.auth-card input{width:100%;padding:.45rem .7rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s2);color:var(--t1);font-size:13px;margin-bottom:.75rem;outline:none}
+.auth-card input:focus{border-color:var(--accent)}
+.auth-card .btn-primary{width:100%}
+.auth-err{font-size:11px;color:var(--danger);margin-top:.5rem;text-align:center;min-height:16px}
+
+/* ── Layout ── */
+#app{display:none;min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.5rem;border-bottom:0.5px solid var(--border);background:var(--s1);position:sticky;top:0;z-index:100}
+.topbar-left{display:flex;align-items:center;gap:.75rem}
+.topbar h1{font-size:13px;font-weight:500}
+.topbar-right{display:flex;align-items:center;gap:.5rem}
+#last-update{font-size:11px;color:var(--t3)}
+.wrap{max-width:1280px;margin:0 auto;padding:1.25rem 1.5rem 3rem}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 .8rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s1);color:var(--t2);font-size:12px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.btn:hover{background:var(--s2);color:var(--t1)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn-primary:hover{opacity:.88;color:#fff}
+.btn-sm{height:26px;padding:0 .6rem;font-size:11px}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--t3)}
+.btn-ghost:hover{background:var(--s2);color:var(--t1)}
+.btn-danger{color:var(--danger);border-color:transparent;background:transparent}
+.btn-danger:hover{background:#fcebeb;color:var(--danger)}
+
+/* ── Filter bar ── */
+.filter-bar{background:var(--s1);border:0.5px solid var(--border);border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:1rem}
+.filter-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:.2rem}
+.fg label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em}
+.fg select,.fg input{padding:.35rem .6rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s2);color:var(--t1);font-size:12px;height:30px;outline:none}
+.fg select:focus,.fg input:focus{border-color:var(--accent)}
+.fg input[type=text]{width:190px}
+.filter-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px 2px 10px;border-radius:20px;background:var(--accent-bg);color:var(--accent-t);border:0.5px solid var(--accent-t)33;cursor:default}
+.chip-x{cursor:pointer;opacity:.6;font-size:13px;line-height:1;margin-left:2px}
+.chip-x:hover{opacity:1}
+
+/* ── KPIs ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1rem}
+.kpi{background:var(--s1);border:0.5px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem}
+.kpi-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.kpi-val{font-size:24px;font-weight:500;line-height:1;margin-bottom:3px}
+.kpi-sub{font-size:11px;color:var(--t2)}
+.kpi-delta-pos{color:var(--green)}
+.kpi-delta-neg{color:var(--danger)}
+
+/* ── Charts ── */
+.charts-grid{display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:1rem}
+.chart-card{background:var(--s1);border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.chart-title{font-size:10px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:.5rem}
+.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--t2)}
+.leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ── Table card ── */
+.table-card{background:var(--s1);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.table-toolbar{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-bottom:0.5px solid var(--border);gap:.5rem;flex-wrap:wrap}
+.table-toolbar-left{display:flex;align-items:center;gap:.5rem}
+.table-toolbar-right{display:flex;align-items:center;gap:.5rem}
+#result-count{font-size:11px;color:var(--t3)}
+.per-page-wrap{display:flex;align-items:center;gap:.35rem;font-size:11px;color:var(--t3)}
+.per-page-wrap select{height:26px;padding:0 .4rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s2);color:var(--t1);font-size:11px}
+
+/* table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{padding:.55rem 1rem;text-align:left;font-size:10px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;border-bottom:0.5px solid var(--border);background:var(--s2);white-space:nowrap;user-select:none;cursor:pointer}
+thead th:hover{color:var(--t1)}
+thead th.sort-asc::after{content:' ↑';color:var(--accent)}
+thead th.sort-desc::after{content:' ↓';color:var(--accent)}
+thead th.no-sort{cursor:default}
+thead th.no-sort:hover{color:var(--t3)}
+tbody td{padding:.6rem 1rem;border-bottom:0.5px solid var(--border);color:var(--t2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--s2)}
+.td-name{color:var(--t1);font-weight:400;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-phone{font-variant-numeric:tabular-nums;white-space:nowrap}
+.td-muted{color:var(--t3);font-size:11px}
+
+/* badges */
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;background:var(--s2);color:var(--t2);border:0.5px solid var(--border);white-space:nowrap}
+.b-or{background:#e6f1fb33;color:#185fa5;border-color:#2a78d655}
+.b-pf{background:#e1f5ee33;color:#0f6e56;border-color:#1baf7a55}
+.b-wa{background:#faeeda33;color:#854f0b;border-color:#eda10055}
+.b-ci{background:#eeedfe33;color:#3c3489;border-color:#4a3aa755}
+@media(prefers-color-scheme:dark){
+.b-or{background:#0c447c22;color:#85b7eb;border-color:#2a78d644}
+.b-pf{background:#08504122;color:#5dcaa5;border-color:#1baf7a44}
+.b-wa{background:#63380622;color:#fac775;border-color:#eda10044}
+.b-ci{background:#26215c22;color:#afa9ec;border-color:#4a3aa744}
+}
+
+/* ── Pagination ── */
+.pag{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-top:0.5px solid var(--border);flex-wrap:wrap;gap:.5rem}
+.pag-info{font-size:11px;color:var(--t3)}
+.pag-btns{display:flex;align-items:center;gap:.3rem}
+.pag-btn{min-width:28px;height:26px;padding:0 .4rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s1);color:var(--t2);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pag-btn:hover:not(:disabled):not(.active){background:var(--s2)}
+.pag-btn.active{background:var(--accent);color:#fff;border-color:transparent;font-weight:500}
+.pag-btn:disabled{opacity:.3;cursor:default}
+.pag-jump{display:flex;align-items:center;gap:.35rem;font-size:11px;color:var(--t3)}
+.pag-jump input{width:46px;height:26px;padding:0 .4rem;border:0.5px solid var(--border-s);border-radius:var(--radius);background:var(--s2);color:var(--t1);font-size:11px;text-align:center}
+
+/* ── Empty / loading ── */
+.empty{text-align:center;padding:2.5rem;color:var(--t3);font-size:12px}
+.skeleton{background:linear-gradient(90deg,var(--s2) 25%,var(--s3) 50%,var(--s2) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:4px;height:12px;display:inline-block}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+
+/* ── Spinner ── */
+.spin{width:14px;height:14px;border:2px solid var(--border-s);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Responsive ── */
+@media(max-width:1000px){.charts-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.wrap{padding:.75rem .75rem 2rem}.filter-row{gap:.4rem}}
+</style>
+</head>
+<body>
+
+<!-- Auth -->
+<div id="overlay">
+  <div class="auth-card">
+    <h2>CIR Gráfica · Dashboard</h2>
+    <label>Usuário</label>
+    <input id="au" type="text" autocomplete="username"/>
+    <label>Senha</label>
+    <input id="ap" type="password" autocomplete="current-password"/>
+    <button class="btn btn-primary" onclick="login()">Entrar</button>
+    <p class="auth-err" id="ae"></p>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>CIR Gráfica · Leads</h1>
+      <span id="loading-indicator" style="display:none"><span class="spin"></span></span>
+    </div>
+    <div class="topbar-right">
+      <span id="last-update"></span>
+      <button class="btn btn-sm" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn btn-sm" onclick="loadAll()">↻ Atualizar</button>
+      <button class="btn btn-sm btn-ghost" onclick="logout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <div class="filter-row">
+        <div class="fg"><label>De</label><input type="month" id="f-from"/></div>
+        <div class="fg"><label>Até</label><input type="month" id="f-to"/></div>
+        <div class="fg">
+          <label>Origem</label>
+          <select id="f-source">
+            <option value="">Todas</option>
+            <option value="orcamento-rapido">Orçamento Rápido</option>
+            <option value="portfolio_download">LP Portfólio</option>
+            <option value="whatsapp-site">WhatsApp Site</option>
+            <option value="cidades-cir">Cidades CIR</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Estado</label>
+          <select id="f-estado"><option value="">Todos</option></select>
+        </div>
+        <div class="fg">
+          <label>UTM Source</label>
+          <select id="f-utm"><option value="">Todos</option></select>
+        </div>
+        <div class="fg"><label>Buscar</label><input type="text" id="f-search" placeholder="Nome, telefone, e-mail…"/></div>
+        <button class="btn btn-primary btn-sm" onclick="applyFilters()">Filtrar</button>
+        <button class="btn btn-sm btn-ghost" id="clear-btn" onclick="clearFilters()">Limpar</button>
+      </div>
+      <div class="filter-chips" id="chips"></div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi"><p class="kpi-label">Total filtrado</p><p class="kpi-val" id="k-total">—</p><p class="kpi-sub" id="k-total-s"></p></div>
+      <div class="kpi"><p class="kpi-label">Este mês</p><p class="kpi-val" id="k-mes">—</p><p class="kpi-sub" id="k-mes-s"></p></div>
+      <div class="kpi"><p class="kpi-label">Mês anterior</p><p class="kpi-val" id="k-prev">—</p><p class="kpi-sub" id="k-prev-s"></p></div>
+      <div class="kpi"><p class="kpi-label">Top estado</p><p class="kpi-val" id="k-estado">—</p><p class="kpi-sub" id="k-estado-s"></p></div>
+      <div class="kpi"><p class="kpi-label">Top origem</p><p class="kpi-val" id="k-origem">—</p><p class="kpi-sub" id="k-origem-s"></p></div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <p class="chart-title">Evolução mensal por origem</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:#2a78d6"></span>Orçamento Rápido</span>
+          <span class="leg"><span class="leg-sq" style="background:#1baf7a"></span>LP Portfólio</span>
+          <span class="leg"><span class="leg-sq" style="background:#eda100"></span>WhatsApp</span>
+          <span class="leg"><span class="leg-sq" style="background:#4a3aa7"></span>Cidades CIR</span>
+        </div>
+        <div style="position:relative;height:200px"><canvas id="cMes" role="img" aria-label="Leads mensais por origem"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">Top estados</p>
+        <div style="position:relative;height:230px"><canvas id="cEstado" role="img" aria-label="Leads por estado"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span id="result-count" class="kpi-label"></span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="per-page-wrap">
+            Exibir
+            <select id="per-page" onchange="changePerPage()">
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            por página
+          </div>
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('customer_name')" id="th-customer_name">Nome</th>
+              <th onclick="sortBy('customer_phone')" id="th-customer_phone">Telefone</th>
+              <th onclick="sortBy('estado')" id="th-estado">Estado</th>
+              <th onclick="sortBy('source')" id="th-source">Origem</th>
+              <th onclick="sortBy('utm_source')" id="th-utm_source">UTM Source</th>
+              <th onclick="sortBy('created_at')" id="th-created_at">Data</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="6"><div class="empty">Carregando…</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pag" id="pag" style="display:none">
+        <span class="pag-info" id="pag-info"></span>
+        <div class="pag-btns" id="pag-btns"></div>
+        <div class="pag-jump">
+          Ir para
+          <input type="number" id="jump-input" min="1" onkeydown="if(event.key==='Enter')jumpTo()"/>
+          <button class="btn btn-sm" onclick="jumpTo()">Ir</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Constants ──────────────────────────────────────────────────────────────
+const SRC_LABELS = {'orcamento-rapido':'Orçamento Rápido','portfolio_download':'LP Portfólio','whatsapp-site':'WhatsApp Site','cidades-cir':'Cidades CIR'}
+const SRC_COLORS = {'orcamento-rapido':'#2a78d6','portfolio_download':'#1baf7a','whatsapp-site':'#eda100','cidades-cir':'#4a3aa7'}
+const SRC_BADGE  = {'orcamento-rapido':'b-or','portfolio_download':'b-pf','whatsapp-site':'b-wa','cidades-cir':'b-ci'}
+const SORT_LABELS = {'customer_name':'Nome','customer_phone':'Telefone','estado':'Estado','source':'Origem','utm_source':'UTM Source','created_at':'Data'}
+const FILTER_LABELS = {'f-source':'Origem','f-estado':'Estado','f-utm':'UTM','f-from':'De','f-to':'Até','f-search':'Busca'}
+
+// ── Auth ───────────────────────────────────────────────────────────────────
+let AUTH = localStorage.getItem('cir_auth') || ''
+
+async function login() {
+  const u = $('au').value, p = $('ap').value
+  if (!u || !p) { $('ae').textContent = 'Preencha usuário e senha.'; return }
+  const h = 'Basic ' + btoa(u + ':' + p)
+  const r = await fetch('/api/admin/leads?per_page=1', {headers:{Authorization:h}})
+  if (r.ok) { AUTH = h; localStorage.setItem('cir_auth', h); showApp() }
+  else $('ae').textContent = 'Usuário ou senha incorretos.'
+}
+$('ap').onkeydown = e => { if (e.key === 'Enter') login() }
+
+function logout() { localStorage.removeItem('cir_auth'); location.reload() }
+
+async function tryAutoLogin() {
+  if (!AUTH) return
+  const r = await fetch('/api/admin/leads?per_page=1', {headers:{Authorization:AUTH}})
+  if (r.ok) showApp()
+  else { localStorage.removeItem('cir_auth'); AUTH = '' }
+}
+
+// ── State ──────────────────────────────────────────────────────────────────
+let page = 1, orderBy = 'created_at', orderDir = 'desc', allRows = []
+let chartMes = null, chartEstado = null
+let searchTimer = null
+
+function getFilters() {
+  return {
+    date_from: $v('f-from') ? $v('f-from') + '-01' : '',
+    date_to:   $v('f-to')   ? $v('f-to')   + '-31' : '',
+    source:    $v('f-source'),
+    estado:    $v('f-estado'),
+    utm_source:$v('f-utm'),
+    search:    $v('f-search').trim(),
+  }
+}
+
+function applyFilters() { page = 1; pushState(); loadAll() }
+function clearFilters() {
+  ['f-from','f-to','f-source','f-estado','f-utm','f-search'].forEach(id => {
+    const el = $(id); if (el.tagName === 'SELECT') el.value = ''; else el.value = ''
+  })
+  page = 1; pushState(); loadAll()
+}
+
+function changePerPage() { page = 1; loadTable() }
+
+function sortBy(col) {
+  if (orderBy === col) orderDir = orderDir === 'desc' ? 'asc' : 'desc'
+  else { orderBy = col; orderDir = col === 'created_at' ? 'desc' : 'asc' }
+  page = 1; pushState(); loadTable()
+}
+
+// ── URL state ──────────────────────────────────────────────────────────────
+function pushState() {
+  const f = getFilters()
+  const p = new URLSearchParams()
+  Object.entries(f).forEach(([k,v]) => { if (v) p.set(k,v) })
+  if (page > 1) p.set('page', page)
+  if (orderBy !== 'created_at') p.set('order_by', orderBy)
+  if (orderDir !== 'desc') p.set('order_dir', orderDir)
+  history.replaceState(null,'','#' + p.toString())
+}
+
+function restoreState() {
+  const h = location.hash.slice(1)
+  if (!h) return
+  const p = new URLSearchParams(h)
+  const map = {date_from:'f-from',date_to:'f-to',source:'f-source',estado:'f-estado',utm_source:'f-utm',search:'f-search'}
+  // restore month inputs (strip -01 / -31 suffix)
+  if (p.get('date_from')) $('f-from').value = p.get('date_from').slice(0,7)
+  if (p.get('date_to'))   $('f-to').value   = p.get('date_to').slice(0,7)
+  if (p.get('source'))    $('f-source').value = p.get('source')
+  if (p.get('estado'))    $('f-estado').value = p.get('estado')
+  if (p.get('utm_source'))$('f-utm').value = p.get('utm_source')
+  if (p.get('search'))    $('f-search').value = p.get('search')
+  if (p.get('page'))      page = parseInt(p.get('page')) || 1
+  if (p.get('order_by'))  orderBy  = p.get('order_by')
+  if (p.get('order_dir')) orderDir = p.get('order_dir')
+}
+
+// ── API ────────────────────────────────────────────────────────────────────
+async function api(params = {}) {
+  const qs = new URLSearchParams(Object.fromEntries(Object.entries(params).filter(([,v])=>v)))
+  const r = await fetch('/api/admin/leads?' + qs, {headers:{Authorization:AUTH}})
+  if (r.status === 401) { localStorage.removeItem('cir_auth'); location.reload() }
+  return r.json()
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────────
+function showApp() {
+  $('overlay').style.display = 'none'
+  $('app').style.display = 'block'
+  boot()
+}
+function boot() {
+  restoreState()
+  loadAll()
+  // debounced search on Enter or pause
+  $('f-search').addEventListener('input', () => {
+    clearTimeout(searchTimer)
+    searchTimer = setTimeout(() => { page = 1; pushState(); loadAll() }, 600)
+  })
+  $('f-search').addEventListener('keydown', e => { if (e.key === 'Enter') { clearTimeout(searchTimer); applyFilters() } })
+}
+
+// ── Load all ───────────────────────────────────────────────────────────────
+async function loadAll() {
+  setLoading(true)
+  const f = getFilters()
+  const pp = parseInt($v('per-page')) || 25
+  const [chartRes, tableRes] = await Promise.all([
+    api({...f, mode:'chart'}),
+    api({...f, page, per_page:pp, order_by:orderBy, order_dir:orderDir}),
+  ])
+  allRows = chartRes.data || []
+  updateKPIs(allRows, tableRes.count)
+  updateCharts(allRows)
+  renderTable(tableRes.data || [], tableRes.count)
+  renderPagination(tableRes.count)
+  updateChips()
+  populateDynamicFilters(allRows)
+  updateSortHeaders()
+  setLoading(false)
+  $('last-update').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR')
+}
+
+async function loadTable() {
+  setLoading(true)
+  const f = getFilters()
+  const pp = parseInt($v('per-page')) || 25
+  const res = await api({...f, page, per_page:pp, order_by:orderBy, order_dir:orderDir})
+  renderTable(res.data || [], res.count)
+  renderPagination(res.count)
+  updateSortHeaders()
+  pushState()
+  setLoading(false)
+}
+
+function setLoading(v) {
+  $('loading-indicator').style.display = v ? '' : 'none'
+}
+
+// ── KPIs ───────────────────────────────────────────────────────────────────
+function updateKPIs(rows, total) {
+  const now = new Date()
+  const thisMon = now.toISOString().slice(0,7)
+  const prevD = new Date(now.getFullYear(), now.getMonth()-1, 1)
+  const prevMon = prevD.toISOString().slice(0,7)
+  const tc = rows.filter(r => (r.created_at||'').startsWith(thisMon)).length
+  const pc = rows.filter(r => (r.created_at||'').startsWith(prevMon)).length
+  const delta = pc > 0 ? Math.round((tc-pc)/pc*100) : null
+  const eCounts = {}, oCounts = {}
+  rows.forEach(r => {
+    if (r.estado) eCounts[r.estado] = (eCounts[r.estado]||0)+1
+    const s = r.source||'?'; oCounts[s] = (oCounts[s]||0)+1
+  })
+  const topE = Object.entries(eCounts).sort((a,b)=>b[1]-a[1])[0]
+  const topO = Object.entries(oCounts).sort((a,b)=>b[1]-a[1])[0]
+
+  set('k-total', (total||0).toLocaleString('pt-BR'))
+  set('k-total-s', `${rows.length} carregados`)
+  set('k-mes', tc)
+  const ds = delta !== null ? `<span class="${delta>=0?'kpi-delta-pos':'kpi-delta-neg'}">${delta>0?'+':''}${delta}%</span> vs mês ant.` : 'Mês atual'
+  $('k-mes-s').innerHTML = ds
+  set('k-prev', pc)
+  set('k-prev-s', prevD.toLocaleString('pt-BR',{month:'long',year:'numeric'}))
+  set('k-estado', topE ? topE[0] : '—')
+  set('k-estado-s', topE ? `${topE[1]} leads` : '')
+  set('k-origem', topO ? (SRC_LABELS[topO[0]]||topO[0]).split(' ')[0] : '—')
+  set('k-origem-s', topO ? `${topO[1]} leads` : '')
+}
+
+// ── Charts ─────────────────────────────────────────────────────────────────
+function updateCharts(rows) {
+  const isDark = matchMedia('(prefers-color-scheme:dark)').matches
+  const grid = isDark ? '#2c2c2a' : '#e1e0d9'
+  const muted = '#898781', prim = isDark ? '#fff' : '#0b0b0b'
+
+  const months = {}
+  rows.forEach(r => {
+    const m = (r.created_at||'').slice(0,7); if (!m) return
+    if (!months[m]) months[m] = {}
+    const s = r.source||'outro'; months[m][s] = (months[m][s]||0)+1
+  })
+  const mKeys = Object.keys(months).sort()
+  const fmtM = m => { const [y,mo]=m.split('-'); return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2) }
+  const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
+
+  if (chartMes) chartMes.destroy()
+  chartMes = new Chart($('cMes'), {
+    type:'bar',
+    data:{ labels:mKeys.map(fmtM), datasets:srcs.map(s=>({
+      label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
+      backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
+    }))},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{mode:'index', callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}}},
+      scales:{
+        x:{stacked:true, ticks:{color:muted,font:{size:9},autoSkip:mKeys.length>18,maxRotation:45}, grid:{color:grid}},
+        y:{stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]}}
+      }
+    }
+  })
+
+  const eCounts = {}
+  rows.forEach(r => { if(r.estado) eCounts[r.estado]=(eCounts[r.estado]||0)+1 })
+  const top = Object.entries(eCounts).sort((a,b)=>b[1]-a[1]).slice(0,12)
+
+  if (chartEstado) chartEstado.destroy()
+  chartEstado = new Chart($('cEstado'), {
+    type:'bar',
+    data:{ labels:top.map(e=>e[0]), datasets:[{
+      data:top.map(e=>e[1]),
+      backgroundColor:top.map((_,i)=>i===0?'#2a78d6':i<4?'#1baf7a':'#b5d4f4'),
+      borderRadius:4, borderSkipped:false
+    }]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.parsed.x} leads`}}},
+      scales:{
+        x:{ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]}},
+        y:{ticks:{color:prim,font:{size:11}}, grid:{display:false}}
+      }
+    }
+  })
+}
+
+// ── Table ──────────────────────────────────────────────────────────────────
+function renderTable(rows, total) {
+  set('result-count', `${(total||0).toLocaleString('pt-BR')} leads encontrados`)
+  if (!rows.length) {
+    $('tbody').innerHTML = '<tr><td colspan="6"><div class="empty">Nenhum lead encontrado.</div></td></tr>'
+    return
+  }
+  const fmtPhone = p => {
+    if (!p) return '<span class="td-muted">—</span>'
+    const d = p.replace(/\D/g,'')
+    return d.length===11 ? `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}` : p
+  }
+  const fmtDate = d => {
+    if (!d) return '<span class="td-muted">—</span>'
+    return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'})
+  }
+  const bx = s => s ? `<span class="badge ${SRC_BADGE[s]||''}">${SRC_LABELS[s]||s}</span>` : '<span class="td-muted">—</span>'
+  const utm = u => u ? `<span class="badge">${u}</span>` : '<span class="td-muted">—</span>'
+
+  $('tbody').innerHTML = rows.map(r => `<tr>
+    <td class="td-name" title="${esc(r.customer_name||'')}">${r.customer_name ? esc(r.customer_name) : '<span class="td-muted">—</span>'}</td>
+    <td class="td-phone">${fmtPhone(r.customer_phone)}</td>
+    <td>${r.estado||'<span class="td-muted">—</span>'}</td>
+    <td>${bx(r.source)}</td>
+    <td>${utm(r.utm_source)}</td>
+    <td>${fmtDate(r.created_at)}</td>
+  </tr>`).join('')
+}
+
+// ── Pagination ─────────────────────────────────────────────────────────────
+function renderPagination(total) {
+  const pag = $('pag')
+  if (!total) { pag.style.display='none'; return }
+  const pp = parseInt($v('per-page'))||25
+  const totalPages = Math.ceil(total/pp)
+  if (totalPages <= 1) { pag.style.display='none'; return }
+  pag.style.display='flex'
+
+  const from=(page-1)*pp+1, to=Math.min(page*pp,total)
+  set('pag-info', `${from.toLocaleString('pt-BR')}–${to.toLocaleString('pt-BR')} de ${total.toLocaleString('pt-BR')}`)
+  $('jump-input').max = totalPages
+
+  const btn = (label, p, cls='', disabled=false) => {
+    const dis = disabled ? 'disabled' : ''
+    const act = cls === 'active' ? 'active' : ''
+    const onclick = disabled || act ? '' : `onclick="goPage(${p})"`
+    return `<button class="pag-btn ${act}" ${dis} ${onclick}>${label}</button>`
+  }
+
+  let html = btn('«', 1, '', page===1) + btn('‹', page-1, '', page===1)
+  let s=Math.max(1,page-2), e=Math.min(totalPages,s+4); s=Math.max(1,e-4)
+  if (s>1){ html+=btn(1,1); if(s>2) html+=`<span style="padding:0 .2rem;color:var(--t3);font-size:11px">…</span>` }
+  for(let p2=s;p2<=e;p2++) html+=btn(p2,p2,p2===page?'active':'')
+  if (e<totalPages){ if(e<totalPages-1) html+=`<span style="padding:0 .2rem;color:var(--t3);font-size:11px">…</span>`; html+=btn(totalPages,totalPages) }
+  html += btn('›',page+1,'',page===totalPages) + btn('»',totalPages,'',page===totalPages)
+  $('pag-btns').innerHTML = html
+}
+
+function goPage(p) { page=p; loadTable() }
+function jumpTo() {
+  const v = parseInt($('jump-input').value)
+  const pp = parseInt($v('per-page'))||25
+  const maxP = Math.ceil((allRows.length||1)/pp)
+  if (v >= 1) { page = v; loadTable() }
+}
+
+// ── Sort headers ───────────────────────────────────────────────────────────
+function updateSortHeaders() {
+  ['customer_name','customer_phone','estado','source','utm_source','created_at'].forEach(col => {
+    const th = $(`th-${col}`)
+    if (!th) return
+    th.className = ''
+    if (orderBy === col) th.className = `sort-${orderDir}`
+  })
+}
+
+// ── Filter chips ───────────────────────────────────────────────────────────
+function updateChips() {
+  const f = getFilters()
+  const map = {
+    date_from: f.date_from ? `De: ${f.date_from.slice(0,7)}` : '',
+    date_to:   f.date_to   ? `Até: ${f.date_to.slice(0,7)}`  : '',
+    source:    f.source    ? `Origem: ${SRC_LABELS[f.source]||f.source}` : '',
+    estado:    f.estado    ? `Estado: ${f.estado}` : '',
+    utm_source:f.utm_source? `UTM: ${f.utm_source}` : '',
+    search:    f.search    ? `Busca: "${f.search}"` : '',
+  }
+  const fieldMap = {date_from:'f-from',date_to:'f-to',source:'f-source',estado:'f-estado',utm_source:'f-utm',search:'f-search'}
+  const chips = Object.entries(map).filter(([,v])=>v).map(([k,v]) =>
+    `<span class="chip">${esc(v)}<span class="chip-x" onclick="removeFilter('${fieldMap[k]}')">×</span></span>`
+  ).join('')
+  $('chips').innerHTML = chips
+  $('chips').style.display = chips ? '' : 'none'
+}
+
+function removeFilter(fieldId) {
+  const el = $(fieldId); if (el) el.value = ''
+  page = 1; pushState(); loadAll()
+}
+
+// ── Dynamic dropdowns ──────────────────────────────────────────────────────
+function populateDynamicFilters(rows) {
+  const estados = [...new Set(rows.map(r=>r.estado).filter(Boolean))].sort()
+  const curE = $v('f-estado')
+  $('f-estado').innerHTML = '<option value="">Todos</option>' + estados.map(e=>`<option value="${e}"${e===curE?' selected':''}>${e}</option>`).join('')
+
+  const utms = [...new Set(rows.map(r=>r.utm_source).filter(Boolean))].sort()
+  const curU = $v('f-utm')
+  $('f-utm').innerHTML = '<option value="">Todos</option>' + utms.map(u=>`<option value="${u}"${u===curU?' selected':''}>${u}</option>`).join('')
+}
+
+// ── Export CSV ─────────────────────────────────────────────────────────────
+async function exportCSV() {
+  const f = getFilters()
+  const res = await api({...f, mode:'chart'})
+  const rows = res.data || []
+  if (!rows.length) { alert('Nenhum dado para exportar.'); return }
+
+  const cols = ['id','created_at','customer_name','customer_phone','estado','source','utm_source','utm_medium','utm_campaign','page_url']
+  const header = cols.join(',')
+  const body = rows.map(r => cols.map(c => `"${(r[c]||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n')
+  const blob = new Blob(['﻿'+header+'\n'+body], {type:'text/csv;charset=utf-8'})
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `cir-leads-${new Date().toISOString().slice(0,10)}.csv`
+  a.click()
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function $(id) { return document.getElementById(id) }
+function $v(id) { return ($(id)||{}).value || '' }
+function set(id, val) { const el=$(id); if(el) el.textContent=val }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+// ── Init ───────────────────────────────────────────────────────────────────
+tryAutoLogin()
+</script>
+</body>
+</html>
