@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     phone, message, source, cidade, estado, page_url, customer_name, customer_phone,
     customer_email, customer_company,
     utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+    quiz_tipo_produto, quiz_quantidade, quiz_arte_pronta, quiz_acabamento, quiz_prazo, quiz_investimento, destino,
   } = req.body || {}
 
   if (!phone || !message || !source) {
@@ -39,6 +40,13 @@ export default async function handler(req, res) {
     utm_campaign: utm_campaign || null,
     utm_term: utm_term || null,
     utm_content: utm_content || null,
+    quiz_tipo_produto: quiz_tipo_produto || null,
+    quiz_quantidade: quiz_quantidade || null,
+    quiz_arte_pronta: quiz_arte_pronta || null,
+    quiz_acabamento: quiz_acabamento || null,
+    quiz_prazo: quiz_prazo || null,
+    quiz_investimento: quiz_investimento || null,
+    destino: destino || null,
   })
 
   if (error) {
