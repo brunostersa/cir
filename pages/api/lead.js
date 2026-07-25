@@ -1,4 +1,14 @@
 import { supabase } from '../../lib/supabaseClient'
+import { recordAttempt } from '../../lib/rateLimit'
+import { getNameError, getPhoneError } from '../../lib/leadValidation'
+
+const RATE_LIMIT = { limit: 10, windowMs: 10 * 60 * 1000 } // 10 envios / 10 min por IP
+
+function getClientIp(req) {
+  const fwd = req.headers['x-forwarded-for']
+  if (fwd) return fwd.split(',')[0].trim()
+  return req.socket?.remoteAddress || 'unknown'
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -11,6 +21,12 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Lead storage not configured' })
   }
 
+  const { allowed, retryAfterMs } = recordAttempt(`lead:${getClientIp(req)}`, RATE_LIMIT)
+  if (!allowed) {
+    res.setHeader('Retry-After', Math.ceil(retryAfterMs / 1000).toString())
+    return res.status(429).json({ error: 'Too many requests' })
+  }
+
   const {
     phone, message, source, cidade, estado, page_url, customer_name, customer_phone,
     customer_email, customer_company,
@@ -20,6 +36,13 @@ export default async function handler(req, res) {
 
   if (!phone || !message || !source) {
     return res.status(400).json({ error: 'Missing required fields' })
+  }
+
+  if (customer_name && getNameError(customer_name)) {
+    return res.status(400).json({ error: getNameError(customer_name) })
+  }
+  if (customer_phone && getPhoneError(customer_phone)) {
+    return res.status(400).json({ error: getPhoneError(customer_phone) })
   }
 
   const { error } = await supabase.from('leads').insert({
