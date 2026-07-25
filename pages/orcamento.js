@@ -69,7 +69,7 @@ export default function Orcamento() {
   const source = typeof router.query.source === 'string' ? router.query.source : 'orcamento_page'
   const cidade = typeof router.query.cidade === 'string' ? router.query.cidade : null
   const estado = typeof router.query.estado === 'string' ? router.query.estado : null
-  const ctaMessage = typeof router.query.message === 'string' ? router.query.message : 'Olá! vim pelo site e gostaria de um orçamento.'
+  const ctaMessage = typeof router.query.message === 'string' ? router.query.message : 'Gostaria de um orçamento para meus materiais gráficos.'
 
   const step = STEPS[stepIndex]
   const goBack = () => setStepIndex((i) => Math.max(0, i - 1))
