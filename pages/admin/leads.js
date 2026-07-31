@@ -12,10 +12,10 @@ const SRC_LABELS = {
   'cidades-cir': 'Cidades CIR',
 }
 const SRC_COLORS = {
-  'orcamento-rapido': '#c8813a',
+  'orcamento-rapido': '#e8613a',
   'portfolio_download': '#5d9c6e',
-  'whatsapp-site': '#3a7cbf',
-  'cidades-cir': '#7c5dbf',
+  'whatsapp-site': '#4a90e2',
+  'cidades-cir': '#9b6ba8',
 }
 const DESTINO_LABELS = { cirgrafica: 'CIR Gráfica', carbono: 'Carbono' }
 const DESTINO_COLORS = { cirgrafica: '#5d9c6e', carbono: '#c8813a' }
@@ -43,6 +43,22 @@ function setHash(obj) {
   const p = new URLSearchParams(Object.fromEntries(Object.entries(obj).filter(([,v])=>v)))
   history.replaceState(null,'','#'+p.toString())
 }
+function simpleMovingAverage(values, window = 7) {
+  return values.map((_, i) => {
+    if (i < window - 1) return null
+    return values.slice(i - window + 1, i + 1).reduce((a, b) => a + b, 0) / window
+  })
+}
+function getSparklineData(data, field, limit = 30) {
+  const counts = {}
+  data.forEach(r => {
+    if (!r[field]) return
+    const key = r[field]
+    counts[key] = (counts[key] || 0) + 1
+  })
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, limit)
+  return sorted.map(([label, count]) => ({ label, count }))
+}
 
 // ── Component ────────────────────────────────────────────────────────────
 export default function LeadsDashboard() {
@@ -63,6 +79,8 @@ export default function LeadsDashboard() {
 
   const [dayWindow, setDayWindow] = useState(15)
   const [detailLead, setDetailLead] = useState(null)
+  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [viewChart, setViewChart] = useState({}) // { chartName: 'table' || 'chart' }
 
   const searchTimer = useRef(null)
   const chartMesRef = useRef(null)
@@ -152,7 +170,7 @@ export default function LeadsDashboard() {
       const grid = isDark ? '#2a2a28' : '#e2e0d8'
       const muted = '#898781', prim = isDark?'#fff':'#0b0b0b'
 
-      // monthly stacked
+      // monthly stacked with previous month overlay
       const months = {}
       chartRows.forEach(r => {
         const m=(r.created_at||'').slice(0,7); if(!m) return
@@ -163,20 +181,39 @@ export default function LeadsDashboard() {
       const fmtM = m => { const[y,mo]=m.split('-'); return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2) }
       const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
 
+      // calcular totais por mês para linha de comparação
+      const monthTotals = {}
+      mKeys.forEach(m => { monthTotals[m] = srcs.reduce((acc, s) => acc + (months[m][s]||0), 0) })
+      const prevMonthData = mKeys.map((m, i) => i > 0 ? monthTotals[mKeys[i-1]] : null)
+
       if (chartMesInst.current) chartMesInst.current.destroy()
       if (chartMesRef.current) {
         chartMesInst.current = new Chart(chartMesRef.current, {
           type:'bar',
-          data:{ labels:mKeys.map(fmtM), datasets:srcs.map(s=>({
-            label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
-            backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
-          }))},
+          data:{ labels:mKeys.map(fmtM), datasets:[
+            ...srcs.map(s=>({
+              label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
+              backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
+            })),
+            {
+              label:'Mês anterior',
+              data:prevMonthData,
+              type:'line',
+              borderColor:'#7a7268',
+              borderWidth:1,
+              borderDash:[5,5],
+              fill:false,
+              pointRadius:0,
+              yAxisID:'y1'
+            }
+          ]},
           options:{
             responsive:true, maintainAspectRatio:false,
             plugins:{ legend:{display:false}, tooltip:{mode:'index', callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}} },
             scales:{
               x:{ stacked:true, ticks:{color:muted,font:{size:9},autoSkip:mKeys.length>18,maxRotation:45}, grid:{color:grid} },
-              y:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} }
+              y:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} },
+              y1:{ type:'linear', display:false, stacked:false }
             }
           }
         })
@@ -269,12 +306,12 @@ export default function LeadsDashboard() {
     })
   }, [chartRows])
 
-  // daily chart
+  // daily chart with trend line
   useEffect(() => {
     if (!chartRows.length || typeof window === 'undefined') return
     import('chart.js').then(({ Chart, registerables }) => {
       Chart.register(...registerables)
-      const isDark = matchMedia('(prefers-color-scheme:dark)').matches
+      const isDark = isDarkMode
       const grid = isDark ? '#2a2a28' : '#e2e0d8'
       const muted = '#898781'
 
@@ -291,6 +328,7 @@ export default function LeadsDashboard() {
         dayCounts[d] = (dayCounts[d]||0) + 1
       })
       const vals = days.map(d => dayCounts[d]||0)
+      const trend = simpleMovingAverage(vals, 7)
       const fmtDay = d => { const[,m,day]=d.split('-'); return `${day}/${m}` }
       const maxVal = Math.max(...vals, 1)
 
@@ -301,15 +339,26 @@ export default function LeadsDashboard() {
           data: {
             labels: days.map(fmtDay),
             datasets: [{
+              label: 'Leads',
               data: vals,
-              backgroundColor: vals.map(v => v === maxVal ? '#c8813a' : '#c8813a55'),
+              backgroundColor: vals.map(v => v === maxVal ? '#e8613a' : '#e8613a55'),
               borderRadius: 3,
               borderSkipped: false,
+            }, {
+              label: 'Tendência (7d)',
+              data: trend,
+              type: 'line',
+              borderColor: '#e8613a',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 0,
             }]
           },
           options: {
             responsive: true, maintainAspectRatio: false,
-            plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.parsed.y} leads`}} },
+            plugins: { legend:{display:true, labels:{color:muted,font:{size:10},boxWidth:10}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y?.toFixed(0)||0}`}} },
             scales: {
               x: { ticks:{color:muted,font:{size:9}}, grid:{color:grid} },
               y: { ticks:{color:muted,font:{size:10},precision:0}, grid:{color:grid}, border:{dash:[2,2]} }
@@ -318,7 +367,7 @@ export default function LeadsDashboard() {
         })
       }
     })
-  }, [chartRows, dayWindow])
+  }, [chartRows, dayWindow, isDarkMode])
 
   // ── Handlers ────────────────────────────────────────────────────────────
   function handleFilterChange(key, val) {
@@ -440,6 +489,9 @@ export default function LeadsDashboard() {
           {lastUpdate && !loading && <span className="db-sub">atualizado {lastUpdate}</span>}
         </div>
         <div className="db-topbar-right">
+          <button className="db-btn db-btn-sm" onClick={()=>setIsDarkMode(!isDarkMode)} title={isDarkMode?'Modo claro':'Modo escuro'}>
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
           <button className="db-btn db-btn-sm" onClick={exportCSV}>↓ CSV</button>
           <button className="db-btn db-btn-sm" onClick={()=>loadAll()}>↻ Atualizar</button>
         </div>
@@ -537,22 +589,60 @@ export default function LeadsDashboard() {
           </div>
         </div>
 
-        {/* Daily chart */}
-        <div className="db-chart-card db-chart-full" style={{marginBottom:'1px'}}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
-            <p className="db-chart-title" style={{margin:0}}>Leads por dia</p>
-            <div className="db-day-toggle">
-              {[7,15,30].map(n=>(
-                <button key={n} className={`db-day-btn${dayWindow===n?' active':''}`} onClick={()=>setDayWindow(n)}>{n}d</button>
-              ))}
+        {/* Daily chart — destaque */}
+        <div className="db-charts-hero">
+          <div className="db-chart-card" style={{gridColumn:'1 / -1'}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
+              <p className="db-chart-title" style={{margin:0}}>Leads por dia</p>
+              <div className="db-day-toggle">
+                {[7,15,30].map(n=>(
+                  <button key={n} className={`db-day-btn${dayWindow===n?' active':''}`} onClick={()=>setDayWindow(n)}>{n}d</button>
+                ))}
+              </div>
+            </div>
+            <div style={{position:'relative',height:'200px'}}>
+              <canvas ref={chartDayRef}/>
             </div>
           </div>
-          <div style={{position:'relative',height:'160px'}}>
-            <canvas ref={chartDayRef}/>
+
+          {/* Quick stats ao lado do daily chart */}
+          <div className="db-chart-card">
+            <p className="db-chart-title">Top origem hoje</p>
+            <div className="db-stat-list">
+              {Object.entries(oCounts || {}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([src,count])=>{
+                const total = chartRows.length || 1
+                const pct = Math.round(count/total*100)
+                return (
+                  <div key={src} className="db-stat-row">
+                    <span className="db-stat-label">
+                      <span className="db-stat-sq" style={{background:SRC_COLORS[src]||'#888'}}/>
+                      {(SRC_LABELS[src]||src).split(' ')[0]}
+                    </span>
+                    <span className="db-stat-val">{pct}%</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="db-chart-card">
+            <p className="db-chart-title">Top estado hoje</p>
+            <div className="db-stat-list">
+              {Object.entries(eCounts || {}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([estado,count])=>{
+                const total = chartRows.length || 1
+                const pct = Math.round(count/total*100)
+                return (
+                  <div key={estado} className="db-stat-row">
+                    <span className="db-stat-label">{estado}</span>
+                    <span className="db-stat-val">{pct}%</span>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Charts */}
+        {/* Charts secondary row */}
         <div className="db-charts">
           <div className="db-chart-card">
             <p className="db-chart-title">Evolução mensal por origem</p>
@@ -795,9 +885,18 @@ export default function LeadsDashboard() {
         .db-kpi-sub-delta .neg { color:#e34948; }
 
         /* charts */
+        .db-charts-hero { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
         .db-charts { display:grid; grid-template-columns:3fr 2fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
         .db-chart-card { background:var(--cir-bg2); padding:1rem 1.1rem; }
         .db-chart-title { font-size:.6rem; font-weight:600; color:var(--cir-fg2); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5rem; }
+
+        /* stat list */
+        .db-stat-list { display:flex; flex-direction:column; }
+        .db-stat-row { display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; border-top:1px solid var(--cir-line); font-size:.75rem; }
+        .db-stat-row:first-child { border-top:none; }
+        .db-stat-label { display:flex; align-items:center; gap:.4rem; }
+        .db-stat-sq { width:6px; height:6px; flex-shrink:0; border-radius:1px; }
+        .db-stat-val { font-weight:600; color:var(--cir-gold); font-variant-numeric:tabular-nums; }
         .db-legend { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:.5rem; }
         .db-leg { display:flex; align-items:center; gap:4px; font-size:.65rem; color:var(--cir-fg2); }
         .db-leg-sq { width:8px; height:8px; flex-shrink:0; }
@@ -847,8 +946,8 @@ export default function LeadsDashboard() {
         .db-day-btn.active { background:var(--cir-accent); color:#fff; border-color:var(--cir-accent); }
         .db-day-btn:hover:not(.active) { background:var(--cir-bg); color:var(--cir-fg); }
 
-        @media(max-width:1000px) { .db-charts{grid-template-columns:1fr} .db-charts-3col{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} }
-        @media(max-width:640px)  { .db-kpis{grid-template-columns:repeat(2,1fr)} .db-body{padding:.75rem .75rem 2rem} }
+        @media(max-width:1000px) { .db-charts-hero{grid-template-columns:1fr} .db-charts{grid-template-columns:1fr} .db-charts-3col{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} }
+        @media(max-width:640px)  { .db-charts-hero{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(2,1fr)} .db-body{padding:.75rem .75rem 2rem} }
 
         .db-charts-3col { grid-template-columns:repeat(3,1fr); margin-top:1px; }
 
