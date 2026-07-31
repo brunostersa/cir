@@ -44,15 +44,23 @@ function setHash(obj) {
   history.replaceState(null,'','#'+p.toString())
 }
 function simpleMovingAverage(values, window = 7) {
-  return values.map((_, i) => {
-    if (i < window - 1) return null
-    return values.slice(i - window + 1, i + 1).reduce((a, b) => a + b, 0) / window
-  })
+  const result = []
+  let sum = 0
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i]
+    if (i < window - 1) {
+      result.push(null)
+    } else {
+      if (i >= window) sum -= values[i - window]
+      result.push(sum / window)
+    }
+  }
+  return result
 }
 function getSparklineData(data, field, limit = 30) {
   const counts = {}
   data.forEach(r => {
-    if (!r[field]) return
+    if (r[field] == null) return
     const key = r[field]
     counts[key] = (counts[key] || 0) + 1
   })
@@ -166,7 +174,7 @@ export default function LeadsDashboard() {
     if (!chartRows.length || typeof window === 'undefined') return
     import('chart.js').then(({ Chart, registerables }) => {
       Chart.register(...registerables)
-      const isDark = matchMedia('(prefers-color-scheme:dark)').matches
+      const isDark = isDarkMode
       const grid = isDark ? '#2a2a28' : '#e2e0d8'
       const muted = '#898781', prim = isDark?'#fff':'#0b0b0b'
 
@@ -187,39 +195,21 @@ export default function LeadsDashboard() {
       }
       const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
 
-      // calcular totais por mês para linha de comparação
-      const monthTotals = {}
-      mKeys.forEach(m => { monthTotals[m] = srcs.reduce((acc, s) => acc + (months[m][s]||0), 0) })
-      const prevMonthData = mKeys.map((m, i) => i > 0 ? monthTotals[mKeys[i-1]] : null)
 
       if (chartMesInst.current) chartMesInst.current.destroy()
       if (chartMesRef.current) {
         chartMesInst.current = new Chart(chartMesRef.current, {
           type:'bar',
-          data:{ labels:mKeys.map(fmtM), datasets:[
-            ...srcs.map(s=>({
-              label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
-              backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
-            })),
-            {
-              label:'Mês anterior',
-              data:prevMonthData,
-              type:'line',
-              borderColor:'#7a7268',
-              borderWidth:1,
-              borderDash:[5,5],
-              fill:false,
-              pointRadius:0,
-              yAxisID:'y1'
-            }
-          ]},
+          data:{ labels:mKeys.map(fmtM), datasets:srcs.map(s=>({
+            label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
+            backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
+          }))},
           options:{
             responsive:true, maintainAspectRatio:false,
             plugins:{ legend:{display:false}, tooltip:{mode:'index', callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}} },
             scales:{
               x:{ stacked:true, ticks:{color:muted,font:{size:9},autoSkip:mKeys.length>18,maxRotation:45}, grid:{color:grid} },
-              y:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} },
-              y1:{ type:'linear', display:false, stacked:false }
+              y:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} }
             }
           }
         })
@@ -309,8 +299,8 @@ export default function LeadsDashboard() {
           }
         })
       }
-    })
-  }, [chartRows])
+    }).catch(err => console.error('Failed to load Chart.js:', err))
+  }, [chartRows, isDarkMode])
 
   // daily chart with trend line
   useEffect(() => {
@@ -372,7 +362,7 @@ export default function LeadsDashboard() {
           }
         })
       }
-    })
+    }).catch(err => console.error('Failed to load Chart.js:', err))
   }, [chartRows, dayWindow, isDarkMode])
 
   // ── Handlers ────────────────────────────────────────────────────────────
@@ -450,6 +440,8 @@ export default function LeadsDashboard() {
   const delta   = prevMC > 0 ? Math.round((thisMC-prevMC)/prevMC*100) : null
   const eCounts = {}; chartRows.forEach(r=>{ if(r.estado) eCounts[r.estado]=(eCounts[r.estado]||0)+1 })
   const oCounts = {}; chartRows.forEach(r=>{ const s=r.source||'?'; oCounts[s]=(oCounts[s]||0)+1 })
+  const topEstados = Object.entries(eCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
+  const topOrigens = Object.entries(oCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
   const topE = Object.entries(eCounts).sort((a,b)=>b[1]-a[1])[0]
   const topO = Object.entries(oCounts).sort((a,b)=>b[1]-a[1])[0]
   const totalPages = Math.ceil(totalCount/perPage)
@@ -615,7 +607,7 @@ export default function LeadsDashboard() {
           <div className="db-chart-card">
             <p className="db-chart-title">Top origem hoje</p>
             <div className="db-stat-list">
-              {Object.entries(oCounts || {}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([src,count])=>{
+              {topOrigens.map(([src,count])=>{
                 const total = chartRows.length || 1
                 const pct = Math.round(count/total*100)
                 return (
@@ -634,7 +626,7 @@ export default function LeadsDashboard() {
           <div className="db-chart-card">
             <p className="db-chart-title">Top estado hoje</p>
             <div className="db-stat-list">
-              {Object.entries(eCounts || {}).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([estado,count])=>{
+              {topEstados.map(([estado,count])=>{
                 const total = chartRows.length || 1
                 const pct = Math.round(count/total*100)
                 return (
