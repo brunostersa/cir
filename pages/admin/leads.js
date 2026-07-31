@@ -178,7 +178,13 @@ export default function LeadsDashboard() {
         const s=r.source||'outro'; months[m][s]=(months[m][s]||0)+1
       })
       const mKeys = Object.keys(months).sort()
-      const fmtM = m => { const[y,mo]=m.split('-'); return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2) }
+      const now = new Date()
+      const currentMonth = now.toISOString().slice(0,7)
+      const fmtM = m => {
+        const[y,mo]=m.split('-')
+        const label = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2)
+        return m === currentMonth ? label + ' (em andamento)' : label
+      }
       const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
 
       // calcular totais por mês para linha de comparação
