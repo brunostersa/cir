@@ -183,7 +183,7 @@ export default function LeadsDashboard() {
       const fmtM = m => {
         const[y,mo]=m.split('-')
         const label = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2)
-        return m === currentMonth ? label + ' (em andamento)' : label
+        return m === currentMonth ? label + '*' : label
       }
       const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
 
@@ -651,7 +651,10 @@ export default function LeadsDashboard() {
         {/* Charts secondary row */}
         <div className="db-charts">
           <div className="db-chart-card">
-            <p className="db-chart-title">Evolução mensal por origem</p>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
+              <p className="db-chart-title" style={{margin:0}}>Evolução mensal por origem</p>
+              <span style={{fontSize:'.65rem',color:'var(--cir-fg2)'}}>* = mês em andamento</span>
+            </div>
             <div className="db-legend">
               {Object.entries(SRC_LABELS).map(([k,v])=>(
                 <span key={k} className="db-leg"><span className="db-leg-sq" style={{background:SRC_COLORS[k]}}/>{v}</span>
