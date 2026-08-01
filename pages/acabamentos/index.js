@@ -121,24 +121,71 @@ export default function AcabamentosHub({ acabamentos }) {
         </div>
       </section>
 
-      {/* Comparativo Rápido */}
+      {/* Comparativo Inteligente */}
       <section className="ac-hub-compare">
         <h2>Escolher o Acabamento Certo</h2>
         <div className="ac-compare-table">
           <div className="ac-compare-header">
-            <div>Acabamento</div>
-            <div>Custo</div>
-            <div>Impacto Visual</div>
-            <div>Ideal Para</div>
+            <div className="ac-compare-col-1">Acabamento</div>
+            <div className="ac-compare-col-2">Custo</div>
+            <div className="ac-compare-col-3">Impacto</div>
+            <div className="ac-compare-col-4">Prazo</div>
+            <div className="ac-compare-col-5">Ideal Para</div>
           </div>
-          {acabamentos.map((ac) => (
-            <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="ac-compare-row">
-              <div className="ac-compare-name">{ac.nome}</div>
-              <div className="ac-compare-cost">Médio-Alto</div>
-              <div className="ac-compare-impact">⭐⭐⭐⭐⭐</div>
-              <div className="ac-compare-ideal">Premium</div>
-            </Link>
-          ))}
+
+          <Link href="/acabamentos/laminacao-fosca" className="ac-compare-row">
+            <div className="ac-compare-name">Laminação Fosca</div>
+            <div className="ac-compare-cost ac-cost-medium">Médio</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Rápido</div>
+            <div className="ac-compare-ideal">Cartões, capas, corporativo</div>
+          </Link>
+
+          <Link href="/acabamentos/verniz-uv" className="ac-compare-row">
+            <div className="ac-compare-name">Verniz UV</div>
+            <div className="ac-compare-cost ac-cost-medium-high">Médio-Alto</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Médio</div>
+            <div className="ac-compare-ideal">Logos, destaques, premium</div>
+          </Link>
+
+          <Link href="/acabamentos/hot-stamping" className="ac-compare-row ac-compare-row-luxury">
+            <div className="ac-compare-name">🌟 Hot Stamping</div>
+            <div className="ac-compare-cost ac-cost-high">Alto</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Longo</div>
+            <div className="ac-compare-ideal">Luxo, convites, marcas</div>
+          </Link>
+
+          <Link href="/acabamentos/relevo-seco" className="ac-compare-row">
+            <div className="ac-compare-name">Relevo Seco</div>
+            <div className="ac-compare-cost ac-cost-medium-high">Médio-Alto</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Médio</div>
+            <div className="ac-compare-ideal">Executivo, certificados</div>
+          </Link>
+
+          <Link href="/acabamentos/corte-especial" className="ac-compare-row">
+            <div className="ac-compare-name">Corte Especial</div>
+            <div className="ac-compare-cost ac-cost-medium">Médio</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Rápido</div>
+            <div className="ac-compare-ideal">Cartões, etiquetas, PDV</div>
+          </Link>
+
+          <Link href="/acabamentos/encadernacao-premium" className="ac-compare-row">
+            <div className="ac-compare-name">Encadernação Premium</div>
+            <div className="ac-compare-cost ac-cost-medium-high">Médio-Alto</div>
+            <div className="ac-compare-impact">⭐⭐⭐⭐</div>
+            <div className="ac-compare-speed">Longo</div>
+            <div className="ac-compare-ideal">Catálogos, agendas, portfólio</div>
+          </Link>
+        </div>
+
+        <div className="ac-compare-legend">
+          <span><strong>Custo:</strong> baseado em volume padrão</span>
+          <span><strong>Impacto:</strong> percepção visual e diferenciação</span>
+          <span><strong>Prazo:</strong> tempo de produção aproximado</span>
         </div>
       </section>
 
@@ -375,40 +422,112 @@ export default function AcabamentosHub({ acabamentos }) {
 
         .ac-compare-header {
           display: grid;
-          grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+          grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1.8fr;
           gap: 1rem;
-          background: #f4f0e8;
-          padding: 1rem;
-          border-radius: 8px 8px 0 0;
-          font-weight: 600;
-          color: #1a1814;
+          background: linear-gradient(135deg, #1a1814 0%, #2a2420 100%);
+          padding: 1.2rem;
+          border-radius: 12px 12px 0 0;
+          font-weight: 700;
+          color: white;
+          font-size: 0.85rem;
+          letter-spacing: 0.05em;
         }
 
         .ac-compare-row {
           display: grid;
-          grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+          grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1.8fr;
           gap: 1rem;
-          padding: 1rem;
+          padding: 1.2rem;
           border-bottom: 1px solid #e8d4c4;
           align-items: center;
           text-decoration: none;
           color: #2a2420;
-          transition: background 0.2s;
+          transition: all 0.3s;
+          background: white;
         }
 
         .ac-compare-row:hover {
           background: #f9f7f2;
+          transform: translateX(4px);
+          box-shadow: -4px 0 12px rgba(232, 97, 58, 0.1);
+        }
+
+        .ac-compare-row-luxury {
+          background: linear-gradient(90deg, #f9f7f2 0%, #fef9f5 100%);
+          border-left: 4px solid #e8613a;
+        }
+
+        .ac-compare-row-luxury:hover {
+          background: linear-gradient(90deg, #f4f0e8 0%, #fef1e6 100%);
+          box-shadow: -4px 0 16px rgba(232, 97, 58, 0.2);
         }
 
         .ac-compare-name {
-          font-weight: 600;
+          font-weight: 700;
           color: #1a1814;
+          font-size: 0.95rem;
         }
 
-        .ac-compare-cost,
-        .ac-compare-impact,
+        .ac-compare-cost {
+          font-weight: 600;
+          text-align: center;
+          padding: 0.4rem 0.8rem;
+          border-radius: 6px;
+          font-size: 0.85rem;
+        }
+
+        .ac-cost-medium {
+          background: #d4edda;
+          color: #155724;
+        }
+
+        .ac-cost-medium-high {
+          background: #fff3cd;
+          color: #856404;
+        }
+
+        .ac-cost-high {
+          background: #f8d7da;
+          color: #721c24;
+          font-weight: 700;
+        }
+
+        .ac-compare-impact {
+          text-align: center;
+          font-size: 0.9rem;
+          letter-spacing: 0.1em;
+        }
+
+        .ac-compare-speed {
+          text-align: center;
+          color: #6a6460;
+          font-size: 0.85rem;
+          font-weight: 500;
+        }
+
         .ac-compare-ideal {
           color: #6a6460;
+          font-size: 0.85rem;
+          line-height: 1.4;
+        }
+
+        .ac-compare-legend {
+          display: flex;
+          gap: 2rem;
+          margin-top: 2rem;
+          padding: 1.5rem;
+          background: #f9f7f2;
+          border-radius: 8px;
+          font-size: 0.85rem;
+          color: #6a6460;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .ac-compare-legend span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
         }
 
         /* ── CTA ───────────────────────────── */
@@ -452,14 +571,32 @@ export default function AcabamentosHub({ acabamentos }) {
         }
 
         /* ── Responsive ────────────────────── */
+        @media (max-width: 1024px) {
+          .ac-compare-header,
+          .ac-compare-row {
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 0.8rem;
+            padding: 1rem;
+          }
+
+          .ac-compare-header {
+            padding: 1rem;
+          }
+
+          .ac-compare-col-3,
+          .ac-compare-impact {
+            display: none;
+          }
+        }
+
         @media (max-width: 900px) {
           .ac-hub-hero-content h1 {
             font-size: 2rem;
           }
 
-          .ac-compare-header,
-          .ac-compare-row {
-            grid-template-columns: 1fr 1fr;
+          .ac-compare-legend {
+            flex-direction: column;
+            gap: 1rem;
           }
         }
 
@@ -480,8 +617,28 @@ export default function AcabamentosHub({ acabamentos }) {
             gap: 1.5rem;
           }
 
-          .ac-compare-table {
-            font-size: 0.9rem;
+          .ac-compare-header,
+          .ac-compare-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+          }
+
+          .ac-compare-header {
+            padding: 0.8rem;
+          }
+
+          .ac-compare-col-2,
+          .ac-compare-cost,
+          .ac-compare-col-4,
+          .ac-compare-speed {
+            display: none;
+          }
+
+          .ac-compare-legend {
+            font-size: 0.75rem;
+            gap: 1rem;
           }
 
           .ac-hub-cta {
@@ -499,11 +656,32 @@ export default function AcabamentosHub({ acabamentos }) {
             grid-template-columns: 1fr;
           }
 
-          .ac-compare-header,
+          .ac-compare-header {
+            grid-template-columns: 1fr;
+            gap: 0.3rem;
+            padding: 0.6rem;
+            font-size: 0.75rem;
+          }
+
           .ac-compare-row {
             grid-template-columns: 1fr;
-            gap: 0.5rem;
-            font-size: 0.85rem;
+            gap: 0.4rem;
+            padding: 0.8rem;
+            font-size: 0.75rem;
+          }
+
+          .ac-compare-row-luxury {
+            border-left: 2px solid #e8613a;
+          }
+
+          .ac-compare-name {
+            font-size: 0.9rem;
+          }
+
+          .ac-compare-legend {
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 0.7rem;
           }
 
           .ac-hub-btn {
