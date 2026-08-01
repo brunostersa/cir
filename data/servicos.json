@@ -1,0 +1,272 @@
+[
+  {
+    "id": "impressao-offset",
+    "nome": "Impressão Offset",
+    "tagline": "Qualidade superior em grandes volumes",
+    "descricaoCurta": "Impressão profissional de alta qualidade para projetos de grande volume com cores vibrantes e precisão incomparável.",
+    "descricaoCompleta": "A impressão offset é o padrão ouro para projetos de grande volume. Utiliza chapas metálicas e tinta de óleo para reproduzir cores com precisão fotográfica. Ideal para catálogos, brochuras, revistas e materiais premium que exigem qualidade máxima. Com excelente custo-benefício em altos volumes (acima de 1.000 unidades), oferece cores vibrantes e acabamento profissional inigualável.",
+    "beneficios": [
+      "Qualidade de cor excepcional e precisa",
+      "Excelente custo-benefício em grandes volumes",
+      "Variedade de substratos (papéis especiais, couché, etc)",
+      "Cores vibrantes e reprodução fiel",
+      "Acabamento profissional premium",
+      "Ideal para projetos sofisticados"
+    ],
+    "aplicacoes": [
+      "Catálogos e brochuras de luxo",
+      "Revistas e publicações",
+      "Cartazes e posters premium",
+      "Calendários corporativos",
+      "Relatórios anuais",
+      "Livros e edições limitadas"
+    ],
+    "acabamentosRecomendados": ["laminacao-fosca", "verniz-uv", "hot-stamping", "relevo-seco"],
+    "comparativas": "Enquanto a impressão digital é mais rápida e flexível, a offset oferece qualidade superior e custos menores em altos volumes (acima de 1.000 unidades). Para pequenas quantidades, digital é mais econômica.",
+    "processoTecnico": "Utiliza chapas fotossensíveis que transferem tinta via cilindro de borracha (blanqueta). A tinta à base de óleo proporciona cores brilhantes e duradouras. Processo de 4 a 6 cores (CMYK + cores especiais).",
+    "custo": "Custo inicial de chapa (~R$50-150). Valor por peça reduz significativamente em volumes acima de 1.000 unidades.",
+    "prazo": "7-12 dias úteis (inclui preparação de arquivo, prova e impressão)",
+    "ideal": "Catálogos, revistas, materiais premium de grande volume, projetos onde qualidade é prioridade",
+    "img": "/conceituais/materiais-graficos-impressao1.jpeg",
+    "palavrasChave": ["impressão offset", "offset colorida", "impressão profissional", "impressão catálogo", "impressão revista"],
+    "faq": [
+      {
+        "pergunta": "A partir de quantas unidades compensa impressão offset?",
+        "resposta": "A partir de 1.000 unidades. Abaixo disso, a impressão digital oferece melhor custo-benefício. O investimento inicial (chapa) se amortiza em volume."
+      },
+      {
+        "pergunta": "Qual é o tempo de produção da impressão offset?",
+        "resposta": "Geralmente 7-12 dias úteis, considerando preparação de arquivo, prova de cores, ajustes e impressão efetiva."
+      },
+      {
+        "pergunta": "Offset é mais cara que digital?",
+        "resposta": "Em pequenos volumes (até 500), digital é mais barata. Acima de 1.000 unidades, offset compensa pelo custo unitário muito inferior."
+      }
+    ]
+  },
+  {
+    "id": "impressao-digital",
+    "nome": "Impressão Digital",
+    "tagline": "Flexibilidade e velocidade para projetos sob demanda",
+    "descricaoCurta": "Impressão rápida e flexível ideal para pequenos lotes, personalizações e projetos que precisam de entrega ágil.",
+    "descricaoCompleta": "A impressão digital oferece velocidade e flexibilidade sem investimento em chapas. Perfeita para pequenos lotes (50-500 unidades), personalizações em massa e projetos de entrega rápida. Utiliza tecnologia laser ou inkjet de alta qualidade para reproduzir designs com precisão. Ideal para quem precisa de resultados em dias, não semanas.",
+    "beneficios": [
+      "Entrega super rápida (24-48 horas)",
+      "Sem custo de setup ou chapas",
+      "Ideal para pequenos volumes",
+      "Personalizações individuais possíveis",
+      "Qualidade consistente e previsível",
+      "Perfeita para testes de design"
+    ],
+    "aplicacoes": [
+      "Cartões de visita e panfletos",
+      "Convites personalizados",
+      "Materiais de evento",
+      "Testes de design e prototipagem",
+      "Etiquetas e adesivos",
+      "Pequenas tiradas especiais"
+    ],
+    "acabamentosRecomendados": ["corte-especial", "laminacao-fosca", "encadernacao-premium"],
+    "comparativas": "Mais rápida que offset, mas qualidade de cor não é tão vibrante em imagens complexas. Custo unitário mais alto em grandes volumes. Perfeita para urgência, offset para qualidade máxima.",
+    "processoTecnico": "Utiliza toner seco (laser) ou tinta líquida (inkjet) aplicados diretamente no substrato. Sem chapas nem cilindros. Produção sob demanda com setup instantâneo.",
+    "custo": "Sem custo de setup. Valor por peça: R$0,50-2,00 dependendo do tamanho e volume.",
+    "prazo": "24-48 horas para impressão (em casos urgentes, até 6 horas)",
+    "ideal": "Pequenos volumes, personalizações, testes, projetos com prazos curtos, materiais de evento",
+    "img": "/conceituais/materiais-graficos-impressao2.jpeg",
+    "palavrasChave": ["impressão digital", "impressão rápida", "impressão sob demanda", "impressão 24 horas", "impressão personalizada"],
+    "faq": [
+      {
+        "pergunta": "Qual é a qualidade da impressão digital versus offset?",
+        "resposta": "Digital oferece ótima qualidade para textos e designs simples. Para imagens fotográficas complexas, offset produz cores mais vibrantes. Ambas têm excelente qualidade em contextos apropriados."
+      },
+      {
+        "pergunta": "Posso fazer personalizações em impressão digital?",
+        "resposta": "Sim! Essa é uma vantagem. Você pode variar nomes, números, cores entre peças do mesmo lote sem custo adicional."
+      },
+      {
+        "pergunta": "Qual é o custo de impressão digital para 100 cartões?",
+        "resposta": "Aproximadamente R$50-100 (R$0,50-1,00 por cartão), sem custo de setup. Solicite um orçamento online para valor exato."
+      }
+    ]
+  },
+  {
+    "id": "impressao-sob-demanda",
+    "nome": "Impressão Sob Demanda",
+    "tagline": "Produza apenas o que você vende",
+    "descricaoCurta": "Sistema de impressão que permite produzir quantidades mínimas e personalizadas sem estoque, perfeito para pequenos negócios.",
+    "descricaoCompleta": "A impressão sob demanda revoluciona a produção gráfica permitindo que você venda e imprima exatamente a quantidade que o cliente pediu. Sem estoque, sem desperdício. Ideal para empreendedores, agências e pequenos negócios que precisam oferecer variedade sem investimento em inventário. Integra-se com plataformas de e-commerce para automação total.",
+    "beneficios": [
+      "Sem custo de estoque ou galpão",
+      "Imprima exatamente o que vendeu",
+      "Escalabilidade instantânea",
+      "Produtos personalizados com diferencial",
+      "Reduz desperdício e rejeitos",
+      "Possibilita margens maiores"
+    ],
+    "aplicacoes": [
+      "Produtos de e-commerce (camisetas, canecas, etc)",
+      "Livros e publicações independentes",
+      "Materiais corporativos customizados",
+      "Merchandising de eventos",
+      "Produtos sazonais e limitados",
+      "Negócios de pequena escala"
+    ],
+    "acabamentosRecomendados": ["encadernacao-premium", "corte-especial"],
+    "comparativas": "Diferente de offset e digital, sob demanda não é um tipo de impressão mas um modelo de negócio. Pode usar digital ou offset conforme volume. Mais caro por unidade mas elimina custo de estoque.",
+    "processoTecnico": "Integração entre e-commerce, sistema de produção e entrega. Cada pedido gera um arquivo de impressão automaticamente. Pode usar múltiplas tecnologias (digital, offset, sublimação) conforme volume.",
+    "custo": "Sem setup. Custo por unidade varia conforme produto (R$5-50+). Melhor margem pois não há desperdício.",
+    "prazo": "3-5 dias úteis da aprovação até entrega (depende do produto)",
+    "ideal": "E-commerce, pequenos negócios, autores independentes, empresas que precisam de variedade e escalabilidade",
+    "img": "/conceituais/materiais-graficos-impressao3.jpeg",
+    "palavrasChave": ["impressão sob demanda", "POD", "impressão e-commerce", "impressão personalizada", "print on demand"],
+    "faq": [
+      {
+        "pergunta": "Como funciona impressão sob demanda?",
+        "resposta": "Cliente compra → arquivo é gerado automaticamente → vai para fila de impressão → produto é impresso e enviado. Zero estoque, zero desperdício."
+      },
+      {
+        "pergunta": "Quais produtos posso imprimir sob demanda?",
+        "resposta": "Camisetas, canecas, mochilas, livros, cartazes, mousepad, garrafas, bonés e centenas de produtos. Consulte a lista completa."
+      },
+      {
+        "pergunta": "O preço fica caro demais para minha margem?",
+        "resposta": "Pode ficar apertado. Por isso recomendamos sob demanda para produtos com boa margem (moda, luxo, nicho) e não para commodity."
+      }
+    ]
+  },
+  {
+    "id": "embalagens-personalizadas",
+    "nome": "Embalagens Personalizadas",
+    "tagline": "A embalagem que vende seu produto",
+    "descricaoCurta": "Caixas, sachês e embalagens customizadas que transformam sua marca e geram impacto no ponto de venda.",
+    "descricaoCompleta": "A embalagem é a primeira (e às vezes última) impressão do cliente sobre seu produto. Caixas personalizadas, sachês, bags e embalagens especiais transformam sua marca em experiência tangível. Desde impressão offset premium até personalizações sob demanda, criamos soluções que protegem, impressionam e vendem.",
+    "beneficios": [
+      "Diferenciação visual no ponto de venda",
+      "Comunicação da marca 360°",
+      "Proteção do produto",
+      "Experiência de unboxing memorável",
+      "Aumento da percepção de valor",
+      "Possibilidade de compartilhamento social (em rede)"
+    ],
+    "aplicacoes": [
+      "Caixas de presente e premium",
+      "Sacolas e bolsas personalizadas",
+      "Sachês de alimentos e cosméticos",
+      "Caixas de envio corporativo",
+      "Tubos e embalagens especiais",
+      "Rótulos personalizados"
+    ],
+    "acabamentosRecomendados": ["laminacao-fosca", "hot-stamping", "relevo-seco", "verniz-uv"],
+    "comparativas": "Diferente de impressão simples, embalagens envolvem estrutura e proteção. Mais complexas que cartazes. Requerem conhecimento técnico de espessura de cartão, resistência e acabamentos.",
+    "processoTecnico": "Desenho técnico com marcas de corte e dobra. Impressão offset ou digital. Corte e vinco em máquinas especializadas. Montagem e finalização.",
+    "custo": "Variável conforme tamanho e complexidade. Caixas simples: R$0,50-2,00. Premium com acabamentos: R$3,00-10,00+",
+    "prazo": "10-15 dias (inclui prototipagem e ajustes)",
+    "ideal": "E-commerce, alimentos premium, cosméticos, presentes, marcas que querem diferenciar-se",
+    "img": "/conceituais/materiais-graficos-impressao4.jpeg",
+    "palavrasChave": ["embalagem personalizada", "caixa customizada", "embalagem premium", "caixa de presente", "embalagem de marca"],
+    "faq": [
+      {
+        "pergunta": "Qual é o tamanho mínimo de pedido para embalagens?",
+        "resposta": "500 unidades para impressão offset (melhor custo). Digital aceita partir de 50. Sob demanda a partir de 1 unidade."
+      },
+      {
+        "pergunta": "Preciso de protótipo antes de produzir?",
+        "resposta": "Altamente recomendado. Custa entre R$100-300 e evita surpresas custosas em produção. Vale muito a pena."
+      },
+      {
+        "pergunta": "Posso usar acabamentos na embalagem (hot stamping, relevo)?",
+        "resposta": "Sim! Embalagens são o lugar perfeito para acabamentos premium. Hot stamping em ouro/prata é clássico e impressiona."
+      }
+    ]
+  },
+  {
+    "id": "materiais-institucionais",
+    "nome": "Materiais Institucionais",
+    "tagline": "A identidade visual da sua empresa em papel",
+    "descricaoCurta": "Cartões, papel timbrado, pastas e materiais que comunicam profissionalismo e identidade corporativa.",
+    "descricaoCompleta": "Materiais institucionais formam a base da comunicação impressa de qualquer empresa. Desde cartões de visita que criam primeira impressão até papel timbrado e pastas que transmitem profissionalismo. Utilizamos as melhores técnicas e acabamentos para garantir que sua identidade visual seja impecável em cada interação.",
+    "beneficios": [
+      "Primeira impressão profissional",
+      "Consistência de marca",
+      "Identidade visual estratégica",
+      "Aumenta percepção de credibilidade",
+      "Facilita contatos e relacionamento",
+      "Diferenciação da concorrência"
+    ],
+    "aplicacoes": [
+      "Cartões de visita executivos",
+      "Papel timbrado e envelopes",
+      "Pastas e blocos personalizados",
+      "Materiais de apresentação",
+      "Tokens e crachás",
+      "Chaveiros e brindes corporativos"
+    ],
+    "acabamentosRecomendados": ["laminacao-fosca", "hot-stamping", "relevo-seco", "corte-especial"],
+    "comparativas": "Materiais institucionais focam em identidade e comunicação. Diferentes de catálogos (que vendem) ou sinalização (que informa). Exigem atenção ao detalhe e consistência.",
+    "processoTecnico": "Impressão em papéis premium (couchê, reciclado, cardboard). Acabamentos estratégicos (laminação, hot stamping) elevam percepção. Cortes precisos e alinhamento perfeito.",
+    "custo": "Cartão simples: R$0,30-1,00 por unidade. Com acabamentos: R$1,00-3,00+",
+    "prazo": "5-8 dias úteis",
+    "ideal": "Empresas, consultores, executivos, agências que querem transmitir profissionalismo",
+    "img": "/conceituais/materiais-graficos-impressao5.jpeg",
+    "palavrasChave": ["cartão de visita", "papel timbrado", "materiais corporativos", "identidade visual", "cartão executivo"],
+    "faq": [
+      {
+        "pergunta": "Qual é a espessura ideal para cartão de visita?",
+        "resposta": "300-350 gsm é padrão profissional. Mais fino (250gsm) parece frágil. Mais grosso (400gsm+) é premium mas mais caro."
+      },
+      {
+        "pergunta": "Como faço para manter consistência de marca em materiais?",
+        "resposta": "Use sempre as mesmas cores (Pantone), fonte e elementos visuais. Manual de marca bem definido ajuda muito."
+      },
+      {
+        "pergunta": "Vale a pena investir em acabamentos nos materiais corporativos?",
+        "resposta": "Sim! Um cartão com hot stamping cria impressão de luxo por apenas R$1-2 a mais. ROI é alto em termos de percepção."
+      }
+    ]
+  },
+  {
+    "id": "sinalizacao-display",
+    "nome": "Sinalização e Display",
+    "tagline": "Sua marca visível onde o cliente está",
+    "descricaoCurta": "Banners, posters, displays e sinalização que capturam atenção e comunicam instantaneamente no ponto de venda.",
+    "descricaoCompleta": "Sinalização eficaz é invisível: o cliente não pensa, apenas segue. Banners premium, displays impressionantes e posters impactantes que comunicam sua mensagem em segundos. Ideal para pontos de venda, eventos, fachadas e ambientes corporativos. Utilizamos materiais duráveis e técnicas de impressão que garantem cores vibrantes e legibilidade perfeita.",
+    "beneficios": [
+      "Comunicação instantânea",
+      "Alto impacto visual",
+      "Atrai clientes no ponto de venda",
+      "Mensagem clara e direta",
+      "Durável em ambientes externos",
+      "Custo efetivo em grandes áreas"
+    ],
+    "aplicacoes": [
+      "Banners de fachada e exterior",
+      "Displays de ponto de venda",
+      "Posters informativos",
+      "Sinalização de eventos",
+      "Painéis internos e externos",
+      "Placas e totens"
+    ],
+    "acabamentosRecomendados": ["corte-especial", "encadernacao-premium"],
+    "comparativas": "Diferente de impressão tradicional em papel. Exige materiais especiais (lona, PVC, papel fotográfico) e técnicas de impressão de grande formato. Outdoor vs indoor exigem diferentes materiais.",
+    "processoTecnico": "Impressão em ploter de grande formato ou impressora UV. Materiais: lona vinílica, PVC, papel fotográfico, tecido. Acabamento com bastões, reenforços ou estrutura.",
+    "custo": "Banners: R$5-30 por m². Posters: R$2-10 por m². Displays: R$30-200+ conforme complexidade.",
+    "prazo": "3-5 dias úteis para impressão + acabamento",
+    "ideal": "Pontos de venda, eventos, fachadas, campanhas de marketing, sinalização corporativa",
+    "img": "/conceituais/materiais-graficos-impressao6.jpeg",
+    "palavrasChave": ["sinalização", "banner", "poster", "display", "grande formato", "impressão outdoor"],
+    "faq": [
+      {
+        "pergunta": "Qual material devo usar para um banner que fica ao ar livre?",
+        "resposta": "Lona vinílica 440gsm é padrão. Resiste a chuva, vento e UV. Para maior durabilidade (5+ anos), considere 550gsm."
+      },
+      {
+        "pergunta": "Posso colocar um banner em minha fachada ou preciso de autorização?",
+        "resposta": "Depende do município. Geralmente é necessário alvará. Recomendamos consultar a prefeitura local antes da impressão."
+      },
+      {
+        "pergunta": "Como garantir que o poster fica visível de longe?",
+        "resposta": "Use fontes grandes (mínimo 20cm para ler de 5m), cores contrastantes e layout simples. Menos conteúdo = melhor compreensão instantânea."
+      }
+    ]
+  }
+]

@@ -1,77 +1,65 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import ProductsCarousel from '../../components/ProductsCarousel'
 import Favicon from '../../components/Favicon'
 import WhatsAppLink from '../../components/WhatsAppLink'
-import acabamentos from '../../data/acabamentos.json'
 import servicos from '../../data/servicos.json'
+import acabamentos from '../../data/acabamentos.json'
 import Head from 'next/head'
 import Link from 'next/link'
 
 export async function getStaticPaths() {
-  const paths = acabamentos.map(ac => ({
-    params: { id: ac.id }
+  const paths = servicos.map(svc => ({
+    params: { servico: svc.id }
   }));
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const acabamento = acabamentos.find(ac => ac.id === params.id);
+  const servico = servicos.find(svc => svc.id === params.servico);
 
-  if (!acabamento) {
+  if (!servico) {
     return { notFound: true };
   }
 
-  const outrosAcabamentos = acabamentos.filter(ac => ac.id !== params.id).slice(0, 3);
-  const servicosRelacionados = servicos.filter(svc =>
-    (svc.acabamentosRecomendados || []).includes(params.id)
+  const outrosServicos = servicos.filter(svc => svc.id !== params.servico).slice(0, 3);
+  const acabamentosRecomendados = acabamentos.filter(ac =>
+    (servico.acabamentosRecomendados || []).includes(ac.id)
   );
 
   return {
     props: {
-      acabamento,
-      outrosAcabamentos,
-      servicosRelacionados
+      servico,
+      outrosServicos,
+      acabamentosRecomendados
     }
   };
 }
 
-export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicosRelacionados }) {
-  // SEO Otimizado para Google
-  const pageTitle = `${acabamento.nome}: Guia Completo 2024 | CIR Gráfica`;
-  const pageDescription = `${acabamento.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
-  const canonicalUrl = `https://cidades.cirgrafica.com.br/acabamentos/${acabamento.id}`;
+export default function ServicoPage({ servico, outrosServicos, acabamentosRecomendados }) {
+  const pageTitle = `${servico.nome}: Guia Completo 2024 | CIR Gráfica`;
+  const pageDescription = `${servico.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
+  const canonicalUrl = `https://cidades.cirgrafica.com.br/servicos/${servico.id}`;
 
   const schemaData = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": `${acabamento.nome}: Guia Completo`,
+    "@type": "Service",
+    "name": servico.nome,
     "description": pageDescription,
-    "articleBody": acabamento.descricaoCompleta,
-    "image": `https://cidades.cirgrafica.com.br${acabamento.img}`,
-    "author": {
+    "provider": {
       "@type": "Organization",
       "name": "CIR Gráfica"
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "CIR Gráfica",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://www.cirgrafica.com.br/logo.png"
-      }
-    },
-    "datePublished": "2024-01-01",
+    "areaServed": "BR",
     "url": canonicalUrl,
-    "keywords": acabamento.palavrasChave.join(", ")
+    "image": `https://cidades.cirgrafica.com.br${servico.img}`
   };
 
   return (
-    <div className="cir-root ac-light-page">
+    <div className="cir-root svc-light-page">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <meta name="keywords" content={acabamento.palavrasChave.join(", ")} />
+        <meta name="keywords" content={servico.palavrasChave.join(", ")} />
         <meta name="author" content="CIR Gráfica" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
@@ -79,14 +67,14 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={`https://cidades.cirgrafica.com.br${acabamento.img}`} />
+        <meta property="og:image" content={`https://cidades.cirgrafica.com.br${servico.img}`} />
         <meta property="og:site_name" content="CIR Gráfica" />
         <meta property="og:locale" content="pt_BR" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={canonicalUrl} />
         <meta property="twitter:title" content={pageTitle} />
         <meta property="twitter:description" content={pageDescription} />
-        <meta property="twitter:image" content={`https://cidades.cirgrafica.com.br${acabamento.img}`} />
+        <meta property="twitter:image" content={`https://cidades.cirgrafica.com.br${servico.img}`} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
       </Head>
 
@@ -94,111 +82,105 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
       <Header />
 
       {/* Breadcrumbs */}
-      <nav className="ac-breadcrumb" aria-label="Breadcrumb">
-        <div className="ac-breadcrumb-inner">
+      <nav className="svc-breadcrumb" aria-label="Breadcrumb">
+        <div className="svc-breadcrumb-inner">
           <Link href="/">Home</Link>
           <span>/</span>
-          <Link href="/acabamentos">Acabamentos</Link>
+          <Link href="/servicos">Serviços</Link>
           <span>/</span>
-          <span aria-current="page">{acabamento.nome}</span>
+          <span aria-current="page">{servico.nome}</span>
         </div>
       </nav>
 
-      {/* Hero - H1 otimizado para SEO */}
-      <section className="ac-hero">
-        <div className="ac-hero-content">
-          <h1>{acabamento.nome}</h1>
-          <p className="ac-hero-subtitle">{acabamento.tagline}</p>
+      {/* Hero */}
+      <section className="svc-hero">
+        <div className="svc-hero-content">
+          <h1>{servico.nome}</h1>
+          <p className="svc-hero-subtitle">{servico.tagline}</p>
         </div>
       </section>
 
-      {/* Imagem destaque com legenda */}
-      <section className="ac-image-section">
-        <figure className="ac-figure">
-          <img src={acabamento.img} alt={`Exemplo de ${acabamento.nome}`} />
-          <figcaption>{acabamento.nome} - CIR Gráfica</figcaption>
+      {/* Imagem destaque */}
+      <section className="svc-image-section">
+        <figure className="svc-figure">
+          <img src={servico.img} alt={`Exemplo de ${servico.nome}`} />
+          <figcaption>{servico.nome} - CIR Gráfica</figcaption>
         </figure>
       </section>
 
       {/* Conteúdo Principal */}
-      <article className="ac-main-content">
-        {/* O que é - H2 otimizado */}
-        <section className="ac-section">
-          <h2>O que é {acabamento.nome}?</h2>
-          <p className="ac-lead">{acabamento.descricaoCompleta}</p>
+      <article className="svc-main-content">
+        <section className="svc-section">
+          <h2>O que é {servico.nome}?</h2>
+          <p className="svc-lead">{servico.descricaoCompleta}</p>
         </section>
 
-        {/* Benefícios - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Benefícios do {acabamento.nome}</h2>
-          <div className="ac-benefits-grid">
-            {acabamento.beneficios.map((b, i) => (
-              <div key={i} className="ac-benefit-item">
-                <span className="ac-check">✓</span>
+        <section className="svc-section">
+          <h2>Benefícios do {servico.nome}</h2>
+          <div className="svc-benefits-grid">
+            {servico.beneficios.map((b, i) => (
+              <div key={i} className="svc-benefit-item">
+                <span className="svc-check">✓</span>
                 <span>{b}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Aplicações - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Para Que Serve {acabamento.nome}?</h2>
-          <p className="ac-intro">{acabamento.ideal}</p>
-          <div className="ac-apps-list">
-            {acabamento.aplicacoes.map((app, i) => (
-              <div key={i} className="ac-app-item">
-                <span className="ac-arrow">→</span>
+        <section className="svc-section">
+          <h2>Para Que Serve {servico.nome}?</h2>
+          <p className="svc-intro">{servico.ideal}</p>
+          <div className="svc-apps-list">
+            {servico.aplicacoes.map((app, i) => (
+              <div key={i} className="svc-app-item">
+                <span className="svc-arrow">→</span>
                 <span>{app}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Como Funciona - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Como Funciona {acabamento.nome}?</h2>
-          <div className="ac-tech-box">
-            <p>{acabamento.processoTecnico}</p>
+        <section className="svc-section">
+          <h2>Como Funciona {servico.nome}?</h2>
+          <div className="svc-tech-box">
+            <p>{servico.processoTecnico}</p>
           </div>
         </section>
 
-        {/* Comparativas */}
-        <section className="ac-section">
-          <h2>{acabamento.nome} vs Outros Acabamentos</h2>
-          <div className="ac-compare-box">
-            <p>{acabamento.comparativas}</p>
+        <section className="svc-section">
+          <h2>{servico.nome} vs Outros Serviços</h2>
+          <div className="svc-compare-box">
+            <p>{servico.comparativas}</p>
           </div>
         </section>
 
-        {/* Custo e Prazo - Grid 2 colunas */}
-        <section className="ac-section">
+        <section className="svc-section">
           <h2>Custo e Prazo de Entrega</h2>
-          <div className="ac-info-grid">
-            <div className="ac-info-card">
+          <div className="svc-info-grid">
+            <div className="svc-info-card">
               <h3>Quanto Custa?</h3>
-              <p>{acabamento.custo}</p>
+              <p>{servico.custo}</p>
             </div>
-            <div className="ac-info-card">
+            <div className="svc-info-card">
               <h3>Qual é o Prazo?</h3>
-              <p>{acabamento.prazo}</p>
+              <p>{servico.prazo}</p>
             </div>
           </div>
         </section>
 
-        {/* Serviços Relacionados - LINK CRUZADO */}
-        {servicosRelacionados.length > 0 && (
-          <section className="ac-section">
-            <h2>Serviços que Usam {acabamento.nome}</h2>
-            <p className="ac-intro">Este acabamento é aplicado nos seguintes serviços:</p>
-            <div className="ac-related-grid">
-              {servicosRelacionados.map(svc => (
-                <Link key={svc.id} href={`/servicos/${svc.id}`} className="ac-related-card">
-                  <img src={svc.img} alt={svc.nome} />
-                  <div className="ac-related-info">
-                    <h3>{svc.nome}</h3>
-                    <p>{svc.tagline}</p>
-                    <span className="ac-related-link">Conhecer serviço →</span>
+        {/* Acabamentos Recomendados - LINK CRUZADO */}
+        {acabamentosRecomendados.length > 0 && (
+          <section className="svc-section">
+            <h2>Acabamentos Recomendados para {servico.nome}</h2>
+            <p className="svc-intro">Eleve ainda mais o resultado combinando este serviço com os acabamentos abaixo:</p>
+            <div className="svc-related-grid">
+              {acabamentosRecomendados.map(ac => (
+                <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="svc-related-card">
+                  <img src={ac.img} alt={ac.nome} />
+                  <div className="svc-related-info">
+                    <h3>{ac.nome}</h3>
+                    <p>{ac.tagline}</p>
+                    <span className="svc-related-link">Conhecer acabamento →</span>
                   </div>
                 </Link>
               ))}
@@ -206,12 +188,12 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           </section>
         )}
 
-        {/* FAQ - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Perguntas Frequentes sobre {acabamento.nome}</h2>
-          <div className="ac-faq-list">
-            {acabamento.faq.map((q, i) => (
-              <details key={i} className="ac-faq-item">
+        {/* FAQ */}
+        <section className="svc-section">
+          <h2>Perguntas Frequentes sobre {servico.nome}</h2>
+          <div className="svc-faq-list">
+            {servico.faq.map((q, i) => (
+              <details key={i} className="svc-faq-item">
                 <summary>{q.pergunta}</summary>
                 <p>{q.resposta}</p>
               </details>
@@ -220,27 +202,31 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         </section>
 
         {/* CTA */}
-        <section className="ac-cta">
-          <h2>Transforme sua Marca com {acabamento.nome}</h2>
-          <p>Solicite um orçamento sem compromisso e descubra como este acabamento pode elevar o valor percebido de seus materiais gráficos.</p>
-          <a href="https://wa.me/556232021150" target="_blank" rel="noopener noreferrer" className="ac-btn">
+        <section className="svc-cta">
+          <h2>Solicite um Orçamento para {servico.nome}</h2>
+          <p>Envie suas especificações e receba uma proposta personalizada em até 2 horas.</p>
+          <WhatsAppLink
+            message={`Olá! Gostaria de um orçamento para ${servico.nome}`}
+            source={`servico_${servico.id}`}
+            className="svc-btn"
+          >
             💬 Solicitar Orçamento
-          </a>
+          </WhatsAppLink>
         </section>
       </article>
 
-      {/* Outros Acabamentos */}
-      {outrosAcabamentos.length > 0 && (
-        <section className="ac-others">
-          <h2>Explore Outros Acabamentos</h2>
-          <div className="ac-cards-grid">
-            {outrosAcabamentos.map(ac => (
-              <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="ac-card">
-                <img src={ac.img} alt={ac.nome} />
-                <div className="ac-card-info">
-                  <h3>{ac.nome}</h3>
-                  <p>{ac.tagline}</p>
-                  <span className="ac-link">Saiba mais →</span>
+      {/* Outros Serviços */}
+      {outrosServicos.length > 0 && (
+        <section className="svc-others">
+          <h2>Explore Outros Serviços</h2>
+          <div className="svc-cards-grid">
+            {outrosServicos.map(svc => (
+              <Link key={svc.id} href={`/servicos/${svc.id}`} className="svc-card">
+                <img src={svc.img} alt={svc.nome} />
+                <div className="svc-card-info">
+                  <h3>{svc.nome}</h3>
+                  <p>{svc.tagline}</p>
+                  <span className="svc-link">Saiba mais →</span>
                 </div>
               </Link>
             ))}
@@ -248,24 +234,23 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         </section>
       )}
 
-      <WhatsAppLink />
       <Footer />
 
       <style jsx>{`
         /* ── Page Light ────────────────────── */
-        .ac-light-page {
+        .svc-light-page {
           background: #ffffff;
           color: #2a2420;
         }
 
         /* ── Breadcrumbs ───────────────────── */
-        .ac-breadcrumb {
+        .svc-breadcrumb {
           background: #f9f7f2;
           border-bottom: 1px solid #e8d4c4;
           margin-top: 80px;
         }
 
-        .ac-breadcrumb-inner {
+        .svc-breadcrumb-inner {
           max-width: 1200px;
           margin: 0 auto;
           padding: 0.75rem 2rem;
@@ -276,33 +261,33 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           flex-wrap: wrap;
         }
 
-        .ac-breadcrumb a {
+        .svc-breadcrumb a {
           color: #e8613a;
           text-decoration: none;
           transition: opacity 0.2s;
         }
 
-        .ac-breadcrumb a:hover {
+        .svc-breadcrumb a:hover {
           opacity: 0.7;
         }
 
-        .ac-breadcrumb span {
+        .svc-breadcrumb span {
           color: #6a6460;
         }
 
-        .ac-breadcrumb [aria-current="page"] {
+        .svc-breadcrumb [aria-current="page"] {
           color: #2a2420;
           font-weight: 600;
         }
 
         /* ── Hero ──────────────────────────── */
-        .ac-hero {
+        .svc-hero {
           background: linear-gradient(135deg, #f4f0e8 0%, #ece7dd 100%);
           padding: 5rem 2rem 4rem;
           text-align: center;
         }
 
-        .ac-hero-content h1 {
+        .svc-hero-content h1 {
           font-size: 2.5rem;
           font-weight: 700;
           color: #1a1814;
@@ -310,26 +295,26 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           font-family: 'Courier Prime', monospace;
         }
 
-        .ac-hero-subtitle {
+        .svc-hero-subtitle {
           font-size: 1.2rem;
           color: #6a6460;
           margin: 0;
         }
 
         /* ── Image Section ─────────────────── */
-        .ac-image-section {
+        .svc-image-section {
           padding: 2rem;
           background: white;
           text-align: center;
         }
 
-        .ac-figure {
+        .svc-figure {
           margin: 0;
           max-width: 600px;
           margin: 0 auto;
         }
 
-        .ac-figure img {
+        .svc-figure img {
           width: 100%;
           max-height: 400px;
           object-fit: cover;
@@ -337,7 +322,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .ac-figure figcaption {
+        .svc-figure figcaption {
           margin-top: 0.8rem;
           font-size: 0.9rem;
           color: #6a6460;
@@ -345,17 +330,17 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         }
 
         /* ── Main Content ──────────────────── */
-        .ac-main-content {
+        .svc-main-content {
           max-width: 800px;
           margin: 0 auto;
           padding: 2rem;
         }
 
-        .ac-section {
+        .svc-section {
           margin-bottom: 3rem;
         }
 
-        .ac-section h2 {
+        .svc-section h2 {
           font-size: 1.5rem;
           font-weight: 700;
           color: #1a1814;
@@ -365,21 +350,21 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           display: inline-block;
         }
 
-        .ac-section h3 {
+        .svc-section h3 {
           font-size: 1.1rem;
           font-weight: 600;
           color: #1a1814;
           margin: 1rem 0 0.5rem 0;
         }
 
-        .ac-section p {
+        .svc-section p {
           font-size: 1rem;
           line-height: 1.8;
           color: #2a2420;
           margin-bottom: 1rem;
         }
 
-        .ac-lead {
+        .svc-lead {
           font-size: 1.05rem;
           line-height: 1.85;
           color: #3a3430;
@@ -388,14 +373,14 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         }
 
         /* ── Benefits Grid ─────────────────── */
-        .ac-benefits-grid {
+        .svc-benefits-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
           margin-top: 1rem;
         }
 
-        .ac-benefit-item {
+        .svc-benefit-item {
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
@@ -405,33 +390,33 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           border-left: 3px solid #e8613a;
         }
 
-        .ac-check {
+        .svc-check {
           color: #e8613a;
           font-weight: 700;
           font-size: 1.2rem;
           flex-shrink: 0;
         }
 
-        .ac-benefit-item span:last-child {
+        .svc-benefit-item span:last-child {
           color: #2a2420;
           font-size: 0.95rem;
           line-height: 1.5;
         }
 
         /* ── Applications List ─────────────── */
-        .ac-intro {
+        .svc-intro {
           font-size: 1rem;
           color: #3a3430;
           margin-bottom: 1.5rem;
         }
 
-        .ac-apps-list {
+        .svc-apps-list {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 0.75rem;
         }
 
-        .ac-app-item {
+        .svc-app-item {
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -439,70 +424,70 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           color: #2a2420;
         }
 
-        .ac-arrow {
+        .svc-arrow {
           color: #e8613a;
           font-weight: 600;
         }
 
         /* ── Tech Box ──────────────────────── */
-        .ac-tech-box {
+        .svc-tech-box {
           background: #f4f0e8;
           padding: 1.5rem;
           border-radius: 8px;
           border-left: 4px solid #e8613a;
         }
 
-        .ac-tech-box p {
+        .svc-tech-box p {
           margin: 0;
           color: #2a2420;
         }
 
         /* ── Compare Box ───────────────────── */
-        .ac-compare-box {
+        .svc-compare-box {
           background: #ece7dd;
           padding: 1.5rem;
           border-radius: 8px;
           border: 2px solid #e8613a;
         }
 
-        .ac-compare-box p {
+        .svc-compare-box p {
           margin: 0;
           color: #2a2420;
         }
 
         /* ── Info Grid ─────────────────────── */
-        .ac-info-grid {
+        .svc-info-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1.5rem;
           margin-top: 1rem;
         }
 
-        .ac-info-card {
+        .svc-info-card {
           background: #f9f7f2;
           padding: 1.5rem;
           border-radius: 8px;
           border: 1px solid #e8d4c4;
         }
 
-        .ac-info-card h3 {
+        .svc-info-card h3 {
           color: #e8613a;
           margin-top: 0;
         }
 
-        .ac-info-card p {
+        .svc-info-card p {
           color: #2a2420;
         }
 
-        /* ── Related (Serviços) Grid ───────── */
-        .ac-related-grid {
+        /* ── Related (Acabamentos) Grid ────── */
+        .svc-related-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
           gap: 1.5rem;
           margin-top: 1rem;
         }
 
-        .ac-related-card {
+        .svc-related-card {
           display: block;
           text-decoration: none;
           background: #f9f7f2;
@@ -512,48 +497,48 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .ac-related-card:hover {
+        .svc-related-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 8px 20px rgba(232, 97, 58, 0.15);
           border-color: #e8613a;
         }
 
-        .ac-related-card img {
+        .svc-related-card img {
           width: 100%;
           height: 160px;
           object-fit: cover;
           display: block;
         }
 
-        .ac-related-info {
+        .svc-related-info {
           padding: 1.2rem;
         }
 
-        .ac-related-info h3 {
+        .svc-related-info h3 {
           color: #1a1814;
           font-size: 1rem;
           margin: 0 0 0.4rem 0;
         }
 
-        .ac-related-info p {
+        .svc-related-info p {
           color: #6a6460;
           font-size: 0.85rem;
           margin: 0 0 0.8rem 0;
           line-height: 1.4;
         }
 
-        .ac-related-link {
+        .svc-related-link {
           color: #e8613a;
           font-weight: 600;
           font-size: 0.85rem;
         }
 
         /* ── FAQ ───────────────────────────── */
-        .ac-faq-list {
+        .svc-faq-list {
           margin-top: 1rem;
         }
 
-        .ac-faq-item {
+        .svc-faq-item {
           background: #f9f7f2;
           border: 1px solid #e8d4c4;
           border-radius: 6px;
@@ -561,7 +546,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           overflow: hidden;
         }
 
-        .ac-faq-item summary {
+        .svc-faq-item summary {
           padding: 1rem;
           cursor: pointer;
           font-weight: 600;
@@ -572,11 +557,11 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           align-items: center;
         }
 
-        .ac-faq-item summary:hover {
+        .svc-faq-item summary:hover {
           background: #ece7dd;
         }
 
-        .ac-faq-item p {
+        .svc-faq-item p {
           padding: 0 1rem 1rem 1rem;
           margin: 0;
           color: #2a2420;
@@ -584,7 +569,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         }
 
         /* ── CTA ───────────────────────────── */
-        .ac-cta {
+        .svc-cta {
           background: linear-gradient(135deg, #e8613a15 0%, #ece7dd 100%);
           border: 2px solid #e8613a;
           border-radius: 12px;
@@ -593,19 +578,19 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           margin-top: 3rem;
         }
 
-        .ac-cta h2 {
+        .svc-cta h2 {
           color: #1a1814;
           border: none;
           display: block;
         }
 
-        .ac-cta p {
+        .svc-cta p {
           font-size: 1rem;
           color: #2a2420;
           margin-bottom: 1.5rem;
         }
 
-        .ac-btn {
+        .svc-btn {
           display: inline-block;
           background: #e8613a;
           color: white;
@@ -615,32 +600,34 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           font-weight: 600;
           transition: background 0.3s;
           font-size: 1rem;
+          border: none;
+          cursor: pointer;
         }
 
-        .ac-btn:hover {
+        .svc-btn:hover {
           background: #d14f2e;
         }
 
         /* ── Others Section ────────────────── */
-        .ac-others {
+        .svc-others {
           background: #f9f7f2;
           padding: 3rem 2rem;
           max-width: 1200px;
           margin: 0 auto;
         }
 
-        .ac-others h2 {
+        .svc-others h2 {
           text-align: center;
           margin-bottom: 2rem;
         }
 
-        .ac-cards-grid {
+        .svc-cards-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 1.5rem;
         }
 
-        .ac-card {
+        .svc-card {
           display: block;
           text-decoration: none;
           background: white;
@@ -650,36 +637,36 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
           transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .ac-card:hover {
+        .svc-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-        .ac-card img {
+        .svc-card img {
           width: 100%;
           height: 200px;
           object-fit: cover;
           display: block;
         }
 
-        .ac-card-info {
+        .svc-card-info {
           padding: 1.5rem;
         }
 
-        .ac-card h3 {
+        .svc-card h3 {
           color: #1a1814;
           font-size: 1.1rem;
           margin: 0 0 0.5rem 0;
         }
 
-        .ac-card p {
+        .svc-card p {
           color: #6a6460;
           font-size: 0.9rem;
           margin: 0 0 1rem 0;
           line-height: 1.5;
         }
 
-        .ac-link {
+        .svc-link {
           color: #e8613a;
           font-weight: 600;
           font-size: 0.95rem;
@@ -687,66 +674,66 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
 
         /* ── Responsive ────────────────────── */
         @media (max-width: 900px) {
-          .ac-benefits-grid,
-          .ac-apps-list,
-          .ac-info-grid {
+          .svc-benefits-grid,
+          .svc-apps-list,
+          .svc-info-grid {
             grid-template-columns: 1fr;
           }
 
-          .ac-hero-content h1 {
+          .svc-hero-content h1 {
             font-size: 2rem;
           }
         }
 
         @media (max-width: 768px) {
-          .ac-hero {
+          .svc-hero {
             padding: 2.5rem 1rem;
           }
 
-          .ac-hero-content h1 {
+          .svc-hero-content h1 {
             font-size: 1.75rem;
           }
 
-          .ac-main-content {
+          .svc-main-content {
             padding: 1.5rem;
           }
 
-          .ac-section h2 {
+          .svc-section h2 {
             font-size: 1.3rem;
           }
 
-          .ac-cta {
+          .svc-cta {
             padding: 1.5rem;
           }
 
-          .ac-cta h2 {
+          .svc-cta h2 {
             font-size: 1.2rem;
           }
 
-          .ac-btn {
+          .svc-btn {
             display: block;
             width: 100%;
           }
         }
 
         @media (max-width: 480px) {
-          .ac-hero-content h1 {
+          .svc-hero-content h1 {
             font-size: 1.4rem;
           }
 
-          .ac-hero-subtitle {
+          .svc-hero-subtitle {
             font-size: 1rem;
           }
 
-          .ac-section h2 {
+          .svc-section h2 {
             font-size: 1.1rem;
           }
 
-          .ac-section p {
+          .svc-section p {
             font-size: 0.95rem;
           }
 
-          .ac-cards-grid {
+          .svc-cards-grid {
             grid-template-columns: 1fr;
           }
         }

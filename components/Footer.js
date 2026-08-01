@@ -32,6 +32,11 @@ export default function Footer() {
           <h3 className="cir-footer__section-title">Projeto</h3>
           <ul className="cir-footer__list">
             <li>
+              <Link href="/servicos" className="cir-footer__link">
+                Serviços Gráficos
+              </Link>
+            </li>
+            <li>
               <Link href="/acabamentos" className="cir-footer__link">
                 Acabamentos Gráficos
               </Link>
