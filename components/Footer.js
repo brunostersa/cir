@@ -83,10 +83,7 @@ export default function Footer() {
 
       <div className="cir-footer__bottom">
         <span className="cir-footer__copy">
-          © {new Date().getFullYear()} CIR Gráfica e Editora Ltda. Todos os direitos reservados.
-        </span>
-        <span className="cir-footer__credits-simple">
-          Desenvolvido por <a href="https://customerhub.com.br" target="_blank" rel="noopener noreferrer">Customer Hub</a> • Design & Estratégia por Bruno Stersa
+          © {new Date().getFullYear()} CIR Gráfica e Editora Ltda. Desenvolvido por Customer Hub.
         </span>
       </div>
 
@@ -206,26 +203,8 @@ export default function Footer() {
 
         .cir-footer__copy {
           font-size: 0.75rem;
-          color: #8a8178;
+          color: #ffffff;
           line-height: 1.6;
-        }
-
-        .cir-footer__credits-simple {
-          font-size: 0.7rem;
-          color: #6a6460;
-          line-height: 1.6;
-          display: block;
-          margin-top: 0.5rem;
-        }
-
-        .cir-footer__credits-simple a {
-          color: #e8613a;
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-
-        .cir-footer__credits-simple a:hover {
-          color: #f07a4d;
         }
 
         @media (max-width: 1200px) {
