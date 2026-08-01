@@ -2,6 +2,7 @@ import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
 import ProductsCarousel from '../../../components/ProductsCarousel'
 import AcabamentosSection from '../../../components/AcabamentosSection'
+import ServicosGrid from '../../../components/ServicosGrid'
 import Favicon from '../../../components/Favicon'
 import WhatsAppLink from '../../../components/WhatsAppLink'
 import cidades from '../../../cidades.json'
@@ -160,38 +161,7 @@ export default function GraficaEstado({ estado, cidades }) {
       <div className="cir-section">
         <span className="cir-s-tag cir-reveal">Serviços</span>
         <h2 className="cp-h2 cir-reveal cir-reveal--d1">Tudo que você pode solicitar</h2>
-        <div className="cp-services-grid cir-reveal cir-reveal--d1">
-          <div className="cp-service">
-            <h3>Materiais Institucionais</h3>
-            <p>Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.</p>
-            <ul><li>Cartões de visita</li><li>Papel timbrado</li><li>Pastas executivas</li><li>Folders institucionais</li></ul>
-          </div>
-          <div className="cp-service">
-            <h3>Materiais Promocionais</h3>
-            <p>Flyers, banners, adesivos e catálogos para divulgar seus produtos e serviços com impacto.</p>
-            <ul><li>Flyers e panfletos</li><li>Banners e faixas</li><li>Adesivos personalizados</li><li>Catálogos promocionais</li></ul>
-          </div>
-          <div className="cp-service">
-            <h3>Impressão Digital e Offset</h3>
-            <p>Soluções rápidas para pequenas tiragens e produções offset para grandes volumes com acabamento impecável.</p>
-            <ul><li>Impressão digital rápida</li><li>Produção offset</li><li>Pequenas e grandes tiragens</li><li>Acabamento profissional</li></ul>
-          </div>
-          <div className="cp-service">
-            <h3>Impressão Editorial</h3>
-            <p>Revistas, livros e apostilas com acabamento impecável para projetos editoriais de qualidade.</p>
-            <ul><li>Revistas e jornais</li><li>Livros e manuais</li><li>Apostilas educacionais</li><li>Publicações corporativas</li></ul>
-          </div>
-          <div className="cp-service">
-            <h3>Moda e Etiquetas</h3>
-            <p>Tags e etiquetas que valorizam as peças e contam a história da sua marca no setor da moda.</p>
-            <ul><li>Tags personalizadas</li><li>Etiquetas de roupas</li><li>Identificação de produtos</li><li>Materiais têxteis</li></ul>
-          </div>
-          <div className="cp-service">
-            <h3>Embalagens e Sacolas</h3>
-            <p>Caixas e sacolas personalizadas para criar experiências únicas na entrega e destacar sua marca.</p>
-            <ul><li>Caixas personalizadas</li><li>Sacolas promocionais</li><li>Envelopes personalizados</li><li>Displays promocionais</li></ul>
-          </div>
-        </div>
+        <ServicosGrid className="cir-reveal cir-reveal--d1" />
       </div>
 
       <ProductsCarousel />

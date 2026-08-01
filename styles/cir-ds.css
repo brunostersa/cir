@@ -371,12 +371,15 @@
 .cir-section--light .cp-body { color: var(--cir-l-fg2) }
 .cir-section--light .cp-body strong { color: var(--cir-l-fg) }
 .cp-services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 3rem; background: var(--cir-line) }
-.cp-service { background: var(--cir-bg); padding: 2.5rem }
+.cp-service { background: var(--cir-bg); padding: 2.5rem; display: block; text-decoration: none; color: inherit; transition: transform .25s, box-shadow .25s; position: relative }
+.cp-service:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.18); z-index: 1 }
 .cp-service h3 { font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--cir-accent); margin-bottom: 1rem }
 .cp-service p { font-family: var(--cir-sans); font-size: .85rem; font-weight: 400; line-height: 1.7; color: var(--cir-fg2); margin-bottom: .8rem }
-.cp-service ul { list-style: none; display: flex; flex-direction: column; gap: .4rem }
+.cp-service ul { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem }
 .cp-service ul li { font-family: var(--cir-sans); font-size: .78rem; font-weight: 400; color: var(--cir-fg2); padding-left: 1rem; position: relative }
 .cp-service ul li::before { content: '—'; position: absolute; left: 0; color: var(--cir-accent); opacity: .5 }
+.cp-service-link { display: inline-block; font-family: var(--cir-sans); font-size: .72rem; font-weight: 600; letter-spacing: .08em; color: var(--cir-accent); transition: opacity .2s }
+.cp-service:hover .cp-service-link { opacity: .7 }
 .cp-note { border-top: 1px solid var(--cir-line); margin-top: 1px; padding: 2.5rem; background: var(--cir-bg2) }
 .cp-steps { display: flex; flex-direction: column; gap: 0 }
 .cp-step { display: grid; grid-template-columns: 2rem 1fr; gap: 1.5rem; padding: 1.8rem 0; border-top: 1px solid var(--cir-line) }
@@ -481,4 +484,5 @@
   .cir-section { padding: 4rem var(--cir-gutter) }
   .cir-footer { flex-direction: column; text-align: center }
   .cir-footer__links { text-align: center }
+  .cp-services-grid { grid-template-columns: 1fr }
 }
