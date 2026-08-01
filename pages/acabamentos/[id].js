@@ -204,9 +204,11 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
       <Footer />
 
       <style jsx>{`
+        /* ── Base ──────────────────────────── */
         .ac-article {
           max-width: 900px;
           margin: 0 auto;
+          color: var(--cir-l-fg);
         }
 
         .ac-intro-box {
@@ -219,8 +221,10 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
           width: 100%;
           height: auto;
           display: block;
+          filter: saturate(0.9);
         }
 
+        /* ── Seções de Conteúdo ────────────── */
         .ac-content-section {
           margin-bottom: 2.5rem;
         }
@@ -229,16 +233,17 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
           font-size: 1.3rem;
           font-weight: 600;
           margin-bottom: 1rem;
-          color: #1a1814;
+          color: var(--cir-l-fg);
         }
 
         .ac-content-section p {
           font-size: 1rem;
           line-height: 1.8;
-          color: #6a6460;
+          color: var(--cir-l-fg2);
           margin-bottom: 1rem;
         }
 
+        /* ── Listas ────────────────────────── */
         .ac-list {
           list-style: none;
           padding: 0;
@@ -251,18 +256,19 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
-          color: #1a1814;
+          color: var(--cir-l-fg);
           font-size: 0.95rem;
           line-height: 1.6;
         }
 
         .ac-list-icon {
-          color: #e8613a;
+          color: var(--cir-accent);
           font-weight: 600;
           flex-shrink: 0;
           font-size: 1.1rem;
         }
 
+        /* ── Grid 2 Colunas ────────────────── */
         .ac-grid-2 {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -271,23 +277,25 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
         }
 
         .ac-info-box {
-          background: #ece7dd;
+          background: var(--cir-bg2);
+          border: 1px solid var(--cir-line);
           padding: 1.5rem;
           border-radius: 8px;
         }
 
         .ac-info-box h3 {
-          color: #e8613a;
+          color: var(--cir-gold);
           font-weight: 600;
           margin-bottom: 0.5rem;
         }
 
         .ac-info-box p {
-          color: #6a6460;
+          color: var(--cir-fg2);
           font-size: 0.95rem;
           margin: 0;
         }
 
+        /* ── FAQ ───────────────────────────── */
         .ac-faq {
           display: flex;
           flex-direction: column;
@@ -295,27 +303,32 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
         }
 
         .ac-faq-item {
-          border-left: 3px solid #e8613a;
+          border-left: 3px solid var(--cir-accent);
           padding-left: 1.5rem;
+          background: var(--cir-bg2);
+          padding: 1rem;
+          padding-left: 1.5rem;
+          border-radius: 4px;
         }
 
         .ac-faq-item h3 {
-          color: #1a1814;
+          color: var(--cir-fg);
           font-weight: 600;
           margin-bottom: 0.5rem;
           font-size: 1rem;
         }
 
         .ac-faq-item p {
-          color: #6a6460;
+          color: var(--cir-fg2);
           font-size: 0.95rem;
           line-height: 1.6;
           margin: 0;
         }
 
+        /* ── CTA Box ───────────────────────── */
         .ac-cta-box {
-          background: linear-gradient(135deg, #e8613a22 0%, #ece7dd 100%);
-          border: 2px solid #e8613a;
+          background: rgba(232, 97, 58, 0.08);
+          border: 2px solid var(--cir-accent);
           border-radius: 12px;
           padding: 2rem;
           text-align: center;
@@ -323,32 +336,33 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
         }
 
         .ac-cta-box h2 {
-          color: #1a1814;
+          color: var(--cir-fg);
           font-size: 1.4rem;
           margin-bottom: 1rem;
         }
 
         .ac-cta-box p {
-          color: #6a6460;
+          color: var(--cir-fg2);
           font-size: 0.95rem;
           margin-bottom: 1.5rem;
         }
 
         .ac-cta-btn {
           display: inline-block;
-          background: #e8613a;
+          background: var(--cir-accent);
           color: white;
           padding: 0.9rem 2rem;
           border-radius: 6px;
           text-decoration: none;
           font-weight: 600;
-          transition: background 0.3s;
+          transition: opacity 0.3s;
         }
 
         .ac-cta-btn:hover {
-          background: #d14f2e;
+          opacity: 0.85;
         }
 
+        /* ── Card Grid ─────────────────────── */
         .ac-grid-3 {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -358,16 +372,16 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
         .ac-card {
           display: block;
           text-decoration: none;
-          background: white;
+          background: var(--cir-bg2);
+          border: 1px solid var(--cir-line);
           border-radius: 8px;
           overflow: hidden;
-          transition: transform 0.3s, box-shadow 0.3s;
-          border: 1px solid #ece7dd;
+          transition: transform 0.3s, border-color 0.3s;
         }
 
         .ac-card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+          border-color: var(--cir-gold);
         }
 
         .ac-card-img {
@@ -375,6 +389,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
           height: 200px;
           object-fit: cover;
           display: block;
+          filter: saturate(0.8);
         }
 
         .ac-card-content {
@@ -382,36 +397,130 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
         }
 
         .ac-card h3 {
-          color: #1a1814;
+          color: var(--cir-gold);
           font-weight: 600;
           margin-bottom: 0.5rem;
           font-size: 1rem;
         }
 
         .ac-card p {
-          color: #6a6460;
+          color: var(--cir-fg2);
           font-size: 0.85rem;
           line-height: 1.5;
           margin-bottom: 1rem;
         }
 
         .ac-card-arrow {
-          color: #e8613a;
+          color: var(--cir-accent);
           font-weight: 600;
           font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-          .ac-list {
-            grid-template-columns: 1fr;
-          }
-
+        /* ── Responsive ────────────────────── */
+        @media (max-width: 900px) {
           .ac-grid-2 {
             grid-template-columns: 1fr;
           }
 
           .ac-content-section h2 {
+            font-size: 1.2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .ac-article {
+            padding: 0;
+          }
+
+          .ac-content-section {
+            margin-bottom: 2rem;
+          }
+
+          .ac-content-section h2 {
             font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+          }
+
+          .ac-content-section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+          }
+
+          .ac-list {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+          }
+
+          .ac-list li {
+            font-size: 0.9rem;
+          }
+
+          .ac-cta-box {
+            padding: 1.5rem;
+            margin-top: 2rem;
+          }
+
+          .ac-cta-box h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .ac-cta-box p {
+            font-size: 0.9rem;
+          }
+
+          .ac-cta-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+          }
+
+          .ac-faq-item {
+            padding: 1rem;
+          }
+
+          .ac-card {
+            border-radius: 6px;
+          }
+
+          .ac-card-img {
+            height: 150px;
+          }
+
+          .ac-card-content {
+            padding: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .ac-content-section h2 {
+            font-size: 1rem;
+          }
+
+          .ac-list {
+            gap: 0.5rem;
+          }
+
+          .ac-list li {
+            font-size: 0.85rem;
+            gap: 0.5rem;
+          }
+
+          .ac-grid-3 {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .ac-cta-box {
+            padding: 1.25rem;
+          }
+
+          .ac-cta-box h2 {
+            font-size: 1rem;
+          }
+
+          .ac-cta-btn {
+            display: block;
+            width: 100%;
           }
         }
       `}</style>
