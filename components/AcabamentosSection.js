@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import Link from 'next/link'
 
 const ACABAMENTOS = [
   {
-    id: 'fosca',
+    id: 'laminacao-fosca',
     name: 'Laminação Fosca',
     tagline: 'Elegância discreta e toque aveludado',
     desc: 'A laminação fosca cobre toda a superfície com uma película mate que elimina reflexos e oferece sensação tátil sofisticada. Protege contra arranhões e umidade — ideal para materiais de alto padrão que transmitem seriedade e refinamento.',
@@ -11,7 +12,7 @@ const ACABAMENTOS = [
     img: '/conceituais/materiais-graficos-impressao33.jpeg',
   },
   {
-    id: 'uv',
+    id: 'verniz-uv',
     name: 'Verniz UV',
     tagline: 'Brilho intenso onde a peça mais importa',
     desc: 'O verniz UV pode ser aplicado de forma total ou localizada — realçando apenas os elementos que merecem destaque. O contraste entre a área envernizada e o fundo cria profundidade visual única. Combinado com laminação fosca, produz um efeito premium inconfundível.',
@@ -20,7 +21,7 @@ const ACABAMENTOS = [
     img: '/conceituais/materiais-graficos-impressao11.jpeg',
   },
   {
-    id: 'hot',
+    id: 'hot-stamping',
     name: 'Hot Stamping',
     tagline: 'Metalização que comunica luxo',
     desc: 'O hot stamping aplica folhas metálicas — ouro, prata, cobre ou cores especiais — por pressão e calor. O resultado é um brilho metálico real, impossível de replicar por impressão convencional. Transforma qualquer peça em objeto de valor e atribui percepção premium imediata.',
@@ -29,7 +30,7 @@ const ACABAMENTOS = [
     img: '/conceituais/materiais-graficos-impressao34.jpeg',
   },
   {
-    id: 'relevo',
+    id: 'relevo-seco',
     name: 'Relevo Seco',
     tagline: 'Dimensão tátil sem tinta',
     desc: 'O relevo seco (embossing) cria uma impressão tridimensional na superfície do papel sem uso de tinta. A peça ganha textura e profundidade perceptível ao toque — uma experiência sensorial que valoriza a marca em silêncio e comunica excelência técnica antes mesmo de ser lida.',
@@ -38,7 +39,7 @@ const ACABAMENTOS = [
     img: '/conceituais/materiais-graficos-impressao19.jpeg',
   },
   {
-    id: 'corte',
+    id: 'corte-especial',
     name: 'Corte Especial',
     tagline: 'Formatos que quebram o padrão',
     desc: 'A faca de corte personalizada permite criar peças em formatos não convencionais — cantos arredondados, recortes internos, formas orgânicas ou geométricas complexas. O resultado é uma peça que literalmente se destaca em qualquer contexto de apresentação.',
@@ -47,7 +48,7 @@ const ACABAMENTOS = [
     img: '/conceituais/materiais-graficos-impressao7.jpeg',
   },
   {
-    id: 'encad',
+    id: 'encadernacao-premium',
     name: 'Encadernação Premium',
     tagline: 'Acabamento que dura e impressiona',
     desc: 'Da costura à capa dura, cada método de encadernação serve a um propósito — e indicamos o ideal para o seu projeto. Wire-o para praticidade, costura para sofisticação, capa dura para durabilidade máxima. Miolo pautado, pontilhado, quadriculado ou em branco.',
@@ -99,6 +100,9 @@ export default function AcabamentosSection() {
           <div className="ac-ideal">
             <span className="ac-ideal-label">Ideal para</span>
             <p className="ac-ideal-text">{ac.ideal}</p>
+            <Link href={`/acabamentos/${ac.id}`} className="ac-saiba-mais">
+              Saiba Mais →
+            </Link>
           </div>
         </div>
         <div className="ac-img-wrap">
@@ -124,7 +128,9 @@ export default function AcabamentosSection() {
         .ac-check { color: var(--cir-accent); font-size: .85rem; flex-shrink: 0 }
         .ac-ideal { border-top: 1px solid var(--cir-l-line); padding-top: 1.5rem }
         .ac-ideal-label { font-family: var(--cir-sans); font-size: .62rem; font-weight: 600; letter-spacing: .14em; color: var(--cir-l-fg2); display: block; margin-bottom: .4rem }
-        .ac-ideal-text { font-family: var(--cir-sans); font-size: .8rem; font-weight: 400; color: var(--cir-l-fg); line-height: 1.6 }
+        .ac-ideal-text { font-family: var(--cir-sans); font-size: .8rem; font-weight: 400; color: var(--cir-l-fg); line-height: 1.6; margin-bottom: .8rem }
+        .ac-saiba-mais { font-family: var(--cir-sans); font-size: .75rem; font-weight: 600; letter-spacing: .08em; color: var(--cir-accent); text-decoration: none; transition: color .2s; display: inline-block }
+        .ac-saiba-mais:hover { color: #d14f2e }
         .ac-img-wrap { position: relative; overflow: hidden }
         .ac-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; filter: saturate(.7) }
         .ac-img-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.5rem; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 100%); font-family: var(--cir-serif); font-size: .9rem; font-weight: 700; color: #fff }
