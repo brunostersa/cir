@@ -79,32 +79,14 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Créditos */}
-        <div className="cir-footer__section">
-          <h3 className="cir-footer__section-title">Créditos</h3>
-          <div className="cir-footer__credits">
-            <p className="cir-footer__credit-item">
-              <strong>Desenvolvido por</strong><br />
-              <a
-                href="https://customerhub.com.br"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cir-footer__link"
-              >
-                Customer Hub
-              </a>
-            </p>
-            <p className="cir-footer__credit-item">
-              <strong>Design & Estratégia</strong><br />
-              Bruno Stersa
-            </p>
-          </div>
-        </div>
       </div>
 
       <div className="cir-footer__bottom">
         <span className="cir-footer__copy">
           © {new Date().getFullYear()} CIR Gráfica e Editora Ltda. Todos os direitos reservados.
+        </span>
+        <span className="cir-footer__credits-simple">
+          Desenvolvido por <a href="https://customerhub.com.br" target="_blank" rel="noopener noreferrer">Customer Hub</a> • Design & Estratégia por Bruno Stersa
         </span>
       </div>
 
@@ -121,7 +103,7 @@ export default function Footer() {
           max-width: 1400px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1.5fr;
+          grid-template-columns: 2fr 1fr 1fr;
           gap: 3rem;
           margin-bottom: 2rem;
         }
@@ -213,34 +195,6 @@ export default function Footer() {
           transform: translateX(4px);
         }
 
-        .cir-footer__credits {
-          display: flex;
-          flex-direction: column;
-          gap: 1.2rem;
-        }
-
-        .cir-footer__credit-item {
-          font-size: 0.8rem;
-          line-height: 1.6;
-          margin: 0;
-          color: #d4cfc8;
-        }
-
-        .cir-footer__credit-item strong {
-          color: #ffffff;
-          font-weight: 700;
-        }
-
-        .cir-footer__credit-item a {
-          color: #e8613a;
-          text-decoration: none;
-          font-weight: 600;
-          transition: color 0.2s;
-        }
-
-        .cir-footer__credit-item a:hover {
-          color: #f07a4d;
-        }
 
         .cir-footer__bottom {
           max-width: 1400px;
@@ -254,6 +208,24 @@ export default function Footer() {
           font-size: 0.75rem;
           color: #8a8178;
           line-height: 1.6;
+        }
+
+        .cir-footer__credits-simple {
+          font-size: 0.7rem;
+          color: #6a6460;
+          line-height: 1.6;
+          display: block;
+          margin-top: 0.5rem;
+        }
+
+        .cir-footer__credits-simple a {
+          color: #e8613a;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+
+        .cir-footer__credits-simple a:hover {
+          color: #f07a4d;
         }
 
         @media (max-width: 1200px) {

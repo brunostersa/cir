@@ -511,6 +511,14 @@ export default function AcabamentosHub({ acabamentos }) {
           line-height: 1.4;
         }
 
+        .ac-compare-col-1,
+        .ac-compare-col-2,
+        .ac-compare-col-3,
+        .ac-compare-col-4,
+        .ac-compare-col-5 {
+          display: block;
+        }
+
         .ac-compare-legend {
           display: flex;
           gap: 2rem;
@@ -574,18 +582,14 @@ export default function AcabamentosHub({ acabamentos }) {
         @media (max-width: 1024px) {
           .ac-compare-header,
           .ac-compare-row {
-            grid-template-columns: 2fr 1fr 1fr 2fr;
+            grid-template-columns: 2fr 1.2fr 1.5fr 1.5fr;
             gap: 0.8rem;
-            padding: 1rem;
-          }
-
-          .ac-compare-header {
             padding: 1rem;
           }
 
           .ac-compare-col-3,
           .ac-compare-impact {
-            display: none;
+            display: none !important;
           }
         }
 
@@ -617,23 +621,47 @@ export default function AcabamentosHub({ acabamentos }) {
             gap: 1.5rem;
           }
 
-          .ac-compare-header,
-          .ac-compare-row {
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            font-size: 0.8rem;
+          .ac-compare-table {
+            border-radius: 8px;
+            overflow: hidden;
           }
 
           .ac-compare-header {
+            grid-template-columns: 1.5fr 2fr;
+            gap: 0.5rem;
             padding: 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 8px 8px 0 0;
+          }
+
+          .ac-compare-row {
+            grid-template-columns: 1.5fr 2fr;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #e8d4c4;
+          }
+
+          .ac-compare-row:last-child {
+            border-bottom: none;
           }
 
           .ac-compare-col-2,
           .ac-compare-cost,
+          .ac-compare-col-3,
+          .ac-compare-impact,
           .ac-compare-col-4,
           .ac-compare-speed {
-            display: none;
+            display: none !important;
+          }
+
+          .ac-compare-col-1 {
+            grid-column: 1;
+          }
+
+          .ac-compare-col-5,
+          .ac-compare-ideal {
+            grid-column: 2;
           }
 
           .ac-compare-legend {
@@ -657,25 +685,32 @@ export default function AcabamentosHub({ acabamentos }) {
           }
 
           .ac-compare-header {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 0.3rem;
             padding: 0.6rem;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
           }
 
           .ac-compare-row {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 0.4rem;
             padding: 0.8rem;
             font-size: 0.75rem;
           }
 
-          .ac-compare-row-luxury {
-            border-left: 2px solid #e8613a;
-          }
-
           .ac-compare-name {
             font-size: 0.9rem;
+            font-weight: 700;
+            grid-column: 1 / -1;
+          }
+
+          .ac-compare-ideal {
+            grid-column: 1 / -1;
+            font-size: 0.75rem;
+          }
+
+          .ac-compare-row-luxury {
+            border-left: 2px solid #e8613a;
           }
 
           .ac-compare-legend {
