@@ -32,8 +32,9 @@ export async function getStaticProps({ params }) {
 }
 
 export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
-  const pageTitle = `${acabamento.nome} | Guia Completo de Acabamentos Gráficos`;
-  const pageDescription = acabamento.descricaoCompleta;
+  // SEO Otimizado para Google
+  const pageTitle = `${acabamento.nome}: Guia Completo 2024 | CIR Gráfica`;
+  const pageDescription = `${acabamento.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/acabamentos/${acabamento.id}`;
 
   const schemaData = {
@@ -61,7 +62,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
   };
 
   return (
-    <div className="cir-root">
+    <div className="cir-root ac-light-page">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -87,440 +88,539 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
       <Favicon />
       <Header />
 
-      {/* Hero */}
-      <div className="cp-hero">
-        <h1 className="cp-h1">{acabamento.nome}</h1>
-        <p className="cp-intro cir-reveal cir-reveal--d2">{acabamento.tagline}</p>
-      </div>
+      {/* Hero - H1 otimizado para SEO */}
+      <section className="ac-hero">
+        <div className="ac-hero-content">
+          <h1>{acabamento.nome}</h1>
+          <p className="ac-hero-subtitle">{acabamento.tagline}</p>
+        </div>
+      </section>
+
+      {/* Imagem destaque com legenda */}
+      <section className="ac-image-section">
+        <figure className="ac-figure">
+          <img src={acabamento.img} alt={`Exemplo de ${acabamento.nome}`} />
+          <figcaption>{acabamento.nome} - CIR Gráfica</figcaption>
+        </figure>
+      </section>
 
       {/* Conteúdo Principal */}
-      <div className="cir-section">
-        <article className="ac-article cir-reveal cir-reveal--d1">
-          <div className="ac-intro-box">
-            <img src={acabamento.img} alt={acabamento.nome} className="ac-hero-img" />
-          </div>
+      <article className="ac-main-content">
+        {/* O que é - H2 otimizado */}
+        <section className="ac-section">
+          <h2>O que é {acabamento.nome}?</h2>
+          <p className="ac-lead">{acabamento.descricaoCompleta}</p>
+        </section>
 
-          {/* O que é */}
-          <div className="ac-content-section">
-            <h2>O que é {acabamento.nome}?</h2>
-            <p>{acabamento.descricaoCompleta}</p>
+        {/* Benefícios - H2 otimizado */}
+        <section className="ac-section">
+          <h2>Benefícios do {acabamento.nome}</h2>
+          <div className="ac-benefits-grid">
+            {acabamento.beneficios.map((b, i) => (
+              <div key={i} className="ac-benefit-item">
+                <span className="ac-check">✓</span>
+                <span>{b}</span>
+              </div>
+            ))}
           </div>
+        </section>
 
-          {/* Benefícios */}
-          <div className="ac-content-section">
-            <h2>Principais Benefícios</h2>
-            <ul className="ac-list">
-              {acabamento.beneficios.map((b, i) => (
-                <li key={i}>
-                  <span className="ac-list-icon">✓</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
+        {/* Aplicações - H2 otimizado */}
+        <section className="ac-section">
+          <h2>Para Que Serve {acabamento.nome}?</h2>
+          <p className="ac-intro">{acabamento.ideal}</p>
+          <div className="ac-apps-list">
+            {acabamento.aplicacoes.map((app, i) => (
+              <div key={i} className="ac-app-item">
+                <span className="ac-arrow">→</span>
+                <span>{app}</span>
+              </div>
+            ))}
           </div>
+        </section>
 
-          {/* Aplicações */}
-          <div className="ac-content-section">
-            <h2>Ideal Para</h2>
-            <p style={{ marginBottom: '1rem' }}>{acabamento.ideal}</p>
-            <ul className="ac-list">
-              {acabamento.aplicacoes.map((app, i) => (
-                <li key={i}>
-                  <span className="ac-list-icon">→</span>
-                  {app}
-                </li>
-              ))}
-            </ul>
+        {/* Como Funciona - H2 otimizado */}
+        <section className="ac-section">
+          <h2>Como Funciona {acabamento.nome}?</h2>
+          <div className="ac-tech-box">
+            <p>{acabamento.processoTecnico}</p>
           </div>
+        </section>
 
-          {/* Processo Técnico */}
-          <div className="ac-content-section" style={{ background: '#f4f0e8', padding: '2rem', borderRadius: '8px', marginBottom: '2rem' }}>
-            <h2 style={{ color: '#1a1814' }}>Processo Técnico</h2>
-            <p style={{ color: '#6a6460' }}>{acabamento.processoTecnico}</p>
-          </div>
-
-          {/* Comparativas */}
-          <div className="ac-content-section">
-            <h2>Como se Compara com Outros Acabamentos?</h2>
+        {/* Comparativas */}
+        <section className="ac-section">
+          <h2>{acabamento.nome} vs Outros Acabamentos</h2>
+          <div className="ac-compare-box">
             <p>{acabamento.comparativas}</p>
           </div>
+        </section>
 
-          {/* Custo e Prazo */}
-          <div className="ac-grid-2">
-            <div className="ac-info-box">
-              <h3>Custo</h3>
+        {/* Custo e Prazo - Grid 2 colunas */}
+        <section className="ac-section">
+          <h2>Custo e Prazo de Entrega</h2>
+          <div className="ac-info-grid">
+            <div className="ac-info-card">
+              <h3>Quanto Custa?</h3>
               <p>{acabamento.custo}</p>
             </div>
-            <div className="ac-info-box">
-              <h3>Prazo de Entrega</h3>
+            <div className="ac-info-card">
+              <h3>Qual é o Prazo?</h3>
               <p>{acabamento.prazo}</p>
             </div>
           </div>
+        </section>
 
-          {/* FAQ */}
-          <div className="ac-content-section">
-            <h2>Perguntas Frequentes</h2>
-            <div className="ac-faq">
-              {acabamento.faq.map((q, i) => (
-                <div key={i} className="ac-faq-item">
-                  <h3>{q.pergunta}</h3>
-                  <p>{q.resposta}</p>
-                </div>
-              ))}
-            </div>
+        {/* FAQ - H2 otimizado */}
+        <section className="ac-section">
+          <h2>Perguntas Frequentes sobre {acabamento.nome}</h2>
+          <div className="ac-faq-list">
+            {acabamento.faq.map((q, i) => (
+              <details key={i} className="ac-faq-item">
+                <summary>{q.pergunta}</summary>
+                <p>{q.resposta}</p>
+              </details>
+            ))}
           </div>
+        </section>
 
-          {/* CTA */}
-          <div className="ac-cta-box">
-            <h2>Pronto para transformar sua marca com {acabamento.nome}?</h2>
-            <p>Solicite um orçamento sem compromisso e veja como este acabamento pode elevar o valor percebido de seus materiais.</p>
-            <a href="https://wa.me/556232021150" target="_blank" rel="noopener noreferrer" className="ac-cta-btn">
-              💬 Solicitar Orçamento
-            </a>
-          </div>
-        </article>
-      </div>
+        {/* CTA */}
+        <section className="ac-cta">
+          <h2>Transforme sua Marca com {acabamento.nome}</h2>
+          <p>Solicite um orçamento sem compromisso e descubra como este acabamento pode elevar o valor percebido de seus materiais gráficos.</p>
+          <a href="https://wa.me/556232021150" target="_blank" rel="noopener noreferrer" className="ac-btn">
+            💬 Solicitar Orçamento
+          </a>
+        </section>
+      </article>
 
       {/* Outros Acabamentos */}
       {outrosAcabamentos.length > 0 && (
-        <div className="cir-section cir-section--light">
-          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Outros Acabamentos Disponíveis</h2>
-          <div className="ac-grid-3 cir-reveal cir-reveal--d1">
+        <section className="ac-others">
+          <h2>Explore Outros Acabamentos</h2>
+          <div className="ac-cards-grid">
             {outrosAcabamentos.map(ac => (
               <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="ac-card">
-                <img src={ac.img} alt={ac.nome} className="ac-card-img" />
-                <div className="ac-card-content">
+                <img src={ac.img} alt={ac.nome} />
+                <div className="ac-card-info">
                   <h3>{ac.nome}</h3>
                   <p>{ac.tagline}</p>
-                  <span className="ac-card-arrow">Saiba mais →</span>
+                  <span className="ac-link">Saiba mais →</span>
                 </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       <WhatsAppLink />
       <Footer />
 
       <style jsx>{`
-        /* ── Base ──────────────────────────── */
-        .ac-article {
-          max-width: 900px;
+        /* ── Page Light ────────────────────── */
+        .ac-light-page {
+          background: #ffffff;
+          color: #2a2420;
+        }
+
+        /* ── Hero ──────────────────────────── */
+        .ac-hero {
+          background: linear-gradient(135deg, #f4f0e8 0%, #ece7dd 100%);
+          padding: 4rem 2rem;
+          text-align: center;
+        }
+
+        .ac-hero-content h1 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1a1814;
+          margin-bottom: 0.5rem;
+          font-family: 'Courier Prime', monospace;
+        }
+
+        .ac-hero-subtitle {
+          font-size: 1.2rem;
+          color: #6a6460;
+          margin: 0;
+        }
+
+        /* ── Image Section ─────────────────── */
+        .ac-image-section {
+          padding: 2rem;
+          background: white;
+          text-align: center;
+        }
+
+        .ac-figure {
+          margin: 0;
+          max-width: 600px;
           margin: 0 auto;
-          color: var(--cir-l-fg);
         }
 
-        .ac-intro-box {
-          margin-bottom: 3rem;
-          border-radius: 8px;
-          overflow: hidden;
-        }
-
-        .ac-hero-img {
+        .ac-figure img {
           width: 100%;
-          height: auto;
-          display: block;
-          filter: saturate(0.9);
+          max-height: 400px;
+          object-fit: cover;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* ── Seções de Conteúdo ────────────── */
-        .ac-content-section {
-          margin-bottom: 2.5rem;
+        .ac-figure figcaption {
+          margin-top: 0.8rem;
+          font-size: 0.9rem;
+          color: #6a6460;
+          font-style: italic;
         }
 
-        .ac-content-section h2 {
-          font-size: 1.3rem;
-          font-weight: 600;
+        /* ── Main Content ──────────────────── */
+        .ac-main-content {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
+        }
+
+        .ac-section {
+          margin-bottom: 3rem;
+        }
+
+        .ac-section h2 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #1a1814;
           margin-bottom: 1rem;
-          color: var(--cir-l-fg);
+          padding-bottom: 0.5rem;
+          border-bottom: 3px solid #e8613a;
+          display: inline-block;
         }
 
-        .ac-content-section p {
+        .ac-section h3 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #1a1814;
+          margin: 1rem 0 0.5rem 0;
+        }
+
+        .ac-section p {
           font-size: 1rem;
           line-height: 1.8;
-          color: var(--cir-l-fg2);
+          color: #2a2420;
           margin-bottom: 1rem;
         }
 
-        /* ── Listas ────────────────────────── */
-        .ac-list {
-          list-style: none;
-          padding: 0;
+        .ac-lead {
+          font-size: 1.05rem;
+          line-height: 1.85;
+          color: #3a3430;
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+        }
+
+        /* ── Benefits Grid ─────────────────── */
+        .ac-benefits-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
+          margin-top: 1rem;
         }
 
-        .ac-list li {
+        .ac-benefit-item {
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
-          color: var(--cir-l-fg);
-          font-size: 0.95rem;
-          line-height: 1.6;
+          padding: 0.75rem;
+          background: #f9f7f2;
+          border-radius: 6px;
+          border-left: 3px solid #e8613a;
         }
 
-        .ac-list-icon {
-          color: var(--cir-accent);
-          font-weight: 600;
+        .ac-check {
+          color: #e8613a;
+          font-weight: 700;
+          font-size: 1.2rem;
           flex-shrink: 0;
-          font-size: 1.1rem;
         }
 
-        /* ── Grid 2 Colunas ────────────────── */
-        .ac-grid-2 {
+        .ac-benefit-item span:last-child {
+          color: #2a2420;
+          font-size: 0.95rem;
+          line-height: 1.5;
+        }
+
+        /* ── Applications List ─────────────── */
+        .ac-intro {
+          font-size: 1rem;
+          color: #3a3430;
+          margin-bottom: 1.5rem;
+        }
+
+        .ac-apps-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+        }
+
+        .ac-app-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.5rem 0;
+          color: #2a2420;
+        }
+
+        .ac-arrow {
+          color: #e8613a;
+          font-weight: 600;
+        }
+
+        /* ── Tech Box ──────────────────────── */
+        .ac-tech-box {
+          background: #f4f0e8;
+          padding: 1.5rem;
+          border-radius: 8px;
+          border-left: 4px solid #e8613a;
+        }
+
+        .ac-tech-box p {
+          margin: 0;
+          color: #2a2420;
+        }
+
+        /* ── Compare Box ───────────────────── */
+        .ac-compare-box {
+          background: #ece7dd;
+          padding: 1.5rem;
+          border-radius: 8px;
+          border: 2px solid #e8613a;
+        }
+
+        .ac-compare-box p {
+          margin: 0;
+          color: #2a2420;
+        }
+
+        /* ── Info Grid ─────────────────────── */
+        .ac-info-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1.5rem;
-          margin-bottom: 2.5rem;
+          margin-top: 1rem;
         }
 
-        .ac-info-box {
-          background: var(--cir-bg2);
-          border: 1px solid var(--cir-line);
+        .ac-info-card {
+          background: #f9f7f2;
           padding: 1.5rem;
           border-radius: 8px;
+          border: 1px solid #e8d4c4;
         }
 
-        .ac-info-box h3 {
-          color: var(--cir-gold);
-          font-weight: 600;
-          margin-bottom: 0.5rem;
+        .ac-info-card h3 {
+          color: #e8613a;
+          margin-top: 0;
         }
 
-        .ac-info-box p {
-          color: var(--cir-fg2);
-          font-size: 0.95rem;
-          margin: 0;
+        .ac-info-card p {
+          color: #2a2420;
         }
 
         /* ── FAQ ───────────────────────────── */
-        .ac-faq {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
+        .ac-faq-list {
+          margin-top: 1rem;
         }
 
         .ac-faq-item {
-          border-left: 3px solid var(--cir-accent);
-          padding-left: 1.5rem;
-          background: var(--cir-bg2);
-          padding: 1rem;
-          padding-left: 1.5rem;
-          border-radius: 4px;
+          background: #f9f7f2;
+          border: 1px solid #e8d4c4;
+          border-radius: 6px;
+          margin-bottom: 0.75rem;
+          overflow: hidden;
         }
 
-        .ac-faq-item h3 {
-          color: var(--cir-fg);
+        .ac-faq-item summary {
+          padding: 1rem;
+          cursor: pointer;
           font-weight: 600;
-          margin-bottom: 0.5rem;
-          font-size: 1rem;
+          color: #1a1814;
+          user-select: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .ac-faq-item summary:hover {
+          background: #ece7dd;
         }
 
         .ac-faq-item p {
-          color: var(--cir-fg2);
-          font-size: 0.95rem;
-          line-height: 1.6;
+          padding: 0 1rem 1rem 1rem;
           margin: 0;
+          color: #2a2420;
+          background: #ffffff;
         }
 
-        /* ── CTA Box ───────────────────────── */
-        .ac-cta-box {
-          background: rgba(232, 97, 58, 0.08);
-          border: 2px solid var(--cir-accent);
+        /* ── CTA ───────────────────────────── */
+        .ac-cta {
+          background: linear-gradient(135deg, #e8613a15 0%, #ece7dd 100%);
+          border: 2px solid #e8613a;
           border-radius: 12px;
-          padding: 2rem;
+          padding: 2.5rem;
           text-align: center;
           margin-top: 3rem;
         }
 
-        .ac-cta-box h2 {
-          color: var(--cir-fg);
-          font-size: 1.4rem;
-          margin-bottom: 1rem;
+        .ac-cta h2 {
+          color: #1a1814;
+          border: none;
+          display: block;
         }
 
-        .ac-cta-box p {
-          color: var(--cir-fg2);
-          font-size: 0.95rem;
+        .ac-cta p {
+          font-size: 1rem;
+          color: #2a2420;
           margin-bottom: 1.5rem;
         }
 
-        .ac-cta-btn {
+        .ac-btn {
           display: inline-block;
-          background: var(--cir-accent);
+          background: #e8613a;
           color: white;
-          padding: 0.9rem 2rem;
+          padding: 0.95rem 2.5rem;
           border-radius: 6px;
           text-decoration: none;
           font-weight: 600;
-          transition: opacity 0.3s;
+          transition: background 0.3s;
+          font-size: 1rem;
         }
 
-        .ac-cta-btn:hover {
-          opacity: 0.85;
+        .ac-btn:hover {
+          background: #d14f2e;
         }
 
-        /* ── Card Grid ─────────────────────── */
-        .ac-grid-3 {
+        /* ── Others Section ────────────────── */
+        .ac-others {
+          background: #f9f7f2;
+          padding: 3rem 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .ac-others h2 {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+
+        .ac-cards-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 1.5rem;
         }
 
         .ac-card {
           display: block;
           text-decoration: none;
-          background: var(--cir-bg2);
-          border: 1px solid var(--cir-line);
+          background: white;
           border-radius: 8px;
           overflow: hidden;
-          transition: transform 0.3s, border-color 0.3s;
+          border: 1px solid #e8d4c4;
+          transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .ac-card:hover {
           transform: translateY(-4px);
-          border-color: var(--cir-gold);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-        .ac-card-img {
+        .ac-card img {
           width: 100%;
           height: 200px;
           object-fit: cover;
           display: block;
-          filter: saturate(0.8);
         }
 
-        .ac-card-content {
+        .ac-card-info {
           padding: 1.5rem;
         }
 
         .ac-card h3 {
-          color: var(--cir-gold);
-          font-weight: 600;
-          margin-bottom: 0.5rem;
-          font-size: 1rem;
+          color: #1a1814;
+          font-size: 1.1rem;
+          margin: 0 0 0.5rem 0;
         }
 
         .ac-card p {
-          color: var(--cir-fg2);
-          font-size: 0.85rem;
+          color: #6a6460;
+          font-size: 0.9rem;
+          margin: 0 0 1rem 0;
           line-height: 1.5;
-          margin-bottom: 1rem;
         }
 
-        .ac-card-arrow {
-          color: var(--cir-accent);
+        .ac-link {
+          color: #e8613a;
           font-weight: 600;
-          font-size: 0.9rem;
+          font-size: 0.95rem;
         }
 
         /* ── Responsive ────────────────────── */
         @media (max-width: 900px) {
-          .ac-grid-2 {
+          .ac-benefits-grid,
+          .ac-apps-list,
+          .ac-info-grid {
             grid-template-columns: 1fr;
           }
 
-          .ac-content-section h2 {
-            font-size: 1.2rem;
+          .ac-hero-content h1 {
+            font-size: 2rem;
           }
         }
 
         @media (max-width: 768px) {
-          .ac-article {
-            padding: 0;
+          .ac-hero {
+            padding: 2.5rem 1rem;
           }
 
-          .ac-content-section {
-            margin-bottom: 2rem;
+          .ac-hero-content h1 {
+            font-size: 1.75rem;
           }
 
-          .ac-content-section h2 {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-          }
-
-          .ac-content-section p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-          }
-
-          .ac-list {
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-          }
-
-          .ac-list li {
-            font-size: 0.9rem;
-          }
-
-          .ac-cta-box {
+          .ac-main-content {
             padding: 1.5rem;
-            margin-top: 2rem;
           }
 
-          .ac-cta-box h2 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
+          .ac-section h2 {
+            font-size: 1.3rem;
           }
 
-          .ac-cta-box p {
-            font-size: 0.9rem;
+          .ac-cta {
+            padding: 1.5rem;
           }
 
-          .ac-cta-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
+          .ac-cta h2 {
+            font-size: 1.2rem;
           }
 
-          .ac-faq-item {
-            padding: 1rem;
-          }
-
-          .ac-card {
-            border-radius: 6px;
-          }
-
-          .ac-card-img {
-            height: 150px;
-          }
-
-          .ac-card-content {
-            padding: 1rem;
+          .ac-btn {
+            display: block;
+            width: 100%;
           }
         }
 
         @media (max-width: 480px) {
-          .ac-content-section h2 {
+          .ac-hero-content h1 {
+            font-size: 1.4rem;
+          }
+
+          .ac-hero-subtitle {
             font-size: 1rem;
           }
 
-          .ac-list {
-            gap: 0.5rem;
+          .ac-section h2 {
+            font-size: 1.1rem;
           }
 
-          .ac-list li {
-            font-size: 0.85rem;
-            gap: 0.5rem;
+          .ac-section p {
+            font-size: 0.95rem;
           }
 
-          .ac-grid-3 {
+          .ac-cards-grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-
-          .ac-cta-box {
-            padding: 1.25rem;
-          }
-
-          .ac-cta-box h2 {
-            font-size: 1rem;
-          }
-
-          .ac-cta-btn {
-            display: block;
-            width: 100%;
           }
         }
       `}</style>
