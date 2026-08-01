@@ -88,6 +88,17 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
       <Favicon />
       <Header />
 
+      {/* Breadcrumbs */}
+      <nav className="ac-breadcrumb" aria-label="Breadcrumb">
+        <div className="ac-breadcrumb-inner">
+          <Link href="/">Home</Link>
+          <span>/</span>
+          <Link href="/acabamentos">Acabamentos</Link>
+          <span>/</span>
+          <span aria-current="page">{acabamento.nome}</span>
+        </div>
+      </nav>
+
       {/* Hero - H1 otimizado para SEO */}
       <section className="ac-hero">
         <div className="ac-hero-content">
@@ -222,10 +233,47 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos }) {
           color: #2a2420;
         }
 
+        /* ── Breadcrumbs ───────────────────── */
+        .ac-breadcrumb {
+          background: #f9f7f2;
+          border-bottom: 1px solid #e8d4c4;
+          margin-top: 80px;
+        }
+
+        .ac-breadcrumb-inner {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0.75rem 2rem;
+          font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+
+        .ac-breadcrumb a {
+          color: #e8613a;
+          text-decoration: none;
+          transition: opacity 0.2s;
+        }
+
+        .ac-breadcrumb a:hover {
+          opacity: 0.7;
+        }
+
+        .ac-breadcrumb span {
+          color: #6a6460;
+        }
+
+        .ac-breadcrumb [aria-current="page"] {
+          color: #2a2420;
+          font-weight: 600;
+        }
+
         /* ── Hero ──────────────────────────── */
         .ac-hero {
           background: linear-gradient(135deg, #f4f0e8 0%, #ece7dd 100%);
-          padding: 4rem 2rem;
+          padding: 5rem 2rem 4rem;
           text-align: center;
         }
 
