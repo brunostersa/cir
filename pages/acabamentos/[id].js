@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import ProductsCarousel from '../../components/ProductsCarousel'
 import Favicon from '../../components/Favicon'
 import WhatsAppLink from '../../components/WhatsAppLink'
 import acabamentos from '../../data/acabamentos.json'
@@ -37,7 +36,6 @@ export async function getStaticProps({ params }) {
 }
 
 export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicosRelacionados }) {
-  // SEO Otimizado para Google
   const pageTitle = `${acabamento.nome}: Guia Completo 2024 | CIR Gráfica`;
   const pageDescription = `${acabamento.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/acabamentos/${acabamento.id}`;
@@ -67,7 +65,7 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
   };
 
   return (
-    <div className="cir-root ac-light-page">
+    <div className="cir-root">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -93,9 +91,8 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
       <Favicon />
       <Header />
 
-      {/* Breadcrumbs */}
-      <nav className="ac-breadcrumb" aria-label="Breadcrumb">
-        <div className="ac-breadcrumb-inner">
+      <nav className="cp-breadcrumb" aria-label="Breadcrumb">
+        <div className="cp-breadcrumb-inner">
           <Link href="/">Home</Link>
           <span>/</span>
           <Link href="/acabamentos">Acabamentos</Link>
@@ -104,653 +101,154 @@ export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicos
         </div>
       </nav>
 
-      {/* Hero - H1 otimizado para SEO */}
-      <section className="ac-hero">
-        <div className="ac-hero-content">
-          <h1>{acabamento.nome}</h1>
-          <p className="ac-hero-subtitle">{acabamento.tagline}</p>
+      {/* Hero */}
+      <div className="cp-hero cp-hero--sub">
+        <h1 className="cp-h1 cir-reveal">{acabamento.nome}</h1>
+        <p className="cp-intro cir-reveal cir-reveal--d1">{acabamento.tagline}</p>
+      </div>
+
+      {/* Imagem destaque */}
+      <figure className="cp-figure">
+        <img src={acabamento.img} alt={`Exemplo de ${acabamento.nome}`} />
+        <figcaption>{acabamento.nome} — CIR Gráfica</figcaption>
+      </figure>
+
+      <article>
+        {/* O que é */}
+        <div className="cir-section cir-section--light">
+          <span className="cir-s-tag cir-reveal">O que é</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">O que é {acabamento.nome}?</h2>
+          <p className="cp-body cir-reveal cir-reveal--d1">{acabamento.descricaoCompleta}</p>
         </div>
-      </section>
 
-      {/* Imagem destaque com legenda */}
-      <section className="ac-image-section">
-        <figure className="ac-figure">
-          <img src={acabamento.img} alt={`Exemplo de ${acabamento.nome}`} />
-          <figcaption>{acabamento.nome} - CIR Gráfica</figcaption>
-        </figure>
-      </section>
+        <hr className="cir-divider" />
 
-      {/* Conteúdo Principal */}
-      <article className="ac-main-content">
-        {/* O que é - H2 otimizado */}
-        <section className="ac-section">
-          <h2>O que é {acabamento.nome}?</h2>
-          <p className="ac-lead">{acabamento.descricaoCompleta}</p>
-        </section>
-
-        {/* Benefícios - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Benefícios do {acabamento.nome}</h2>
-          <div className="ac-benefits-grid">
+        {/* Benefícios */}
+        <div className="cir-section">
+          <span className="cir-s-tag cir-reveal">Vantagens</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Benefícios do {acabamento.nome}</h2>
+          <ul className="cp-check-list cir-reveal cir-reveal--d1">
             {acabamento.beneficios.map((b, i) => (
-              <div key={i} className="ac-benefit-item">
-                <span className="ac-check">✓</span>
-                <span>{b}</span>
-              </div>
+              <li key={i} className="cp-check-item">{b}</li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </div>
 
-        {/* Aplicações - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Para Que Serve {acabamento.nome}?</h2>
-          <p className="ac-intro">{acabamento.ideal}</p>
-          <div className="ac-apps-list">
+        {/* Aplicações */}
+        <div className="cir-section cir-section--light">
+          <span className="cir-s-tag cir-reveal">Onde usar</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Para Que Serve {acabamento.nome}?</h2>
+          <p className="cp-body cir-reveal cir-reveal--d1">{acabamento.ideal}</p>
+          <ul className="cp-arrow-list cir-reveal cir-reveal--d1">
             {acabamento.aplicacoes.map((app, i) => (
-              <div key={i} className="ac-app-item">
-                <span className="ac-arrow">→</span>
-                <span>{app}</span>
-              </div>
+              <li key={i} className="cp-arrow-item">{app}</li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </div>
 
-        {/* Como Funciona - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Como Funciona {acabamento.nome}?</h2>
-          <div className="ac-tech-box">
+        <hr className="cir-divider" />
+
+        {/* Como funciona + Comparativo */}
+        <div className="cir-section">
+          <span className="cir-s-tag cir-reveal">Processo técnico</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Como Funciona {acabamento.nome}?</h2>
+          <blockquote className="cp-blockquote cir-reveal cir-reveal--d1">
             <p>{acabamento.processoTecnico}</p>
-          </div>
-        </section>
+          </blockquote>
 
-        {/* Comparativas */}
-        <section className="ac-section">
-          <h2>{acabamento.nome} vs Outros Acabamentos</h2>
-          <div className="ac-compare-box">
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1" style={{ marginTop: '3rem' }}>{acabamento.nome} vs Outros Acabamentos</h2>
+          <blockquote className="cp-blockquote cir-reveal cir-reveal--d1">
             <p>{acabamento.comparativas}</p>
-          </div>
-        </section>
+          </blockquote>
+        </div>
 
-        {/* Custo e Prazo - Grid 2 colunas */}
-        <section className="ac-section">
-          <h2>Custo e Prazo de Entrega</h2>
-          <div className="ac-info-grid">
-            <div className="ac-info-card">
+        {/* Custo e prazo */}
+        <div className="cir-section cir-section--light">
+          <span className="cir-s-tag cir-reveal">Investimento</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Custo e Prazo de Entrega</h2>
+          <div className="cp-info-grid cir-reveal cir-reveal--d1">
+            <div className="cp-info-card">
               <h3>Quanto Custa?</h3>
               <p>{acabamento.custo}</p>
             </div>
-            <div className="ac-info-card">
+            <div className="cp-info-card">
               <h3>Qual é o Prazo?</h3>
               <p>{acabamento.prazo}</p>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Serviços Relacionados - LINK CRUZADO */}
+        {/* Serviços relacionados */}
         {servicosRelacionados.length > 0 && (
-          <section className="ac-section">
-            <h2>Serviços que Usam {acabamento.nome}</h2>
-            <p className="ac-intro">Este acabamento é aplicado nos seguintes serviços:</p>
-            <div className="ac-related-grid">
-              {servicosRelacionados.map(svc => (
-                <Link key={svc.id} href={`/servicos/${svc.id}`} className="ac-related-card">
-                  <img src={svc.img} alt={svc.nome} />
-                  <div className="ac-related-info">
-                    <h3>{svc.nome}</h3>
-                    <p>{svc.tagline}</p>
-                    <span className="ac-related-link">Conhecer serviço →</span>
-                  </div>
-                </Link>
-              ))}
+          <>
+            <hr className="cir-divider" />
+            <div className="cir-section">
+              <span className="cir-s-tag cir-reveal">Link cruzado</span>
+              <h2 className="cp-h2 cir-reveal cir-reveal--d1">Serviços que Usam {acabamento.nome}</h2>
+              <p className="cp-body cir-reveal cir-reveal--d1">Este acabamento é aplicado nos seguintes serviços:</p>
+              <div className="cp-item-grid cir-reveal cir-reveal--d1">
+                {servicosRelacionados.map(svc => (
+                  <Link key={svc.id} href={`/servicos/${svc.id}`} className="cp-item-card">
+                    <img className="cp-item-img" src={svc.img} alt={svc.nome} />
+                    <div className="cp-item-body">
+                      <span className="cp-item-tag">{svc.tagline}</span>
+                      <h3 className="cp-item-title">{svc.nome}</h3>
+                      <span className="cp-item-link">Conhecer serviço →</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </section>
+          </>
         )}
 
-        {/* FAQ - H2 otimizado */}
-        <section className="ac-section">
-          <h2>Perguntas Frequentes sobre {acabamento.nome}</h2>
-          <div className="ac-faq-list">
+        {/* FAQ */}
+        <div className="cir-section cir-section--light">
+          <span className="cir-s-tag cir-reveal">Dúvidas frequentes</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Perguntas Frequentes sobre {acabamento.nome}</h2>
+          <div className="cp-faq-details cir-reveal cir-reveal--d1">
             {acabamento.faq.map((q, i) => (
-              <details key={i} className="ac-faq-item">
+              <details key={i}>
                 <summary>{q.pergunta}</summary>
                 <p>{q.resposta}</p>
               </details>
             ))}
           </div>
-        </section>
-
-        {/* CTA */}
-        <section className="ac-cta">
-          <h2>Transforme sua Marca com {acabamento.nome}</h2>
-          <p>Solicite um orçamento sem compromisso e descubra como este acabamento pode elevar o valor percebido de seus materiais gráficos.</p>
-          <a href="https://wa.me/556232021150" target="_blank" rel="noopener noreferrer" className="ac-btn">
-            💬 Solicitar Orçamento
-          </a>
-        </section>
+        </div>
       </article>
 
-      {/* Outros Acabamentos */}
+      {/* CTA */}
+      <div className="cp-cta">
+        <h2>Transforme sua Marca com {acabamento.nome}</h2>
+        <p>Solicite um orçamento sem compromisso e descubra como este acabamento pode elevar o valor percebido de seus materiais gráficos.</p>
+        <div className="cp-cta-btns">
+          <WhatsAppLink message={`Olá! Gostaria de um orçamento para ${acabamento.nome}`} source={`acabamento_${acabamento.id}`} className="btn-primary">
+            Solicitar Orçamento
+          </WhatsAppLink>
+        </div>
+      </div>
+
+      {/* Outros acabamentos */}
       {outrosAcabamentos.length > 0 && (
-        <section className="ac-others">
-          <h2>Explore Outros Acabamentos</h2>
-          <div className="ac-cards-grid">
+        <div className="cir-section cir-section--light">
+          <span className="cir-s-tag cir-reveal">Continue explorando</span>
+          <h2 className="cp-h2 cir-reveal cir-reveal--d1">Outros Acabamentos</h2>
+          <div className="cp-item-grid cir-reveal cir-reveal--d1">
             {outrosAcabamentos.map(ac => (
-              <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="ac-card">
-                <img src={ac.img} alt={ac.nome} />
-                <div className="ac-card-info">
-                  <h3>{ac.nome}</h3>
-                  <p>{ac.tagline}</p>
-                  <span className="ac-link">Saiba mais →</span>
+              <Link key={ac.id} href={`/acabamentos/${ac.id}`} className="cp-item-card">
+                <img className="cp-item-img" src={ac.img} alt={ac.nome} />
+                <div className="cp-item-body">
+                  <span className="cp-item-tag">{ac.tagline}</span>
+                  <h3 className="cp-item-title">{ac.nome}</h3>
+                  <span className="cp-item-link">Saiba mais →</span>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
       )}
 
-      <WhatsAppLink />
       <Footer />
-
-      <style jsx>{`
-        /* ── Page Light ────────────────────── */
-        .ac-light-page {
-          background: #ffffff;
-          color: #2a2420;
-        }
-
-        /* ── Breadcrumbs ───────────────────── */
-        .ac-breadcrumb {
-          background: #f9f7f2;
-          border-bottom: 1px solid #e8d4c4;
-          margin-top: 80px;
-        }
-
-        .ac-breadcrumb-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0.75rem 2rem;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          flex-wrap: wrap;
-        }
-
-        .ac-breadcrumb a {
-          color: #e8613a;
-          text-decoration: none;
-          transition: opacity 0.2s;
-        }
-
-        .ac-breadcrumb a:hover {
-          opacity: 0.7;
-        }
-
-        .ac-breadcrumb span {
-          color: #6a6460;
-        }
-
-        .ac-breadcrumb [aria-current="page"] {
-          color: #2a2420;
-          font-weight: 600;
-        }
-
-        /* ── Hero ──────────────────────────── */
-        .ac-hero {
-          background: linear-gradient(135deg, #f4f0e8 0%, #ece7dd 100%);
-          padding: 5rem 2rem 4rem;
-          text-align: center;
-        }
-
-        .ac-hero-content h1 {
-          font-size: 2.5rem;
-          font-weight: 700;
-          color: #1a1814;
-          margin-bottom: 0.5rem;
-          font-family: 'Courier Prime', monospace;
-        }
-
-        .ac-hero-subtitle {
-          font-size: 1.2rem;
-          color: #6a6460;
-          margin: 0;
-        }
-
-        /* ── Image Section ─────────────────── */
-        .ac-image-section {
-          padding: 2rem;
-          background: white;
-          text-align: center;
-        }
-
-        .ac-figure {
-          margin: 0;
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        .ac-figure img {
-          width: 100%;
-          max-height: 400px;
-          object-fit: cover;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .ac-figure figcaption {
-          margin-top: 0.8rem;
-          font-size: 0.9rem;
-          color: #6a6460;
-          font-style: italic;
-        }
-
-        /* ── Main Content ──────────────────── */
-        .ac-main-content {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 2rem;
-        }
-
-        .ac-section {
-          margin-bottom: 3rem;
-        }
-
-        .ac-section h2 {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #1a1814;
-          margin-bottom: 1rem;
-          padding-bottom: 0.5rem;
-          border-bottom: 3px solid #e8613a;
-          display: inline-block;
-        }
-
-        .ac-section h3 {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #1a1814;
-          margin: 1rem 0 0.5rem 0;
-        }
-
-        .ac-section p {
-          font-size: 1rem;
-          line-height: 1.8;
-          color: #2a2420;
-          margin-bottom: 1rem;
-        }
-
-        .ac-lead {
-          font-size: 1.05rem;
-          line-height: 1.85;
-          color: #3a3430;
-          font-weight: 500;
-          margin-bottom: 1.5rem;
-        }
-
-        /* ── Benefits Grid ─────────────────── */
-        .ac-benefits-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-
-        .ac-benefit-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.75rem;
-          padding: 0.75rem;
-          background: #f9f7f2;
-          border-radius: 6px;
-          border-left: 3px solid #e8613a;
-        }
-
-        .ac-check {
-          color: #e8613a;
-          font-weight: 700;
-          font-size: 1.2rem;
-          flex-shrink: 0;
-        }
-
-        .ac-benefit-item span:last-child {
-          color: #2a2420;
-          font-size: 0.95rem;
-          line-height: 1.5;
-        }
-
-        /* ── Applications List ─────────────── */
-        .ac-intro {
-          font-size: 1rem;
-          color: #3a3430;
-          margin-bottom: 1.5rem;
-        }
-
-        .ac-apps-list {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.75rem;
-        }
-
-        .ac-app-item {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.5rem 0;
-          color: #2a2420;
-        }
-
-        .ac-arrow {
-          color: #e8613a;
-          font-weight: 600;
-        }
-
-        /* ── Tech Box ──────────────────────── */
-        .ac-tech-box {
-          background: #f4f0e8;
-          padding: 1.5rem;
-          border-radius: 8px;
-          border-left: 4px solid #e8613a;
-        }
-
-        .ac-tech-box p {
-          margin: 0;
-          color: #2a2420;
-        }
-
-        /* ── Compare Box ───────────────────── */
-        .ac-compare-box {
-          background: #ece7dd;
-          padding: 1.5rem;
-          border-radius: 8px;
-          border: 2px solid #e8613a;
-        }
-
-        .ac-compare-box p {
-          margin: 0;
-          color: #2a2420;
-        }
-
-        /* ── Info Grid ─────────────────────── */
-        .ac-info-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-          margin-top: 1rem;
-        }
-
-        .ac-info-card {
-          background: #f9f7f2;
-          padding: 1.5rem;
-          border-radius: 8px;
-          border: 1px solid #e8d4c4;
-        }
-
-        .ac-info-card h3 {
-          color: #e8613a;
-          margin-top: 0;
-        }
-
-        .ac-info-card p {
-          color: #2a2420;
-        }
-
-        /* ── Related (Serviços) Grid ───────── */
-        .ac-related-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 1.5rem;
-          margin-top: 1rem;
-        }
-
-        .ac-related-card {
-          display: block;
-          text-decoration: none;
-          background: #f9f7f2;
-          border-radius: 8px;
-          overflow: hidden;
-          border: 1px solid #e8d4c4;
-          transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .ac-related-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 20px rgba(232, 97, 58, 0.15);
-          border-color: #e8613a;
-        }
-
-        .ac-related-card img {
-          width: 100%;
-          height: 160px;
-          object-fit: cover;
-          display: block;
-        }
-
-        .ac-related-info {
-          padding: 1.2rem;
-        }
-
-        .ac-related-info h3 {
-          color: #1a1814;
-          font-size: 1rem;
-          margin: 0 0 0.4rem 0;
-        }
-
-        .ac-related-info p {
-          color: #6a6460;
-          font-size: 0.85rem;
-          margin: 0 0 0.8rem 0;
-          line-height: 1.4;
-        }
-
-        .ac-related-link {
-          color: #e8613a;
-          font-weight: 600;
-          font-size: 0.85rem;
-        }
-
-        /* ── FAQ ───────────────────────────── */
-        .ac-faq-list {
-          margin-top: 1rem;
-        }
-
-        .ac-faq-item {
-          background: #f9f7f2;
-          border: 1px solid #e8d4c4;
-          border-radius: 6px;
-          margin-bottom: 0.75rem;
-          overflow: hidden;
-        }
-
-        .ac-faq-item summary {
-          padding: 1rem;
-          cursor: pointer;
-          font-weight: 600;
-          color: #1a1814;
-          user-select: none;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .ac-faq-item summary:hover {
-          background: #ece7dd;
-        }
-
-        .ac-faq-item p {
-          padding: 0 1rem 1rem 1rem;
-          margin: 0;
-          color: #2a2420;
-          background: #ffffff;
-        }
-
-        /* ── CTA ───────────────────────────── */
-        .ac-cta {
-          background: linear-gradient(135deg, #e8613a15 0%, #ece7dd 100%);
-          border: 2px solid #e8613a;
-          border-radius: 12px;
-          padding: 2.5rem;
-          text-align: center;
-          margin-top: 3rem;
-        }
-
-        .ac-cta h2 {
-          color: #1a1814;
-          border: none;
-          display: block;
-        }
-
-        .ac-cta p {
-          font-size: 1rem;
-          color: #2a2420;
-          margin-bottom: 1.5rem;
-        }
-
-        .ac-btn {
-          display: inline-block;
-          background: #e8613a;
-          color: white;
-          padding: 0.95rem 2.5rem;
-          border-radius: 6px;
-          text-decoration: none;
-          font-weight: 600;
-          transition: background 0.3s;
-          font-size: 1rem;
-        }
-
-        .ac-btn:hover {
-          background: #d14f2e;
-        }
-
-        /* ── Others Section ────────────────── */
-        .ac-others {
-          background: #f9f7f2;
-          padding: 3rem 2rem;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-
-        .ac-others h2 {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-
-        .ac-cards-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
-        }
-
-        .ac-card {
-          display: block;
-          text-decoration: none;
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-          border: 1px solid #e8d4c4;
-          transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .ac-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-
-        .ac-card img {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          display: block;
-        }
-
-        .ac-card-info {
-          padding: 1.5rem;
-        }
-
-        .ac-card h3 {
-          color: #1a1814;
-          font-size: 1.1rem;
-          margin: 0 0 0.5rem 0;
-        }
-
-        .ac-card p {
-          color: #6a6460;
-          font-size: 0.9rem;
-          margin: 0 0 1rem 0;
-          line-height: 1.5;
-        }
-
-        .ac-link {
-          color: #e8613a;
-          font-weight: 600;
-          font-size: 0.95rem;
-        }
-
-        /* ── Responsive ────────────────────── */
-        @media (max-width: 900px) {
-          .ac-benefits-grid,
-          .ac-apps-list,
-          .ac-info-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .ac-hero-content h1 {
-            font-size: 2rem;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .ac-hero {
-            padding: 2.5rem 1rem;
-          }
-
-          .ac-hero-content h1 {
-            font-size: 1.75rem;
-          }
-
-          .ac-main-content {
-            padding: 1.5rem;
-          }
-
-          .ac-section h2 {
-            font-size: 1.3rem;
-          }
-
-          .ac-cta {
-            padding: 1.5rem;
-          }
-
-          .ac-cta h2 {
-            font-size: 1.2rem;
-          }
-
-          .ac-btn {
-            display: block;
-            width: 100%;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .ac-hero-content h1 {
-            font-size: 1.4rem;
-          }
-
-          .ac-hero-subtitle {
-            font-size: 1rem;
-          }
-
-          .ac-section h2 {
-            font-size: 1.1rem;
-          }
-
-          .ac-section p {
-            font-size: 0.95rem;
-          }
-
-          .ac-cards-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
     </div>
   );
 }
