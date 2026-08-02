@@ -15,7 +15,7 @@ export async function getStaticProps() {
 }
 
 export default function AcabamentosHub({ acabamentos }) {
-  const pageTitle = 'Acabamentos Gráficos: Guia Completo de Técnicas Profissionais | CIR Gráfica';
+  const pageTitle = 'Acabamentos Gráficos: Preços, Prazos e Como Escolher | CIR';
   const pageDescription = 'Conheça os melhores acabamentos gráficos: laminação fosca, verniz UV, hot stamping, relevo seco, corte especial e encadernação. Guia completo com preços e prazos.';
   const canonicalUrl = 'https://cidades.cirgrafica.com.br/acabamentos';
 

@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function AcabamentoPage({ acabamento, outrosAcabamentos, servicosRelacionados }) {
-  const pageTitle = `${acabamento.nome}: Guia Completo | CIR Gráfica`;
+  const pageTitle = `${acabamento.nome}: O Que É, Preço e Como Usar | CIR`;
   const pageDescription = `${acabamento.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/acabamentos/${acabamento.id}`;
 

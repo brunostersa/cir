@@ -15,7 +15,7 @@ export async function getStaticProps() {
 }
 
 export default function ServicosHub({ servicos }) {
-  const pageTitle = 'Serviços Gráficos: Impressão, Embalagem e Sinalização | CIR Gráfica';
+  const pageTitle = 'Serviços Gráficos: Preços, Prazos e Orçamento Online | CIR';
   const pageDescription = 'Conheça todos os serviços da CIR: impressão offset, digital, sob demanda, embalagens, materiais corporativos e sinalização. Qualidade profissional para cada necessidade.';
   const canonicalUrl = 'https://cidades.cirgrafica.com.br/servicos';
 
