@@ -1,4 +1,6 @@
 import cidades from '../cidades.json';
+import acabamentos from '../data/acabamentos.json';
+import servicos from '../data/servicos.json';
 import { normalizeText } from '../utils/normalize';
 
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
@@ -11,6 +13,8 @@ function generateSiteMap(cities) {
     { url: baseUrl, lastmod: BUILD_DATE, changefreq: 'daily', priority: '1.0' },
     { url: `${baseUrl}/portfolio`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.7' },
     { url: `${baseUrl}/consultoria`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.7' },
+    { url: `${baseUrl}/acabamentos`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.8' },
+    { url: `${baseUrl}/servicos`, lastmod: BUILD_DATE, changefreq: 'monthly', priority: '0.8' },
   ];
 
   // URLs de estados
@@ -30,7 +34,23 @@ function generateSiteMap(cities) {
     priority: '0.6'
   }));
 
-  const allUrls = [...staticUrls, ...estadoUrls, ...cidadeUrls];
+  // URLs de acabamentos
+  const acabamentosUrls = acabamentos.map(ac => ({
+    url: `${baseUrl}/acabamentos/${ac.id}`,
+    lastmod: BUILD_DATE,
+    changefreq: 'monthly',
+    priority: '0.7'
+  }));
+
+  // URLs de serviços
+  const servicosUrls = servicos.map(svc => ({
+    url: `${baseUrl}/servicos/${svc.id}`,
+    lastmod: BUILD_DATE,
+    changefreq: 'monthly',
+    priority: '0.7'
+  }));
+
+  const allUrls = [...staticUrls, ...estadoUrls, ...cidadeUrls, ...acabamentosUrls, ...servicosUrls];
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -1,0 +1,266 @@
+[
+  {
+    "id": "laminacao-fosca",
+    "nome": "Laminação Fosca",
+    "tagline": "Elegância discreta e toque aveludado",
+    "descricaoCurta": "A laminação fosca cobre toda a superfície com uma película mate que elimina reflexos e oferece sensação tátil sofisticada.",
+    "descricaoCompleta": "A laminação fosca é um acabamento que cobre toda a superfície da peça impressa com uma película transparente fosca (mate). Ela elimina completamente os reflexos de luz, oferecendo uma sensação tátil sofisticada e aveludada ao toque. Protege contra arranhões, umidade e desgaste, tornando a peça mais durável e profissional. É o acabamento preferido para materiais que transmitem seriedade, refinamento e qualidade premium.",
+    "beneficios": [
+      "Proteção contra arranhões e desgaste",
+      "Aspecto sofisticado e profissional",
+      "Elimina reflexos indesejados",
+      "Toque aveludado ao toque",
+      "Aumenta a durabilidade da peça",
+      "Realça cores de forma sutil"
+    ],
+    "aplicacoes": [
+      "Cartões de visita executivos",
+      "Catálogos e brochuras premium",
+      "Capas de agendas e cadernos",
+      "Folders institucionais",
+      "Materiais de apresentação",
+      "Embalagens premium"
+    ],
+    "comparativas": "Enquanto o verniz brilhante realça cores com intensidade, a laminação fosca oferece um acabamento mais discreto e elegante. Combina perfeitamente com hot stamping ou relevo para criar efeitos de luxo sofisticado.",
+    "processoTecnico": "A película fosca é aplicada com calor e pressão após a impressão. Pode ser feita em hotmelt (adesivo a quente) ou solvent. A espessura típica varia entre 80 a 150 microns, oferecendo diferentes níveis de proteção.",
+    "custo": "Custo moderado. Adiciona entre 15-25% ao valor final, dependendo da quantidade e tamanho da peça.",
+    "prazo": "2-3 dias úteis após a impressão",
+    "ideal": "Cartões de visita, catálogos premium, capas de agendas, folders institucionais e materiais que buscam transmitir qualidade e refinamento.",
+    "img": "/conceituais/materiais-graficos-impressao33.jpeg",
+    "palavrasChave": ["laminação fosca", "acabamento fosco", "película fosca", "cartão fosco", "impressão fosca"],
+    "faq": [
+      {
+        "pergunta": "Qual é a diferença entre laminação fosca e brilho?",
+        "resposta": "A laminação fosca elimina reflexos e oferece toque aveludado, enquanto a brilhante realça cores com intensidade e reflexo. A escolha depende da impressão desejada: elegância discreta vs. impacto visual forte."
+      },
+      {
+        "pergunta": "Dano laminação fosca com o tempo?",
+        "resposta": "Não. A laminação fosca é muito durável e resiste bem a arranhaduras, umidade e desgaste do tempo, mantendo sua aparência por anos."
+      },
+      {
+        "pergunta": "Posso combinar laminação fosca com outros acabamentos?",
+        "resposta": "Sim! A laminação fosca combina perfeitamente com hot stamping (para logos em ouro/prata) e relevo seco para criar efeitos luxuosos sofisticados."
+      }
+    ]
+  },
+  {
+    "id": "verniz-uv",
+    "nome": "Verniz UV",
+    "tagline": "Brilho intenso onde a peça mais importa",
+    "descricaoCurta": "O verniz UV pode ser aplicado de forma total ou localizada, realçando apenas os elementos que merecem destaque.",
+    "descricaoCompleta": "O verniz UV (ultravioleta) é um revestimento líquido de alta brilho que pode ser aplicado em toda a peça ou de forma seletiva (spot UV). Quando aplicado localmente, cria um contraste visual marcante entre áreas envernizadas e não envernizadas, produzindo profundidade e destaque. O verniz UV oferece brilho intenso, resistência aumentada e, quando combinado com laminação fosca, produz um efeito premium inconfundível. É curado instantaneamente por luz ultravioleta, permitindo acabamento rápido e qualidade consistente.",
+    "beneficios": [
+      "Brilho seletivo ou total à escolha",
+      "Contraste visual marcante (spot UV)",
+      "Proteção da superfície contra abrasão",
+      "Combina perfeitamente com laminação fosca",
+      "Cura instantânea por UV",
+      "Acabamento de alta qualidade"
+    ],
+    "aplicacoes": [
+      "Logos em cartões de visita",
+      "Títulos em catálogos e revistas",
+      "Capas de press kits",
+      "Materiais de apresentação executivos",
+      "Cartazes e posters impactantes",
+      "Embalagens diferenciadas"
+    ],
+    "comparativas": "Diferente da laminação fosca que cobre toda a peça, o verniz UV pode ser aplicado seletivamente (spot UV) para destaque. Oferece brilho mais intenso que a laminação brilho convencional.",
+    "processoTecnico": "O verniz UV é aplicado em máquinas especializadas e curado instantaneamente com lâmpadas ultravioleta. Pode ser total (cobertura completa) ou spot (áreas selecionadas). Espessura típica: 20-50 microns.",
+    "custo": "Spot UV é mais caro que verniz total. Adiciona entre 20-35% ao valor, dependendo da cobertura e complexidade.",
+    "prazo": "2-3 dias úteis",
+    "ideal": "Logos em cartões, títulos em catálogos, capas de press kits e qualquer material que necessite destaque visual estratégico.",
+    "img": "/conceituais/materiais-graficos-impressao11.jpeg",
+    "palavrasChave": ["verniz uv", "spot uv", "verniz seletivo", "brilho uv", "acabamento uv"],
+    "faq": [
+      {
+        "pergunta": "Qual é a diferença entre verniz total e spot UV?",
+        "resposta": "Verniz total cobre toda a peça. Spot UV (seletivo) é aplicado apenas em áreas específicas, criando contraste visual marcante e economizando custo."
+      },
+      {
+        "pergunta": "Posso combinar verniz UV com laminação fosca?",
+        "resposta": "Sim! Este é um dos melhores combos. A laminação fosca na peça inteira + spot UV em logos cria um efeito premium luxuoso."
+      },
+      {
+        "pergunta": "O verniz UV é resistente?",
+        "resposta": "Muito resistente. Protege contra arranhaduras, umidade e desgaste, aumentando significativamente a durabilidade da peça."
+      }
+    ]
+  },
+  {
+    "id": "hot-stamping",
+    "nome": "Hot Stamping",
+    "tagline": "Metalização que comunica luxo",
+    "descricaoCurta": "O hot stamping aplica folhas metálicas por pressão e calor, criando um brilho metálico real impossível de replicar.",
+    "descricaoCompleta": "Hot stamping (ou laminação a quente) é uma técnica de acabamento que aplica folhas metálicas — ouro, prata, cobre ou cores especiais — sobre o papel ou cartão através de pressão e calor intenso. O resultado é um brilho metálico real e tátil, impossível de replicar com impressão convencional ou vernizes. Transforma qualquer peça em objeto de valor percebido e atribui status premium imediato. É o acabamento preferido para identidade visual de luxo.",
+    "beneficios": [
+      "Cores metálicas reais (ouro, prata, cobre, etc)",
+      "Brilho metálico impossível de replicar",
+      "Percepção imediata de valor e luxo",
+      "Alta resistência ao desgaste",
+      "Toque tátil marcante",
+      "Acabamento profissional premium"
+    ],
+    "aplicacoes": [
+      "Logomarcas em cartões de visita executivos",
+      "Capas de embalagens de luxo",
+      "Agendas e cadernos executivos",
+      "Convites especiais e corporativos",
+      "Certificados e diplomas",
+      "Materiais de apresentação premium"
+    ],
+    "comparativas": "Enquanto verniz UV oferece brilho fosco ou translúcido, hot stamping cria metalização real com profundidade tátil. É o acabamento mais caro mas com maior impacto de luxo percebido.",
+    "processoTecnico": "Uma faca aquecida (100-200°C) pressiona uma folha metálica sobre o papel/cartão por 0,5-2 segundos. A folha se adere apenas onde houve pressão. Cores disponíveis: ouro (mais comum), prata, cobre, holográfico, cores especiais.",
+    "custo": "O acabamento mais caro. Adiciona entre 30-50% ao valor final, dependendo da cor e tamanho da área.",
+    "prazo": "3-5 dias úteis",
+    "ideal": "Logomarcas em papelaria executiva, embalagens de produtos luxuosos, agendas premium, convites especiais e certificados de valor.",
+    "img": "/conceituais/materiais-graficos-impressao34.jpeg",
+    "palavrasChave": ["hot stamping", "laminação a quente", "ouro hot stamping", "metalização", "acabamento metálico", "prata hot stamping"],
+    "faq": [
+      {
+        "pergunta": "Quais cores estão disponíveis em hot stamping?",
+        "resposta": "As principais são ouro (dourado), prata (prateado) e cobre (avermelhado). Também existem cores especiais holográficas e coloridas conforme disponibilidade."
+      },
+      {
+        "pergunta": "Hot stamping danifica o papel?",
+        "resposta": "Não. A técnica é muito precisa. Utiliza pressão calibrada e temperatura controlada para transferir apenas a folha metálica, sem danificar o substrato."
+      },
+      {
+        "pergunta": "Posso combinar hot stamping com relevo seco?",
+        "resposta": "Sim! Esta é uma combinação clássica de luxo. Hot stamping em ouro + relevo seco cria um efeito visual e tátil incomparável."
+      }
+    ]
+  },
+  {
+    "id": "relevo-seco",
+    "nome": "Relevo Seco",
+    "tagline": "Dimensão tátil sem tinta",
+    "descricaoCurta": "O relevo seco cria impressão tridimensional na superfície sem uso de tinta, oferecendo experiência sensorial única.",
+    "descricaoCompleta": "Relevo seco (embossing) é uma técnica que cria uma impressão tridimensional na superfície do papel ou cartão através de pressão mecânica, sem uso de tinta ou tintas coloridas. O resultado é uma textura profunda e perceptível ao toque — uma experiência sensorial que valoriza a marca silenciosamente e comunica excelência técnica antes mesmo de ser lida. É especialmente impactante em materiais brancos ou claros, onde a profundidade é visualmente evidente. Combina perfeitamente com hot stamping para criar efeitos de ultra-luxo.",
+    "beneficios": [
+      "Dimensão tátil e visual real",
+      "Sem necessidade de tinta ou coloração",
+      "Alto impacto sensorial imediato",
+      "Combina perfeitamente com hot stamping",
+      "Funciona em qualquer cor de papel",
+      "Comunicação de qualidade silenciosa"
+    ],
+    "aplicacoes": [
+      "Logomarcas em papelaria executiva",
+      "Tampas de caixas e embalagens",
+      "Certificados e diplomas",
+      "Convites de alto padrão",
+      "Cartões de visita diferenciados",
+      "Materiais de apresentação premium"
+    ],
+    "comparativas": "Diferente do hot stamping que adiciona cor metálica, o relevo seco trabalha apenas com dimensão e profundidade. Pode ser combinado com hot stamping para criar efeito de ultra-luxo.",
+    "processoTecnico": "Uma faca de relevo em alto-relevo é pressionada no papel/cartão com força calibrada. A pressão cria uma impressão tridimensional permanente. Pode ser feito em relevo (para fora) ou debossing (para dentro). A profundidade típica varia entre 0,5 a 2mm.",
+    "custo": "Custo moderado-alto. Adiciona entre 20-30% ao valor final, dependendo da complexidade do design.",
+    "prazo": "3-5 dias úteis",
+    "ideal": "Logomarcas em papelaria executiva, tampas de caixas de presente, certificados, convites especiais e qualquer material que busque comunicar excelência através do toque.",
+    "img": "/conceituais/materiais-graficos-impressao19.jpeg",
+    "palavrasChave": ["relevo seco", "embossing", "debossing", "relevo", "impressão em relevo", "efeito tátil"],
+    "faq": [
+      {
+        "pergunta": "Qual é a diferença entre relevo (embossing) e debossing?",
+        "resposta": "Relevo vai para fora da superfície (3D em relevo). Debossing vai para dentro (3D em cavidade). Ambos criam impacto tátil, a escolha depende do design desejado."
+      },
+      {
+        "pergunta": "Relevo seco funciona em qualquer papel?",
+        "resposta": "Funciona melhor em papéis de gramatura média-alta (acima de 200g). Papéis muito finos ou muito espessos podem não gerar o efeito desejado."
+      },
+      {
+        "pergunta": "Posso combinar relevo com hot stamping?",
+        "resposta": "Sim! A combinação relevo + hot stamping em ouro é o auge do luxo gráfico. Logo em relevo ouro é praticamente inigualável."
+      }
+    ]
+  },
+  {
+    "id": "corte-especial",
+    "nome": "Corte Especial",
+    "tagline": "Formatos que quebram o padrão",
+    "descricaoCurta": "A faca de corte personalizada permite criar peças em formatos não convencionais e diferenciadores.",
+    "descricaoCompleta": "Corte especial (ou corte personalizado/kiss cut) é um acabamento que utiliza facas customizadas para criar peças em formatos não convencionais. Permite cantos arredondados, recortes internos, formas orgânicas, geométricas complexas ou design único que literalmente quebra o padrão retangular. O resultado é uma peça que se destaca visualmente em qualquer contexto — seja em apresentação, guarda ou entrega. É o acabamento ideal para marcas que buscam diferenciação imediata e impacto visual.",
+    "beneficios": [
+      "Formatos completamente personalizados",
+      "Cantos arredondados e suavizados",
+      "Recortes internos possíveis",
+      "Diferenciação imediata",
+      "Impacto visual máximo",
+      "Comunicação de inovação"
+    ],
+    "aplicacoes": [
+      "Cartões de visita diferenciados e memoráveis",
+      "Etiquetas com formatos especiais",
+      "Displays de mesa e material PDV",
+      "Embalagens com formatos únicos",
+      "Marcadores e presentes corporativos",
+      "Materiais de marketing criativo"
+    ],
+    "comparativas": "Enquanto hot stamping trabalha com materiais (cores metálicas) e relevo cria dimensão, corte especial trabalha com forma e formato. É um complemento perfeito para qualquer acabamento anterior.",
+    "processoTecnico": "Após impressão, a peça passa por máquina de corte com faca personalizada (fabricada em aço ou laser). A faca segue o design exato desejado, permitindo formas infinitas. Pode incluir recortes internos ou furos.",
+    "custo": "Custo varia muito. Simples cantos arredondados: +10-15%. Formatos complexos com recortes internos: +25-40%. Fabricação da faca: custo único amortizado pela quantidade.",
+    "prazo": "5-7 dias úteis (inclui fabricação da faca customizada)",
+    "ideal": "Cartões de visita diferenciados, etiquetas criativas, displays de mesa, embalagens únicas e qualquer material que busque quebrar o padrão retangular.",
+    "img": "/conceituais/materiais-graficos-impressao7.jpeg",
+    "palavrasChave": ["corte especial", "kiss cut", "corte personalizado", "cartão diferenciado", "formato especial", "faca customizada"],
+    "faq": [
+      {
+        "pergunta": "Quanto custa fabricar uma faca personalizada?",
+        "resposta": "Facas simples custam entre R$ 300-600. Facas complexas com múltiplos recortes podem custar até R$ 1.200. O custo é fixo e amortizado pela quantidade impressa."
+      },
+      {
+        "pergunta": "Qual é o prazo para corte especial?",
+        "resposta": "O prazo inclui fabricação da faca (2-3 dias) + corte da peça (1-2 dias). Total: 5-7 dias úteis. Facas existentes reduzem para 2-3 dias."
+      },
+      {
+        "pergunta": "Posso combinar corte especial com outros acabamentos?",
+        "resposta": "Sim! Corte especial combina com tudo: laminação fosca, hot stamping, verniz UV, relevo. O corte é sempre a última etapa."
+      }
+    ]
+  },
+  {
+    "id": "encadernacao-premium",
+    "nome": "Encadernação Premium",
+    "tagline": "Acabamento que dura e impressiona",
+    "descricaoCurta": "Métodos de encadernação de qualidade premium para catálogos, agendas e materiais de referência permanente.",
+    "descricaoCompleta": "Encadernação premium refere-se aos diferentes métodos de junção e acabamento de cadernos, catálogos, agendas e livros. Cada método oferece diferentes níveis de durabilidade, funcionalidade e percepção de qualidade. As opções principais são: wire-o (prático e moderno), costura (sofisticado e durável), capa dura (máxima durabilidade e percepção de valor), e cola (simples mas funcional). O miolo (interior) pode ser pautado, pontilhado, quadriculado ou em branco, oferecendo total personalização conforme necessidade.",
+    "beneficios": [
+      "Múltiplos métodos conforme necessidade",
+      "Wire-o: prático e moderno",
+      "Costura: sofisticado e durável",
+      "Capa dura: máxima proteção e valor",
+      "Miolo personalizado (pautado, quadriculado, etc)",
+      "Alta durabilidade e acabamento profissional"
+    ],
+    "aplicacoes": [
+      "Agendas executivas (capa dura + costura)",
+      "Cadernos corporativos (wire-o ou costura)",
+      "Catálogos premium (wire-o)",
+      "Portfólios profissionais (capa dura + costura)",
+      "Materiais de consulta permanente (capa dura)",
+      "Presentes corporativos (capa dura + acabamento premium)"
+    ],
+    "comparativas": "Wire-o é prático e moderno. Costura é clássica e sofisticada. Capa dura é o topo de linha — máxima durabilidade e percepção de valor.",
+    "processoTecnico": "Wire-o: espiral metálico passa por furos. Costura: fios amarram os cadernos internos. Capa dura: papelão espesso + tecido/papel de cobertura. Cola: adesivo une os cadernos (menos durável). Miolo pode ser offset, digital ou misto.",
+    "custo": "Wire-o: +15-25%. Costura: +25-35%. Capa dura: +40-60%. Capa dura é significativamente mais cara mas oferece percepção de luxo incomparável.",
+    "prazo": "5-10 dias úteis (depende do método e volume)",
+    "ideal": "Agendas executivas, cadernos corporativos, portfólios, catálogos premium e qualquer material que necessite durabilidade e qualidade permanente.",
+    "img": "/conceituais/materiais-graficos-impressao5.jpeg",
+    "palavrasChave": ["encadernação", "wire-o", "costura", "capa dura", "caderno encadernado", "encadernação premium"],
+    "faq": [
+      {
+        "pergunta": "Qual é melhor: wire-o, costura ou capa dura?",
+        "resposta": "Depende do uso. Wire-o é prático. Costura é sofisticado. Capa dura é durável e de luxo. Para presentes/produtos premium: capa dura. Para uso corporativo diário: wire-o."
+      },
+      {
+        "pergunta": "Quanto tempo dura uma encadernação?",
+        "resposta": "Wire-o: 2-3 anos com uso intenso. Costura: 5+ anos. Capa dura: 10+ anos. Encadernação é investimento em durabilidade."
+      },
+      {
+        "pergunta": "Posso personalizar o miolo da agenda/caderno?",
+        "resposta": "Sim! Pautado, pontilhado, quadriculado, em branco ou personalizado conforme necessidade. Muitas opções para diferentes usos."
+      }
+    ]
+  }
+]

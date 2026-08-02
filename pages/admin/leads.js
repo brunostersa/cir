@@ -10,6 +10,32 @@ const SRC_LABELS = {
   'portfolio_download': 'LP Portfólio',
   'whatsapp-site': 'WhatsApp Site',
   'cidades-cir': 'Cidades CIR',
+  'header_orcamento': 'Header',
+  'footer_orcamento': 'Footer',
+  'footer_projeto': 'Footer',
+  'hero_orcamento': 'Hero',
+  'fab_cidade': 'WhatsApp Flutuante (Cidade)',
+  'fab_estado': 'WhatsApp Flutuante (Estado)',
+  'fab_home': 'WhatsApp Flutuante (Home)',
+  'sticky_mobile': 'Barra Fixa Mobile',
+  'lead_popup': 'Popup de Saída',
+  'cta_final_cidade': 'CTA Final (Cidade)',
+  'cta_final_cidade_formulario': 'CTA Final (Cidade, formulário)',
+  'cta_final_estado_orcamento': 'CTA Final (Estado)',
+  'cta_final_home_orcamento': 'CTA Final (Home)',
+  'consultoria_fab': 'Consultoria (Flutuante)',
+  'consultoria_hero': 'Consultoria (Hero)',
+  'consultoria_cta_final': 'Consultoria (CTA Final)',
+  'consultoria_includes': 'Consultoria (Inclusos)',
+  'consultoria_nav': 'Consultoria (Menu)',
+  'consultoria_sticky': 'Consultoria (Barra Fixa)',
+  'products_carousel_card': 'Carrossel de Produtos',
+  'products_carousel_orcamento': 'Carrossel de Produtos (CTA)',
+  'portfolio_agendar_visita': 'Portfólio (Agendar Visita)',
+  'acabamentos_hub_cta': 'Acabamentos (CTA)',
+  'servicos_hub_cta': 'Serviços (CTA)',
+  'servicos_intro': 'Serviços (Intro)',
+  '404_page': 'Página 404',
 }
 const SRC_COLORS = {
   'orcamento-rapido': '#e8613a',
@@ -17,6 +43,12 @@ const SRC_COLORS = {
   'whatsapp-site': '#4a90e2',
   'cidades-cir': '#9b6ba8',
 }
+const SRC_FALLBACK_PALETTE = [
+  '#e8613a', '#5d9c6e', '#4a90e2', '#9b6ba8', '#c8813a', '#4a7c8c',
+  '#a5673f', '#6b8e5a', '#9c5555', '#5a6b8c', '#b85c8a', '#7a9e6a',
+]
+function colorForSrc(s, i) { return SRC_COLORS[s] || SRC_FALLBACK_PALETTE[i % SRC_FALLBACK_PALETTE.length] }
+function labelForSrc(s) { return SRC_LABELS[s] || s }
 const DESTINO_LABELS = { cirgrafica: 'CIR Gráfica', carbono: 'Carbono' }
 const DESTINO_COLORS = { cirgrafica: '#5d9c6e', carbono: '#c8813a' }
 const SORT_COLS = ['customer_name','customer_phone','estado','source','utm_source','destino','created_at']
@@ -84,6 +116,7 @@ export default function LeadsDashboard() {
 
   const [estados, setEstados]   = useState([])
   const [utmSrcs, setUtmSrcs]   = useState([])
+  const [sources, setSources]   = useState([])
 
   const [dayWindow, setDayWindow] = useState(15)
   const [detailLead, setDetailLead] = useState(null)
@@ -142,6 +175,7 @@ export default function LeadsDashboard() {
       setTotalCount(table.count||0)
       setEstados([...new Set((chart.data||[]).map(r=>r.estado).filter(Boolean))].sort())
       setUtmSrcs([...new Set((chart.data||[]).map(r=>r.utm_source).filter(Boolean))].sort())
+      setSources([...new Set((chart.data||[]).map(r=>r.source).filter(Boolean))].sort((a,b)=>labelForSrc(a).localeCompare(labelForSrc(b))))
       setLastUpdate(new Date().toLocaleTimeString('pt-BR'))
     } finally {
       setLoading(false)
@@ -193,16 +227,19 @@ export default function LeadsDashboard() {
         const label = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2)
         return m === currentMonth ? label + '*' : label
       }
-      const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
-
+      // origens presentes nos dados carregados, ordenadas por volume total (maior primeiro) —
+      // dinâmico para nunca ficar desatualizado conforme novos `source=` surgem no site
+      const srcTotals = {}
+      chartRows.forEach(r => { const s = r.source || 'outro'; srcTotals[s] = (srcTotals[s]||0)+1 })
+      const srcs = Object.keys(srcTotals).sort((a,b)=>srcTotals[b]-srcTotals[a])
 
       if (chartMesInst.current) chartMesInst.current.destroy()
       if (chartMesRef.current) {
         chartMesInst.current = new Chart(chartMesRef.current, {
           type:'bar',
-          data:{ labels:mKeys.map(fmtM), datasets:srcs.map(s=>({
-            label:SRC_LABELS[s]||s, data:mKeys.map(m=>months[m][s]||0),
-            backgroundColor:SRC_COLORS[s]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
+          data:{ labels:mKeys.map(fmtM), datasets:srcs.map((s,i)=>({
+            label:labelForSrc(s), data:mKeys.map(m=>months[m][s]||0),
+            backgroundColor:colorForSrc(s,i), borderRadius:0, borderSkipped:false, stack:'a'
           }))},
           options:{
             responsive:true, maintainAspectRatio:false,
@@ -439,9 +476,10 @@ export default function LeadsDashboard() {
   const prevMC  = chartRows.filter(r=>(r.created_at||'').startsWith(prevMon)).length
   const delta   = prevMC > 0 ? Math.round((thisMC-prevMC)/prevMC*100) : null
   const eCounts = {}; chartRows.forEach(r=>{ if(r.estado) eCounts[r.estado]=(eCounts[r.estado]||0)+1 })
-  const oCounts = {}; chartRows.forEach(r=>{ const s=r.source||'?'; oCounts[s]=(oCounts[s]||0)+1 })
+  const oCounts = {}; chartRows.forEach(r=>{ const s=r.source||'outro'; oCounts[s]=(oCounts[s]||0)+1 })
   const topEstados = Object.entries(eCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
   const topOrigens = Object.entries(oCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
+  const allOrigens = Object.entries(oCounts).sort((a,b)=>b[1]-a[1])
   const topE = Object.entries(eCounts).sort((a,b)=>b[1]-a[1])[0]
   const topO = Object.entries(oCounts).sort((a,b)=>b[1]-a[1])[0]
   const totalPages = Math.ceil(totalCount/perPage)
@@ -512,7 +550,7 @@ export default function LeadsDashboard() {
               <label>Origem</label>
               <select value={filters.source} onChange={e=>handleFilterChange('source',e.target.value)}>
                 <option value="">Todas</option>
-                {Object.entries(SRC_LABELS).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+                {sources.map(s=><option key={s} value={s}>{labelForSrc(s)}</option>)}
               </select>
             </div>
             <div className="db-fg">
@@ -607,14 +645,14 @@ export default function LeadsDashboard() {
           <div className="db-chart-card">
             <p className="db-chart-title">Top origem hoje</p>
             <div className="db-stat-list">
-              {topOrigens.map(([src,count])=>{
+              {topOrigens.map(([src,count],i)=>{
                 const total = chartRows.length || 1
                 const pct = Math.round(count/total*100)
                 return (
                   <div key={src} className="db-stat-row">
                     <span className="db-stat-label">
-                      <span className="db-stat-sq" style={{background:SRC_COLORS[src]||'#888'}}/>
-                      {(SRC_LABELS[src]||src).split(' ')[0]}
+                      <span className="db-stat-sq" style={{background:colorForSrc(src,i)}}/>
+                      {labelForSrc(src).split(' ')[0]}
                     </span>
                     <span className="db-stat-val">{pct}%</span>
                   </div>
@@ -648,8 +686,8 @@ export default function LeadsDashboard() {
               <span style={{fontSize:'.65rem',color:'var(--cir-fg2)'}}>* = mês em andamento</span>
             </div>
             <div className="db-legend">
-              {Object.entries(SRC_LABELS).map(([k,v])=>(
-                <span key={k} className="db-leg"><span className="db-leg-sq" style={{background:SRC_COLORS[k]}}/>{v}</span>
+              {allOrigens.map(([k],i)=>(
+                <span key={k} className="db-leg"><span className="db-leg-sq" style={{background:colorForSrc(k,i)}}/>{labelForSrc(k)}</span>
               ))}
             </div>
             <div style={{position:'relative',height:'200px'}}>

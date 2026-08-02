@@ -3,6 +3,7 @@ import Footer from '../components/Footer'
 import ImageCarousel from '../components/ImageCarousel'
 import ProductsCarousel from '../components/ProductsCarousel'
 import AcabamentosSection from '../components/AcabamentosSection'
+import ServicosGrid from '../components/ServicosGrid'
 import Favicon from '../components/Favicon'
 import WhatsAppLink from '../components/WhatsAppLink'
 import cidades from '../cidades.json'
@@ -123,22 +124,7 @@ export default function Home() {
       <div className="cir-section cir-section--light">
         <span className="cir-s-tag">Serviços</span>
         <h2 className="cp-h2">Nossos Serviços</h2>
-        <div className="cp-services-grid" style={{ background: 'var(--cir-l-line)' }}>
-          {[
-            { title: 'Materiais Institucionais', body: 'Cartões de visita, papel timbrado, pastas e folders institucionais para fortalecer a identidade da sua marca.', items: ['Cartões de visita', 'Papel timbrado', 'Pastas executivas', 'Folders institucionais'] },
-            { title: 'Materiais Promocionais', body: 'Flyers, banners, adesivos e catálogos para divulgar seus produtos e serviços com impacto.', items: ['Flyers e panfletos', 'Banners e faixas', 'Adesivos personalizados', 'Catálogos promocionais'] },
-            { title: 'Impressão Digital e Offset', body: 'Soluções rápidas para pequenas tiragens e produções offset para grandes volumes com acabamento impecável.', items: ['Impressão digital rápida', 'Produção offset', 'Pequenas e grandes tiragens', 'Acabamento profissional'] },
-            { title: 'Impressão Editorial', body: 'Revistas, livros e apostilas com acabamento impecável para projetos editoriais de qualidade.', items: ['Revistas e jornais', 'Livros e manuais', 'Apostilas educacionais', 'Publicações corporativas'] },
-            { title: 'Moda e Etiquetas', body: 'Tags e etiquetas que valorizam as peças e contam a história da sua marca no setor da moda.', items: ['Tags personalizadas', 'Etiquetas de roupas', 'Identificação de produtos', 'Materiais têxteis'] },
-            { title: 'Embalagens e Sacolas', body: 'Caixas e sacolas personalizadas para criar experiências únicas na entrega e destacar sua marca.', items: ['Caixas personalizadas', 'Sacolas promocionais', 'Envelopes personalizados', 'Displays promocionais'] },
-          ].map((s, i) => (
-            <div key={i} className="cp-service" style={{ background: 'var(--cir-l-bg)' }}>
-              <h3 style={{ color: 'var(--cir-accent)' }}>{s.title}</h3>
-              <p style={{ color: 'var(--cir-l-fg2)' }}>{s.body}</p>
-              <ul>{s.items.map((item, j) => <li key={j} style={{ color: 'var(--cir-l-fg2)' }}>{item}</li>)}</ul>
-            </div>
-          ))}
-        </div>
+        <ServicosGrid light />
       </div>
 
       <hr className="cir-divider" />
