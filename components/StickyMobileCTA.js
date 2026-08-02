@@ -15,7 +15,7 @@ export default function StickyMobileCTA({ cidade, estado }) {
       <div className={`smc-bar ${visible ? 'smc-bar--visible' : ''}`}>
         <span className="smc-text">Orçamento grátis em {cidade}</span>
         <WhatsAppLink
-          message={`Olá! Gostaria de um orçamento para meu projeto de gráfica em ${cidade}.`}
+          message={`Olá! Sou de ${cidade} e gostaria de um orçamento para meu projeto.`}
           source="sticky_mobile"
           cidade={cidade}
           estado={estado}
