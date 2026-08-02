@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function ServicoPage({ servico, outrosServicos, acabamentosRecomendados }) {
-  const pageTitle = `${servico.nome}: Guia Completo | CIR Gráfica`;
+  const pageTitle = `${servico.nome}: Preço e Como Funciona | CIR`;
   const pageDescription = `${servico.nome} - Tudo o que você precisa saber: como funciona, benefícios, custo, prazo e aplicações. Guia completo com FAQ. CIR Gráfica.`;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/servicos/${servico.id}`;
 
