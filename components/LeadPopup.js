@@ -69,7 +69,7 @@ export default function LeadPopup({ cidade, estado }) {
       return
     }
 
-    const finalMessage = `Olá! Meu nome é ${name.trim()}. Quero aproveitar o orçamento gratuito para meu projeto de gráfica em ${cidade}.`
+    const finalMessage = `Olá! Meu nome é ${name.trim()}. Sou de ${cidade} e quero aproveitar o orçamento gratuito para meu projeto.`
 
     logLead({
       phone: PHONE,

@@ -1,6 +1,13 @@
 import { supabaseAdmin } from '../../../lib/supabaseAdmin'
 
-const ALLOWED_COLUMNS = ['created_at','customer_name','customer_phone','estado','source','utm_source']
+const ALLOWED_COLUMNS = ['created_at','customer_name','customer_phone','estado','source','utm_source','destino']
+
+// PostgREST usa vírgula e parênteses como sintaxe de filtro; envolver o valor em aspas
+// duplas (com \ e " escapados) trata o conteúdo como literal — ver docs do PostgREST
+// sobre "Escaping reserved characters" no filtro .or().
+function escapePostgrestValue(value) {
+  return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')
+}
 
 export default async function handler(req, res) {
   if (!supabaseAdmin) return res.status(500).json({ error: 'Supabase not configured' })
@@ -11,6 +18,7 @@ export default async function handler(req, res) {
     source,
     estado,
     utm_source,
+    destino,
     date_from,
     date_to,
     search,
@@ -27,6 +35,7 @@ export default async function handler(req, res) {
   if (source)     query = query.eq('source', source)
   if (estado)     query = query.eq('estado', estado)
   if (utm_source) query = query.eq('utm_source', utm_source)
+  if (destino)    query = query.eq('destino', destino)
   // BRT = UTC-3: início do dia BRT = 03:00 UTC; fim do dia BRT = 03:00 UTC do dia seguinte
   if (date_from)  query = query.gte('created_at', date_from + 'T03:00:00+00:00')
   if (date_to) {
@@ -35,8 +44,8 @@ export default async function handler(req, res) {
     query = query.lt('created_at', end.toISOString())
   }
   if (search) {
-    const s = search.replace(/'/g, "''")
-    query = query.or(`customer_name.ilike.%${s}%,customer_phone.ilike.%${s}%,customer_email.ilike.%${s}%`)
+    const s = escapePostgrestValue(search)
+    query = query.or(`customer_name.ilike."%${s}%",customer_phone.ilike."%${s}%",customer_email.ilike."%${s}%"`)
   }
 
   query = query.order(col, { ascending: asc })

@@ -1,5 +1,8 @@
 import Head from 'next/head'
 import { useEffect, useRef, useState, useCallback } from 'react'
+import {
+  TIPO_PRODUTO_OPTIONS, QUANTIDADE_OPTIONS, ARTE_OPTIONS, ACABAMENTO_OPTIONS, PRAZO_OPTIONS,
+} from '../../lib/leadRouting'
 
 // ── Constants ────────────────────────────────────────────────────────────
 const SRC_LABELS = {
@@ -9,13 +12,19 @@ const SRC_LABELS = {
   'cidades-cir': 'Cidades CIR',
 }
 const SRC_COLORS = {
-  'orcamento-rapido': '#c8813a',
+  'orcamento-rapido': '#e8613a',
   'portfolio_download': '#5d9c6e',
-  'whatsapp-site': '#3a7cbf',
-  'cidades-cir': '#7c5dbf',
+  'whatsapp-site': '#4a90e2',
+  'cidades-cir': '#9b6ba8',
 }
-const SORT_COLS = ['customer_name','customer_phone','estado','source','utm_source','created_at']
+const DESTINO_LABELS = { cirgrafica: 'CIR Gráfica', carbono: 'Carbono' }
+const DESTINO_COLORS = { cirgrafica: '#5d9c6e', carbono: '#c8813a' }
+const SORT_COLS = ['customer_name','customer_phone','estado','source','utm_source','destino','created_at']
 const PER_PAGE_OPTS = [25, 50, 100]
+
+function labelFromOptions(options, value) {
+  return options.find((o) => o.value === value)?.label || value || null
+}
 
 function fmtPhone(p) {
   if (!p) return '—'
@@ -34,10 +43,34 @@ function setHash(obj) {
   const p = new URLSearchParams(Object.fromEntries(Object.entries(obj).filter(([,v])=>v)))
   history.replaceState(null,'','#'+p.toString())
 }
+function simpleMovingAverage(values, window = 7) {
+  const result = []
+  let sum = 0
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i]
+    if (i < window - 1) {
+      result.push(null)
+    } else {
+      if (i >= window) sum -= values[i - window]
+      result.push(sum / window)
+    }
+  }
+  return result
+}
+function getSparklineData(data, field, limit = 30) {
+  const counts = {}
+  data.forEach(r => {
+    if (r[field] == null) return
+    const key = r[field]
+    counts[key] = (counts[key] || 0) + 1
+  })
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, limit)
+  return sorted.map(([label, count]) => ({ label, count }))
+}
 
 // ── Component ────────────────────────────────────────────────────────────
 export default function LeadsDashboard() {
-  const [filters, setFilters] = useState({ date_from:'', date_to:'', source:'', estado:'', utm_source:'', search:'' })
+  const [filters, setFilters] = useState({ date_from:'', date_to:'', source:'', estado:'', utm_source:'', destino:'', search:'' })
   const [orderBy, setOrderBy]   = useState('created_at')
   const [orderDir, setOrderDir] = useState('desc')
   const [perPage, setPerPage]   = useState(25)
@@ -53,14 +86,23 @@ export default function LeadsDashboard() {
   const [utmSrcs, setUtmSrcs]   = useState([])
 
   const [dayWindow, setDayWindow] = useState(15)
+  const [detailLead, setDetailLead] = useState(null)
+  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [viewChart, setViewChart] = useState({}) // { chartName: 'table' || 'chart' }
 
   const searchTimer = useRef(null)
   const chartMesRef = useRef(null)
   const chartEsRef  = useRef(null)
   const chartDayRef = useRef(null)
+  const chartDestinoRef = useRef(null)
+  const chartTipoRef = useRef(null)
+  const chartAcabRef = useRef(null)
   const chartMesInst = useRef(null)
   const chartEsInst  = useRef(null)
   const chartDayInst = useRef(null)
+  const chartDestinoInst = useRef(null)
+  const chartTipoInst = useRef(null)
+  const chartAcabInst = useRef(null)
 
   // restore from hash on mount
   useEffect(() => {
@@ -71,6 +113,7 @@ export default function LeadsDashboard() {
       source:      h.source      || '',
       estado:      h.estado      || '',
       utm_source:  h.utm_source  || '',
+      destino:     h.destino     || '',
       search:      h.search      || '',
     })
     if (h.order_by)  setOrderBy(h.order_by)
@@ -120,7 +163,7 @@ export default function LeadsDashboard() {
   // initial load
   useEffect(() => {
     const h = getHash()
-    const f = { date_from:h.date_from||'', date_to:h.date_to||'', source:h.source||'', estado:h.estado||'', utm_source:h.utm_source||'', search:h.search||'' }
+    const f = { date_from:h.date_from||'', date_to:h.date_to||'', source:h.source||'', estado:h.estado||'', utm_source:h.utm_source||'', destino:h.destino||'', search:h.search||'' }
     const ob = h.order_by||'created_at', od = h.order_dir||'desc'
     const pp = parseInt(h.per_page)||25, pg = parseInt(h.page)||1
     loadAll(f, ob, od, pp, pg)
@@ -131,11 +174,11 @@ export default function LeadsDashboard() {
     if (!chartRows.length || typeof window === 'undefined') return
     import('chart.js').then(({ Chart, registerables }) => {
       Chart.register(...registerables)
-      const isDark = matchMedia('(prefers-color-scheme:dark)').matches
+      const isDark = isDarkMode
       const grid = isDark ? '#2a2a28' : '#e2e0d8'
       const muted = '#898781', prim = isDark?'#fff':'#0b0b0b'
 
-      // monthly stacked
+      // monthly stacked with previous month overlay
       const months = {}
       chartRows.forEach(r => {
         const m=(r.created_at||'').slice(0,7); if(!m) return
@@ -143,8 +186,15 @@ export default function LeadsDashboard() {
         const s=r.source||'outro'; months[m][s]=(months[m][s]||0)+1
       })
       const mKeys = Object.keys(months).sort()
-      const fmtM = m => { const[y,mo]=m.split('-'); return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2) }
+      const now = new Date()
+      const currentMonth = now.toISOString().slice(0,7)
+      const fmtM = m => {
+        const[y,mo]=m.split('-')
+        const label = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+mo-1]+'/'+y.slice(2)
+        return m === currentMonth ? label + '*' : label
+      }
       const srcs = ['orcamento-rapido','portfolio_download','whatsapp-site','cidades-cir']
+
 
       if (chartMesInst.current) chartMesInst.current.destroy()
       if (chartMesRef.current) {
@@ -189,15 +239,75 @@ export default function LeadsDashboard() {
           }
         })
       }
-    })
-  }, [chartRows])
 
-  // daily chart
+      // por tipo de produto
+      const tCounts = {}
+      chartRows.forEach(r => { if (r.quiz_tipo_produto) tCounts[r.quiz_tipo_produto] = (tCounts[r.quiz_tipo_produto]||0)+1 })
+      const topTipo = Object.entries(tCounts).sort((a,b)=>b[1]-a[1]).slice(0,8)
+
+      if (chartTipoInst.current) chartTipoInst.current.destroy()
+      if (chartTipoRef.current) {
+        chartTipoInst.current = new Chart(chartTipoRef.current, {
+          type:'bar',
+          data:{ labels:topTipo.map(([k])=>labelFromOptions(TIPO_PRODUTO_OPTIONS,k)||k), datasets:[{
+            data:topTipo.map(([,v])=>v),
+            backgroundColor:'#7c5dbf',
+            borderRadius:3, borderSkipped:false
+          }]},
+          options:{
+            indexAxis:'y', responsive:true, maintainAspectRatio:false,
+            plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.parsed.x} leads`}} },
+            scales:{
+              x:{ ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} },
+              y:{ ticks:{color:prim,font:{size:10}}, grid:{display:false} }
+            }
+          }
+        })
+      }
+
+      // acabamento × destino (empilhado)
+      const acabOrder = ACABAMENTO_OPTIONS.map(o=>o.value)
+      const destKeys = ['cirgrafica','carbono']
+      const acabDestino = {}
+      chartRows.forEach(r => {
+        if (!r.quiz_acabamento) return
+        const d = r.destino || 'outro'
+        if (!acabDestino[r.quiz_acabamento]) acabDestino[r.quiz_acabamento] = {}
+        acabDestino[r.quiz_acabamento][d] = (acabDestino[r.quiz_acabamento][d]||0)+1
+      })
+      const acabLabels = acabOrder.filter(a => acabDestino[a])
+
+      if (chartAcabInst.current) chartAcabInst.current.destroy()
+      if (chartAcabRef.current && acabLabels.length) {
+        chartAcabInst.current = new Chart(chartAcabRef.current, {
+          type:'bar',
+          data:{
+            labels:acabLabels.map(a=>labelFromOptions(ACABAMENTO_OPTIONS,a)||a),
+            datasets:destKeys.map(d=>({
+              label:DESTINO_LABELS[d]||d,
+              data:acabLabels.map(a=>acabDestino[a][d]||0),
+              backgroundColor:DESTINO_COLORS[d]||'#888', borderRadius:0, borderSkipped:false, stack:'a'
+            }))
+          },
+          options:{
+            responsive:true, maintainAspectRatio:false,
+            plugins:{ legend:{position:'bottom', labels:{color:muted,font:{size:10},boxWidth:10}}, tooltip:{mode:'index', callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}} },
+            scales:{
+              x:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid} },
+              y:{ stacked:true, ticks:{color:muted,font:{size:10}}, grid:{color:grid}, border:{dash:[2,2]} }
+            }
+          }
+        })
+      }
+    }).catch(err => console.error('Failed to load Chart.js:', err))
+  }, [chartRows, isDarkMode])
+
+  // daily chart with trend line
   useEffect(() => {
     if (!chartRows.length || typeof window === 'undefined') return
     import('chart.js').then(({ Chart, registerables }) => {
       Chart.register(...registerables)
-      const isDark = matchMedia('(prefers-color-scheme:dark)').matches
+      const isDark = isDarkMode
       const grid = isDark ? '#2a2a28' : '#e2e0d8'
       const muted = '#898781'
 
@@ -214,6 +324,7 @@ export default function LeadsDashboard() {
         dayCounts[d] = (dayCounts[d]||0) + 1
       })
       const vals = days.map(d => dayCounts[d]||0)
+      const trend = simpleMovingAverage(vals, 7)
       const fmtDay = d => { const[,m,day]=d.split('-'); return `${day}/${m}` }
       const maxVal = Math.max(...vals, 1)
 
@@ -224,15 +335,26 @@ export default function LeadsDashboard() {
           data: {
             labels: days.map(fmtDay),
             datasets: [{
+              label: 'Leads',
               data: vals,
-              backgroundColor: vals.map(v => v === maxVal ? '#c8813a' : '#c8813a55'),
+              backgroundColor: vals.map(v => v === maxVal ? '#e8613a' : '#e8613a55'),
               borderRadius: 3,
               borderSkipped: false,
+            }, {
+              label: 'Tendência (7d)',
+              data: trend,
+              type: 'line',
+              borderColor: '#e8613a',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 0,
             }]
           },
           options: {
             responsive: true, maintainAspectRatio: false,
-            plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.parsed.y} leads`}} },
+            plugins: { legend:{display:true, labels:{color:muted,font:{size:10},boxWidth:10}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y?.toFixed(0)||0}`}} },
             scales: {
               x: { ticks:{color:muted,font:{size:9}}, grid:{color:grid} },
               y: { ticks:{color:muted,font:{size:10},precision:0}, grid:{color:grid}, border:{dash:[2,2]} }
@@ -240,8 +362,8 @@ export default function LeadsDashboard() {
           }
         })
       }
-    })
-  }, [chartRows, dayWindow])
+    }).catch(err => console.error('Failed to load Chart.js:', err))
+  }, [chartRows, dayWindow, isDarkMode])
 
   // ── Handlers ────────────────────────────────────────────────────────────
   function handleFilterChange(key, val) {
@@ -259,7 +381,7 @@ export default function LeadsDashboard() {
   }
 
   function clearFilters() {
-    const f = { date_from:'', date_to:'', source:'', estado:'', utm_source:'', search:'' }
+    const f = { date_from:'', date_to:'', source:'', estado:'', utm_source:'', destino:'', search:'' }
     setFilters(f); setPage(1)
     loadAll(f, orderBy, orderDir, perPage, 1)
   }
@@ -296,7 +418,11 @@ export default function LeadsDashboard() {
     const res = await api({ ...filters, mode:'chart' })
     const rows = res.data||[]
     if (!rows.length) return
-    const cols = ['id','created_at','customer_name','customer_phone','estado','source','utm_source','utm_medium','utm_campaign','page_url']
+    const cols = [
+      'id','created_at','customer_name','customer_phone','customer_email','estado','source','destino',
+      'quiz_tipo_produto','quiz_quantidade','quiz_arte_pronta','quiz_acabamento','quiz_prazo','quiz_investimento',
+      'utm_source','utm_medium','utm_campaign','page_url',
+    ]
     const csv  = [cols.join(','), ...rows.map(r=>cols.map(c=>`"${(r[c]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n')
     const a = document.createElement('a')
     a.href = URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}))
@@ -314,9 +440,19 @@ export default function LeadsDashboard() {
   const delta   = prevMC > 0 ? Math.round((thisMC-prevMC)/prevMC*100) : null
   const eCounts = {}; chartRows.forEach(r=>{ if(r.estado) eCounts[r.estado]=(eCounts[r.estado]||0)+1 })
   const oCounts = {}; chartRows.forEach(r=>{ const s=r.source||'?'; oCounts[s]=(oCounts[s]||0)+1 })
+  const topEstados = Object.entries(eCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
+  const topOrigens = Object.entries(oCounts).sort((a,b)=>b[1]-a[1]).slice(0,5)
   const topE = Object.entries(eCounts).sort((a,b)=>b[1]-a[1])[0]
   const topO = Object.entries(oCounts).sort((a,b)=>b[1]-a[1])[0]
   const totalPages = Math.ceil(totalCount/perPage)
+
+  // destino: quantos leads foram roteados pra cada empresa (só leads que passaram pelo quiz têm destino)
+  const destinoCounts = {}
+  chartRows.forEach(r => { const d = r.destino || 'sem_quiz'; destinoCounts[d] = (destinoCounts[d]||0)+1 })
+  const destinoTotal = chartRows.length || 1
+  const destinoBreakdown = Object.entries(destinoCounts)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([key,count]) => ({ key, count, pct: Math.round(count/destinoTotal*100) }))
 
   // active chips
   const chipMap = {
@@ -325,6 +461,7 @@ export default function LeadsDashboard() {
     source:    filters.source    ? `Origem: ${SRC_LABELS[filters.source]||filters.source}` : '',
     estado:    filters.estado    ? `Estado: ${filters.estado}` : '',
     utm_source:filters.utm_source? `UTM: ${filters.utm_source}` : '',
+    destino:   filters.destino   ? `Destino: ${DESTINO_LABELS[filters.destino]||filters.destino}` : '',
     search:    filters.search    ? `Busca: "${filters.search}"` : '',
   }
   const activeChips = Object.entries(chipMap).filter(([,v])=>v)
@@ -350,6 +487,9 @@ export default function LeadsDashboard() {
           {lastUpdate && !loading && <span className="db-sub">atualizado {lastUpdate}</span>}
         </div>
         <div className="db-topbar-right">
+          <button className="db-btn db-btn-sm" onClick={()=>setIsDarkMode(!isDarkMode)} title={isDarkMode?'Modo claro':'Modo escuro'}>
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
           <button className="db-btn db-btn-sm" onClick={exportCSV}>↓ CSV</button>
           <button className="db-btn db-btn-sm" onClick={()=>loadAll()}>↻ Atualizar</button>
         </div>
@@ -387,6 +527,13 @@ export default function LeadsDashboard() {
               <select value={filters.utm_source} onChange={e=>handleFilterChange('utm_source',e.target.value)}>
                 <option value="">Todos</option>
                 {utmSrcs.map(u=><option key={u} value={u}>{u}</option>)}
+              </select>
+            </div>
+            <div className="db-fg">
+              <label>Destino</label>
+              <select value={filters.destino} onChange={e=>handleFilterChange('destino',e.target.value)}>
+                <option value="">Todos</option>
+                {Object.entries(DESTINO_LABELS).map(([k,v])=><option key={k} value={k}>{v}</option>)}
               </select>
             </div>
             <div className="db-fg db-fg-search">
@@ -440,25 +587,66 @@ export default function LeadsDashboard() {
           </div>
         </div>
 
-        {/* Daily chart */}
-        <div className="db-chart-card db-chart-full" style={{marginBottom:'1px'}}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
-            <p className="db-chart-title" style={{margin:0}}>Leads por dia</p>
-            <div className="db-day-toggle">
-              {[7,15,30].map(n=>(
-                <button key={n} className={`db-day-btn${dayWindow===n?' active':''}`} onClick={()=>setDayWindow(n)}>{n}d</button>
-              ))}
+        {/* Daily chart — destaque */}
+        <div className="db-charts-hero">
+          <div className="db-chart-card" style={{gridColumn:'1 / -1'}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
+              <p className="db-chart-title" style={{margin:0}}>Leads por dia</p>
+              <div className="db-day-toggle">
+                {[7,15,30].map(n=>(
+                  <button key={n} className={`db-day-btn${dayWindow===n?' active':''}`} onClick={()=>setDayWindow(n)}>{n}d</button>
+                ))}
+              </div>
+            </div>
+            <div style={{position:'relative',height:'200px'}}>
+              <canvas ref={chartDayRef}/>
             </div>
           </div>
-          <div style={{position:'relative',height:'160px'}}>
-            <canvas ref={chartDayRef}/>
+
+          {/* Quick stats ao lado do daily chart */}
+          <div className="db-chart-card">
+            <p className="db-chart-title">Top origem hoje</p>
+            <div className="db-stat-list">
+              {topOrigens.map(([src,count])=>{
+                const total = chartRows.length || 1
+                const pct = Math.round(count/total*100)
+                return (
+                  <div key={src} className="db-stat-row">
+                    <span className="db-stat-label">
+                      <span className="db-stat-sq" style={{background:SRC_COLORS[src]||'#888'}}/>
+                      {(SRC_LABELS[src]||src).split(' ')[0]}
+                    </span>
+                    <span className="db-stat-val">{pct}%</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="db-chart-card">
+            <p className="db-chart-title">Top estado hoje</p>
+            <div className="db-stat-list">
+              {topEstados.map(([estado,count])=>{
+                const total = chartRows.length || 1
+                const pct = Math.round(count/total*100)
+                return (
+                  <div key={estado} className="db-stat-row">
+                    <span className="db-stat-label">{estado}</span>
+                    <span className="db-stat-val">{pct}%</span>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Charts */}
+        {/* Charts secondary row */}
         <div className="db-charts">
           <div className="db-chart-card">
-            <p className="db-chart-title">Evolução mensal por origem</p>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
+              <p className="db-chart-title" style={{margin:0}}>Evolução mensal por origem</p>
+              <span style={{fontSize:'.65rem',color:'var(--cir-fg2)'}}>* = mês em andamento</span>
+            </div>
             <div className="db-legend">
               {Object.entries(SRC_LABELS).map(([k,v])=>(
                 <span key={k} className="db-leg"><span className="db-leg-sq" style={{background:SRC_COLORS[k]}}/>{v}</span>
@@ -472,6 +660,38 @@ export default function LeadsDashboard() {
             <p className="db-chart-title">Top estados</p>
             <div style={{position:'relative',height:'230px'}}>
               <canvas ref={chartEsRef}/>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz: destino, tipo de produto, acabamento */}
+        <div className="db-charts db-charts-3col">
+          <div className="db-destino-card">
+            <p className="db-chart-title">Leads por destino</p>
+            <div className="db-destino-list">
+              {destinoBreakdown.map(d => (
+                <div key={d.key} className="db-destino-row">
+                  <span className="db-destino-label">
+                    {d.key === 'sem_quiz'
+                      ? <span className="td-muted">Sem quiz (dado antigo)</span>
+                      : <span className="db-badge" style={{borderColor:(DESTINO_COLORS[d.key]||'#888')+'55', color:DESTINO_COLORS[d.key]||'#888'}}>{DESTINO_LABELS[d.key]||d.key}</span>}
+                  </span>
+                  <span className="db-destino-count">{d.count.toLocaleString('pt-BR')}</span>
+                  <span className="db-destino-pct">{d.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="db-chart-card">
+            <p className="db-chart-title">Leads por tipo de produto</p>
+            <div style={{position:'relative',height:'200px'}}>
+              <canvas ref={chartTipoRef}/>
+            </div>
+          </div>
+          <div className="db-chart-card">
+            <p className="db-chart-title">Acabamento × destino</p>
+            <div style={{position:'relative',height:'200px'}}>
+              <canvas ref={chartAcabRef}/>
             </div>
           </div>
         </div>
@@ -498,6 +718,7 @@ export default function LeadsDashboard() {
                     ['customer_phone','Telefone'],
                     ['estado','Estado'],
                     ['source','Origem'],
+                    ['destino','Destino'],
                     ['utm_source','UTM Source'],
                     ['created_at','Data'],
                   ].map(([col,label])=>(
@@ -509,15 +730,19 @@ export default function LeadsDashboard() {
               </thead>
               <tbody>
                 {loading && !tableData.length ? (
-                  <tr><td colSpan={6}><div className="db-empty db-loading-text">Carregando…</div></td></tr>
+                  <tr><td colSpan={7}><div className="db-empty db-loading-text">Carregando…</div></td></tr>
                 ) : !tableData.length ? (
-                  <tr><td colSpan={6}><div className="db-empty">Nenhum lead encontrado.</div></td></tr>
+                  <tr><td colSpan={7}><div className="db-empty">Nenhum lead encontrado.</div></td></tr>
                 ) : tableData.map(r=>(
-                  <tr key={r.id}>
+                  <tr key={r.id} className="db-row-clickable" onClick={()=>setDetailLead(r)}>
                     <td className="td-name" title={r.customer_name||''}>{r.customer_name||<span className="td-muted">—</span>}</td>
                     <td className="td-phone">{fmtPhone(r.customer_phone)}</td>
                     <td>{r.estado||<span className="td-muted">—</span>}</td>
                     <td><span className={`db-badge b-${r.source?.split('-')[0]||'x'}`}>{SRC_LABELS[r.source]||r.source||'—'}</span></td>
+                    <td>{r.destino
+                      ? <span className="db-badge" style={{borderColor:(DESTINO_COLORS[r.destino]||'#888')+'55', color:DESTINO_COLORS[r.destino]||'#888'}}>{DESTINO_LABELS[r.destino]||r.destino}</span>
+                      : <span className="td-muted">sem quiz</span>}
+                    </td>
                     <td>{r.utm_source?<span className="db-badge">{r.utm_source}</span>:<span className="td-muted">—</span>}</td>
                     <td className="td-muted">{fmtDate(r.created_at)}</td>
                   </tr>
@@ -552,6 +777,68 @@ export default function LeadsDashboard() {
         </div>
 
       </div>
+
+      {detailLead && (
+        <div className="db-detail-overlay" onClick={()=>setDetailLead(null)}>
+          <div className="db-detail-panel" onClick={e=>e.stopPropagation()}>
+            <button className="db-detail-close" onClick={()=>setDetailLead(null)} aria-label="Fechar">×</button>
+
+            <span className="db-detail-tag">Lead</span>
+            <h2 className="db-detail-title">{detailLead.customer_name || 'Sem nome'}</h2>
+            <p className="db-detail-sub">{fmtPhone(detailLead.customer_phone)} · {fmtDate(detailLead.created_at)}</p>
+
+            {detailLead.destino && (
+              <span
+                className="db-badge db-detail-destino"
+                style={{borderColor:(DESTINO_COLORS[detailLead.destino]||'#888')+'55', color:DESTINO_COLORS[detailLead.destino]||'#888'}}
+              >
+                → {DESTINO_LABELS[detailLead.destino] || detailLead.destino}
+              </span>
+            )}
+
+            {detailLead.quiz_tipo_produto && (
+              <div className="db-detail-section">
+                <p className="db-detail-section-title">Respostas do quiz</p>
+                <dl className="db-detail-grid">
+                  <dt>Produto</dt><dd>{labelFromOptions(TIPO_PRODUTO_OPTIONS, detailLead.quiz_tipo_produto) || '—'}</dd>
+                  <dt>Quantidade</dt><dd>{labelFromOptions(QUANTIDADE_OPTIONS, detailLead.quiz_quantidade) || '—'}</dd>
+                  <dt>Arte</dt><dd>{labelFromOptions(ARTE_OPTIONS, detailLead.quiz_arte_pronta) || '—'}</dd>
+                  <dt>Acabamento</dt><dd>{labelFromOptions(ACABAMENTO_OPTIONS, detailLead.quiz_acabamento) || '—'}</dd>
+                  <dt>Prazo</dt><dd>{labelFromOptions(PRAZO_OPTIONS, detailLead.quiz_prazo) || '—'}</dd>
+                  <dt>Investimento/un.</dt><dd>{detailLead.quiz_investimento || '—'}</dd>
+                </dl>
+              </div>
+            )}
+
+            <div className="db-detail-section">
+              <p className="db-detail-section-title">Contato</p>
+              <dl className="db-detail-grid">
+                <dt>E-mail</dt><dd>{detailLead.customer_email || '—'}</dd>
+                <dt>Empresa</dt><dd>{detailLead.customer_company || '—'}</dd>
+                <dt>Estado</dt><dd>{detailLead.estado || '—'}</dd>
+                <dt>Cidade</dt><dd>{detailLead.cidade || '—'}</dd>
+              </dl>
+            </div>
+
+            <div className="db-detail-section">
+              <p className="db-detail-section-title">Origem</p>
+              <dl className="db-detail-grid">
+                <dt>Source</dt><dd>{detailLead.source || '—'}</dd>
+                <dt>UTM Source</dt><dd>{detailLead.utm_source || '—'}</dd>
+                <dt>UTM Medium</dt><dd>{detailLead.utm_medium || '—'}</dd>
+                <dt>UTM Campaign</dt><dd>{detailLead.utm_campaign || '—'}</dd>
+                <dt>Página</dt><dd className="db-detail-break">{detailLead.page_url || '—'}</dd>
+                <dt>Referrer</dt><dd className="db-detail-break">{detailLead.referrer || '—'}</dd>
+              </dl>
+            </div>
+
+            <div className="db-detail-section">
+              <p className="db-detail-section-title">Mensagem enviada</p>
+              <pre className="db-detail-message">{detailLead.message || '—'}</pre>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx global>{`
         .db-page { background: var(--cir-bg); color: var(--cir-fg); font-family: var(--cir-sans); min-height: 100vh; }
@@ -599,9 +886,18 @@ export default function LeadsDashboard() {
         .db-kpi-sub-delta .neg { color:#e34948; }
 
         /* charts */
+        .db-charts-hero { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
         .db-charts { display:grid; grid-template-columns:3fr 2fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
         .db-chart-card { background:var(--cir-bg2); padding:1rem 1.1rem; }
         .db-chart-title { font-size:.6rem; font-weight:600; color:var(--cir-fg2); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5rem; }
+
+        /* stat list */
+        .db-stat-list { display:flex; flex-direction:column; }
+        .db-stat-row { display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; border-top:1px solid var(--cir-line); font-size:.75rem; }
+        .db-stat-row:first-child { border-top:none; }
+        .db-stat-label { display:flex; align-items:center; gap:.4rem; }
+        .db-stat-sq { width:6px; height:6px; flex-shrink:0; border-radius:1px; }
+        .db-stat-val { font-weight:600; color:var(--cir-gold); font-variant-numeric:tabular-nums; }
         .db-legend { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:.5rem; }
         .db-leg { display:flex; align-items:center; gap:4px; font-size:.65rem; color:var(--cir-fg2); }
         .db-leg-sq { width:8px; height:8px; flex-shrink:0; }
@@ -651,8 +947,39 @@ export default function LeadsDashboard() {
         .db-day-btn.active { background:var(--cir-accent); color:#fff; border-color:var(--cir-accent); }
         .db-day-btn:hover:not(.active) { background:var(--cir-bg); color:var(--cir-fg); }
 
-        @media(max-width:1000px) { .db-charts{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} }
-        @media(max-width:640px)  { .db-kpis{grid-template-columns:repeat(2,1fr)} .db-body{padding:.75rem .75rem 2rem} }
+        @media(max-width:1000px) { .db-charts-hero{grid-template-columns:1fr} .db-charts{grid-template-columns:1fr} .db-charts-3col{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} }
+        @media(max-width:640px)  { .db-charts-hero{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(2,1fr)} .db-body{padding:.75rem .75rem 2rem} }
+
+        .db-charts-3col { grid-template-columns:repeat(3,1fr); margin-top:1px; }
+
+        /* destino breakdown */
+        .db-destino-card { background:var(--cir-bg2); padding:1rem 1.1rem; }
+        .db-destino-list { display:flex; flex-direction:column; }
+        .db-destino-row { display:flex; align-items:center; gap:.6rem; padding:.55rem 0; border-top:1px solid var(--cir-line); font-size:.78rem; }
+        .db-destino-row:first-child { border-top:none; }
+        .db-destino-label { flex:1; min-width:0; }
+        .db-destino-count { flex-shrink:0; font-variant-numeric:tabular-nums; color:var(--cir-fg2); }
+        .db-destino-pct { flex-shrink:0; width:2.6rem; text-align:right; font-variant-numeric:tabular-nums; color:var(--cir-fg2); }
+
+        /* linhas da tabela clicáveis */
+        .db-row-clickable { cursor:pointer; }
+
+        /* painel de detalhes do lead */
+        .db-detail-overlay { position:fixed; inset:0; z-index:300; background:rgba(0,0,0,.55); display:flex; justify-content:flex-end; }
+        .db-detail-panel { position:relative; width:100%; max-width:420px; height:100%; overflow-y:auto; background:var(--cir-bg); border-left:1px solid var(--cir-line); padding:2rem 1.6rem 3rem; }
+        .db-detail-close { position:absolute; top:1rem; right:1rem; width:32px; height:32px; background:transparent; border:1px solid var(--cir-line); color:var(--cir-fg2); font-size:1.3rem; line-height:1; cursor:pointer; }
+        .db-detail-close:hover { color:var(--cir-fg); border-color:var(--cir-fg2); }
+        .db-detail-tag { display:block; font-size:.62rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--cir-fg2); margin-bottom:.6rem; }
+        .db-detail-title { font-family:var(--cir-serif); font-size:1.3rem; font-weight:700; color:var(--cir-fg); margin-bottom:.3rem; }
+        .db-detail-sub { font-size:.75rem; color:var(--cir-fg2); margin-bottom:.8rem; }
+        .db-detail-destino { margin-bottom:1rem; }
+        .db-detail-section { margin-top:1.4rem; padding-top:1.2rem; border-top:1px solid var(--cir-line); }
+        .db-detail-section-title { font-size:.62rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--cir-accent); margin-bottom:.7rem; }
+        .db-detail-grid { display:grid; grid-template-columns:110px 1fr; row-gap:.55rem; column-gap:.6rem; }
+        .db-detail-grid dt { font-size:.68rem; color:var(--cir-fg2); }
+        .db-detail-grid dd { font-size:.78rem; color:var(--cir-fg); }
+        .db-detail-break { word-break:break-all; }
+        .db-detail-message { white-space:pre-wrap; font-family:var(--cir-sans); font-size:.78rem; line-height:1.7; color:var(--cir-fg); background:var(--cir-bg2); padding:.8rem; border:1px solid var(--cir-line); }
       `}</style>
     </div>
   )
