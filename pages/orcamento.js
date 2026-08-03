@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Favicon from '../components/Favicon'
 import { logLead } from '../lib/logLead'
 import { formatPhoneInput } from '../lib/phone'
@@ -12,15 +12,17 @@ import {
   ARTE_OPTIONS,
   ACABAMENTO_OPTIONS,
   PRAZO_OPTIONS,
+  getAcabamentoOptions,
+  getQuizSummaryItems,
   resolveDestino,
-  buildQuizSummary,
 } from '../lib/leadRouting'
 import {
   IconFolder, IconCalendar, IconTag, IconBag, IconBox, IconBook, IconEnvelope, IconSpark,
-  IconLogoMark, IconFileCheck, IconFileBlank, IconBolt, IconClock, IconCheck, LevelBars,
+  IconLogoMark, IconFileCheck, IconFileBlank, IconEdit, IconBolt, IconClock, IconInfinity,
+  IconCheck, LevelBars,
 } from '../components/QuizIcons'
 
-const STEPS = ['tipo_produto', 'quantidade', 'arte_pronta', 'acabamento', 'prazo', 'investimento', 'contato']
+const STEPS = ['tipo_produto', 'quantidade', 'arte_pronta', 'acabamento', 'prazo', 'investimento', 'contato', 'resumo']
 
 const STEP_COPY = {
   tipo_produto: 'Qual o tipo de produto você precisa?',
@@ -30,6 +32,20 @@ const STEP_COPY = {
   prazo: 'Qual o prazo desejado?',
   investimento: 'Tem ideia do investimento por unidade?',
   contato: 'Como podemos te chamar?',
+  resumo: 'Seu projeto',
+}
+
+// Mensagens consultivas — reforçam que o sistema está montando uma recomendação
+// pro cliente, não só coletando dados.
+const STEP_CONSULT = {
+  tipo_produto: 'Em menos de 1 minuto você recebe uma recomendação personalizada.',
+  quantidade: 'Isso nos ajuda a montar o processo de produção mais econômico pra você.',
+  arte_pronta: 'Sem problema se ainda não estiver pronta — te orientamos em cada etapa.',
+  acabamento: 'Vamos indicar a melhor configuração pra elevar o resultado do seu material.',
+  prazo: 'Assim já conseguimos verificar disponibilidade na produção.',
+  investimento: 'Isso ajuda a montar uma proposta dentro do seu orçamento.',
+  contato: 'Estamos montando a melhor opção pra sua necessidade — só falta seu contato.',
+  resumo: 'Confira se ficou tudo certo antes de enviarmos pro nosso time.',
 }
 
 const TIPO_ICONS = {
@@ -43,8 +59,27 @@ const TIPO_ICONS = {
   outros: IconSpark,
 }
 
-const ARTE_ICONS = { so_logo: IconLogoMark, tenho_tudo: IconFileCheck, nao_tenho: IconFileBlank }
-const QUANTIDADE_SHORT = ['< 100', '100–499', '500–999', '1000+']
+const ARTE_ICONS = {
+  nao_tenho: IconFileBlank,
+  so_logo: IconLogoMark,
+  preciso_ajustes: IconEdit,
+  tenho_tudo: IconFileCheck,
+}
+
+const PRAZO_ICONS = {
+  urgente: IconBolt,
+  ate_3_dias: IconClock,
+  ate_7_dias: IconCalendar,
+  sem_data: IconInfinity,
+}
+
+function WhatsAppGlyph(props) {
+  return (
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  )
+}
 
 const EMPTY_QUIZ = {
   tipo_produto: '',
@@ -64,7 +99,6 @@ export default function Orcamento() {
   const [attempted, setAttempted] = useState(false)
   const [done, setDone] = useState(false)
   const [waLink, setWaLink] = useState('')
-  const commitTimer = useRef(null)
 
   const source = typeof router.query.source === 'string' ? router.query.source : 'orcamento_page'
   const cidade = typeof router.query.cidade === 'string' ? router.query.cidade : null
@@ -79,32 +113,26 @@ export default function Orcamento() {
     goNext()
   }
 
-  const rawQuantIndex = QUANTIDADE_OPTIONS.findIndex((o) => o.value === quiz.quantidade)
-  const quantIndex = rawQuantIndex === -1 ? 0 : rawQuantIndex
-
-  const handleQuantChange = (e) => {
-    const idx = Number(e.target.value)
-    setQuiz((q) => ({ ...q, quantidade: QUANTIDADE_OPTIONS[idx].value }))
-  }
-
-  const commitQuant = () => {
-    clearTimeout(commitTimer.current)
-    commitTimer.current = setTimeout(goNext, 350)
-  }
+  const acabamentoOptions = getAcabamentoOptions(quiz.tipo_produto)
 
   const digits = phone.replace(/\D/g, '')
   const nameError = getNameError(name)
   const phoneError = getPhoneError(phone)
 
-  const handleSubmit = (e) => {
+  // 'contato' só valida e avança pro resumo — o envio de fato acontece em handleConfirm
+  const handleContinueFromContact = (e) => {
     e.preventDefault()
     if (nameError || phoneError) {
       setAttempted(true)
       return
     }
+    goNext()
+  }
 
+  const handleConfirm = () => {
     const { destino, phone: targetPhone } = resolveDestino(quiz)
-    const finalMessage = `Olá! Meu nome é ${name.trim()}. ${ctaMessage}\n\n${buildQuizSummary(quiz)}`
+    const summaryText = getQuizSummaryItems(quiz).map((i) => `${i.label}: ${i.value}`).join('\n')
+    const finalMessage = `Olá! Meu nome é ${name.trim()}. ${ctaMessage}\n\n${summaryText}`
     const link = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(finalMessage)}`
 
     logLead({
@@ -168,6 +196,7 @@ export default function Orcamento() {
             )}
             <span className="qz-tag">Solicite seu orçamento</span>
             <h1 className="qz-title">{STEP_COPY[step]}</h1>
+            <p className="qz-consult">{STEP_CONSULT[step]}</p>
 
             {step === 'tipo_produto' && (
               <div className="qz-grid qz-grid--2col">
@@ -184,28 +213,16 @@ export default function Orcamento() {
             )}
 
             {step === 'quantidade' && (
-              <div className="qz-slider-wrap">
-                <div className="qz-slider-value">{QUANTIDADE_OPTIONS[quantIndex].label}</div>
-                <input
-                  type="range"
-                  min="0"
-                  max={QUANTIDADE_OPTIONS.length - 1}
-                  step="1"
-                  value={quantIndex}
-                  onChange={handleQuantChange}
-                  onMouseUp={commitQuant}
-                  onTouchEnd={commitQuant}
-                  onKeyUp={commitQuant}
-                  className="qz-slider"
-                  style={{ background: `linear-gradient(to right, var(--cir-accent) ${(quantIndex / (QUANTIDADE_OPTIONS.length - 1)) * 100}%, var(--cir-line) 0%)` }}
-                  aria-label="Quantidade estimada"
-                />
-                <div className="qz-slider-ticks">
-                  {QUANTIDADE_SHORT.map((label, i) => (
-                    <span key={label} className={`qz-slider-tick ${i <= quantIndex ? 'qz-slider-tick--on' : ''}`}>{label}</span>
-                  ))}
-                </div>
-                <button type="button" className="qz-btn-skip qz-slider-confirm" onClick={goNext}>Confirmar e continuar →</button>
+              <div className="qz-tiers">
+                {QUANTIDADE_OPTIONS.map((o, i) => (
+                  <button key={o.value} type="button" className="qz-tier" onClick={() => selectOption('quantidade', o.value)}>
+                    <LevelBars level={i + 1} max={QUANTIDADE_OPTIONS.length} />
+                    <span className="qz-tier-text">
+                      <span className="qz-tier-label">{o.label}</span>
+                      <span className="qz-tier-hint">{o.hint}</span>
+                    </span>
+                  </button>
+                ))}
               </div>
             )}
 
@@ -225,9 +242,9 @@ export default function Orcamento() {
 
             {step === 'acabamento' && (
               <div className="qz-tiers">
-                {ACABAMENTO_OPTIONS.map((o, i) => (
+                {acabamentoOptions.map((o) => (
                   <button key={o.value} type="button" className="qz-tier" onClick={() => selectOption('acabamento', o.value)}>
-                    <LevelBars level={i + 1} />
+                    <LevelBars level={o.level} max={ACABAMENTO_OPTIONS.length} />
                     <span className="qz-tier-text">
                       <span className="qz-tier-label">{o.label}</span>
                       <span className="qz-tier-hint">{o.hint}</span>
@@ -239,14 +256,15 @@ export default function Orcamento() {
 
             {step === 'prazo' && (
               <div className="qz-grid qz-grid--2col">
-                <button type="button" className="qz-tile" onClick={() => selectOption('prazo', 'urgente')}>
-                  <IconBolt className="qz-tile-icon" />
-                  <span>Material urgente</span>
-                </button>
-                <button type="button" className="qz-tile" onClick={() => selectOption('prazo', 'sem_data')}>
-                  <IconClock className="qz-tile-icon" />
-                  <span>Não tenho data definida</span>
-                </button>
+                {PRAZO_OPTIONS.map((o) => {
+                  const Icon = PRAZO_ICONS[o.value]
+                  return (
+                    <button key={o.value} type="button" className="qz-tile" onClick={() => selectOption('prazo', o.value)}>
+                      <Icon className="qz-tile-icon" />
+                      <span>{o.label}</span>
+                    </button>
+                  )
+                })}
               </div>
             )}
 
@@ -270,7 +288,7 @@ export default function Orcamento() {
             )}
 
             {step === 'contato' && (
-              <form onSubmit={handleSubmit} noValidate className="qz-form">
+              <form onSubmit={handleContinueFromContact} noValidate className="qz-form">
                 <p className="qz-body">Deixe seu nome e WhatsApp para direcionarmos ao atendimento certo</p>
 
                 <label className="qz-label" htmlFor="qz-name">Nome</label>
@@ -299,11 +317,25 @@ export default function Orcamento() {
                 />
                 {attempted && phoneError && <p className="qz-field-error">{phoneError}</p>}
 
-                <button type="submit" className="qz-btn-primary qz-btn-primary--wa">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <button type="submit" className="qz-btn-primary">Ver resumo do meu pedido →</button>
+              </form>
+            )}
+
+            {step === 'resumo' && (
+              <div className="qz-summary">
+                <ul className="qz-summary-list">
+                  {getQuizSummaryItems(quiz).map((item) => (
+                    <li key={item.label} className="qz-summary-item">
+                      <span className="qz-summary-label">{item.label}</span>
+                      <span className="qz-summary-value">{item.value}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button type="button" className="qz-btn-primary qz-btn-primary--wa" onClick={handleConfirm}>
+                  <WhatsAppGlyph style={{ width: 18, height: 18, fill: '#fff' }} />
                   Continuar para o WhatsApp
                 </button>
-              </form>
+              </div>
             )}
           </div>
         )}
@@ -402,8 +434,16 @@ export default function Orcamento() {
           font-weight: 700;
           line-height: 1.25;
           color: var(--cir-fg);
-          margin-bottom: 2rem;
+          margin-bottom: .6rem;
           letter-spacing: -.01em;
+        }
+        .qz-consult {
+          font-family: var(--cir-sans);
+          font-size: .84rem;
+          font-style: italic;
+          line-height: 1.6;
+          color: var(--cir-accent);
+          margin-bottom: 2rem;
         }
         .qz-body {
           font-family: var(--cir-sans);
@@ -439,57 +479,6 @@ export default function Orcamento() {
         }
         .qz-tile:hover { background: #17150f; color: var(--cir-accent); }
         .qz-tile-icon { width: 26px; height: 26px; color: var(--cir-accent); flex-shrink: 0; }
-
-        /* quantidade slider */
-        .qz-slider-wrap { display: flex; flex-direction: column; }
-        .qz-slider-value {
-          font-family: var(--cir-serif);
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--cir-fg);
-          margin-bottom: 2rem;
-        }
-        .qz-slider {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 3px;
-          border-radius: 2px;
-          outline: none;
-          cursor: pointer;
-          margin-bottom: 1rem;
-        }
-        .qz-slider::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          background: var(--cir-accent);
-          border: 3px solid var(--cir-bg);
-          box-shadow: 0 0 0 1px var(--cir-accent);
-          cursor: grab;
-        }
-        .qz-slider::-webkit-slider-thumb:active { cursor: grabbing; }
-        .qz-slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--cir-accent);
-          border: 3px solid var(--cir-bg);
-          box-shadow: 0 0 0 1px var(--cir-accent);
-          cursor: grab;
-        }
-        .qz-slider::-moz-range-track { background: var(--cir-line); height: 3px; border-radius: 2px; }
-        .qz-slider::-moz-range-progress { background: var(--cir-accent); height: 3px; border-radius: 2px; }
-        .qz-slider-ticks {
-          display: flex;
-          justify-content: space-between;
-          font-family: var(--cir-sans);
-          font-size: .68rem;
-          color: var(--cir-fg2);
-        }
-        .qz-slider-tick--on { color: var(--cir-accent); font-weight: 600; }
-        .qz-slider-confirm { margin-top: 2.2rem; align-self: flex-start; }
 
         /* arte pronta list */
         .qz-list { display: flex; flex-direction: column; }
@@ -563,6 +552,35 @@ export default function Orcamento() {
           width: 100%;
         }
         .qz-invest-input::placeholder { color: var(--cir-fg2); opacity: .4; }
+
+        /* resumo final */
+        .qz-summary { display: flex; flex-direction: column; }
+        .qz-summary-list { list-style: none; display: flex; flex-direction: column; }
+        .qz-summary-item {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 1rem;
+          border-top: 1px solid var(--cir-line);
+          padding: 1rem .2rem;
+        }
+        .qz-summary-item:last-child { border-bottom: 1px solid var(--cir-line); }
+        .qz-summary-label {
+          font-family: var(--cir-sans);
+          font-size: .68rem;
+          font-weight: 600;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          color: var(--cir-fg2);
+          flex-shrink: 0;
+        }
+        .qz-summary-value {
+          font-family: var(--cir-serif);
+          font-size: .95rem;
+          font-weight: 700;
+          color: var(--cir-fg);
+          text-align: right;
+        }
 
         /* contact form + shared buttons */
         .qz-form { display: flex; flex-direction: column; }
@@ -644,12 +662,12 @@ export default function Orcamento() {
         @media (max-width: 480px) {
           .qz-topbar { padding: 1.1rem var(--cir-gutter); }
           .qz-main { padding: 1.4rem var(--cir-gutter) 2.5rem; }
-          .qz-title { margin-bottom: 1.4rem; }
+          .qz-title { margin-bottom: .4rem; }
+          .qz-consult { margin-bottom: 1.4rem; }
           .qz-tile { padding: 1.1rem .9rem; gap: .6rem; }
           .qz-tile-icon { width: 22px; height: 22px; }
           .qz-tile span { font-size: .8rem; line-height: 1.35; }
           .qz-list-item, .qz-tier { padding: 1rem .2rem; }
-          .qz-slider-value { font-size: 1.25rem; margin-bottom: 1.6rem; }
         }
         @media (max-width: 340px) {
           .qz-grid--2col { grid-template-columns: 1fr; }

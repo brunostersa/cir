@@ -98,6 +98,23 @@ export function IconFileBlank(props) {
   )
 }
 
+export function IconEdit(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M4 20l1-4.2L15.2 5.6a1.5 1.5 0 012.1 0l1.1 1.1a1.5 1.5 0 010 2.1L8.2 19 4 20z" />
+      <path d="M13.5 7.3l3.2 3.2" />
+    </svg>
+  )
+}
+
+export function IconInfinity(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M7 9a3 3 0 000 6c1.7 0 2.6-1.2 3.6-2.6C11.6 10.9 12.8 9 14.5 9a3 3 0 010 6c-1.7 0-2.6-1.2-3.6-2.6" />
+    </svg>
+  )
+}
+
 export function IconBolt(props) {
   return (
     <svg {...base} {...props}>
