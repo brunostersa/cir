@@ -119,17 +119,16 @@ export default function Orcamento() {
   const nameError = getNameError(name)
   const phoneError = getPhoneError(phone)
 
-  // 'contato' só valida e avança pro resumo — o envio de fato acontece em handleConfirm
+  // 'contato' valida, salva o lead no banco e monta o link do WhatsApp — assim,
+  // mesmo que o cliente desista na tela de resumo, o lead já ficou registrado.
+  // O clique final em 'resumo' só abre o link já pronto (handleConfirm).
   const handleContinueFromContact = (e) => {
     e.preventDefault()
     if (nameError || phoneError) {
       setAttempted(true)
       return
     }
-    goNext()
-  }
 
-  const handleConfirm = () => {
     const { destino, phone: targetPhone } = resolveDestino(quiz)
     const summaryText = getQuizSummaryItems(quiz).map((i) => `${i.label}: ${i.value}`).join('\n')
     const finalMessage = `Olá! Meu nome é ${name.trim()}. ${ctaMessage}\n\n${summaryText}`
@@ -152,8 +151,12 @@ export default function Orcamento() {
       destino,
     })
 
-    window.open(link, '_blank', 'noopener,noreferrer')
     setWaLink(link)
+    goNext()
+  }
+
+  const handleConfirm = () => {
+    window.open(waLink, '_blank', 'noopener,noreferrer')
     setDone(true)
   }
 
