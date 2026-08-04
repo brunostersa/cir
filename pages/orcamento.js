@@ -295,13 +295,10 @@ export default function Orcamento() {
                   </>
                 ) : (
                   <>
-                    <div className="qz-tiers">
-                      {INVESTIMENTO_OPTIONS.map((o, i) => (
-                        <button key={o.value} type="button" className="qz-tier" onClick={() => selectOption('investimento', o.value)}>
-                          <LevelBars level={i + 1} max={INVESTIMENTO_OPTIONS.length} />
-                          <span className="qz-tier-text">
-                            <span className="qz-tier-label">{o.label}</span>
-                          </span>
+                    <div className="qz-grid qz-grid--2col">
+                      {INVESTIMENTO_OPTIONS.map((o) => (
+                        <button key={o.value} type="button" className="qz-tile qz-tile--invest" onClick={() => selectOption('investimento', o.value)}>
+                          <span>{o.label}</span>
                         </button>
                       ))}
                     </div>
@@ -504,6 +501,15 @@ export default function Orcamento() {
         }
         .qz-tile:hover { background: #17150f; color: var(--cir-accent); }
         .qz-tile-icon { width: 26px; height: 26px; color: var(--cir-accent); flex-shrink: 0; }
+        .qz-tile--invest {
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: var(--cir-serif);
+          font-size: 1rem;
+          font-weight: 700;
+          padding: 2.2rem 1.4rem;
+        }
 
         /* arte pronta list */
         .qz-list { display: flex; flex-direction: column; }
