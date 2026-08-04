@@ -12,8 +12,10 @@ import {
   ARTE_OPTIONS,
   ACABAMENTO_OPTIONS,
   PRAZO_OPTIONS,
+  INVESTIMENTO_OPTIONS,
   getAcabamentoOptions,
   getQuizSummaryItems,
+  getInvestimentoLabel,
   resolveDestino,
 } from '../lib/leadRouting'
 import {
@@ -88,6 +90,7 @@ const EMPTY_QUIZ = {
   acabamento: '',
   prazo: '',
   investimento: '',
+  investimento_outro: '',
 }
 
 export default function Orcamento() {
@@ -147,7 +150,7 @@ export default function Orcamento() {
       quiz_arte_pronta: quiz.arte_pronta,
       quiz_acabamento: quiz.acabamento,
       quiz_prazo: quiz.prazo,
-      quiz_investimento: quiz.investimento || null,
+      quiz_investimento: getInvestimentoLabel(quiz) || null,
       destino,
     })
 
@@ -273,20 +276,39 @@ export default function Orcamento() {
 
             {step === 'investimento' && (
               <div className="qz-invest">
-                <div className="qz-invest-field">
-                  <span className="qz-invest-prefix">R$</span>
-                  <input
-                    className="qz-invest-input"
-                    type="text"
-                    inputMode="numeric"
-                    value={quiz.investimento}
-                    onChange={(e) => setQuiz((q) => ({ ...q, investimento: e.target.value }))}
-                    placeholder="0,00"
-                    autoFocus
-                  />
-                </div>
-                <button type="button" className="qz-btn-primary" onClick={goNext}>Continuar</button>
-                <button type="button" className="qz-btn-skip" onClick={goNext}>Prefiro não informar</button>
+                {quiz.investimento === 'outro' ? (
+                  <>
+                    <div className="qz-invest-field">
+                      <span className="qz-invest-prefix">R$</span>
+                      <input
+                        className="qz-invest-input"
+                        type="text"
+                        inputMode="numeric"
+                        value={quiz.investimento_outro}
+                        onChange={(e) => setQuiz((q) => ({ ...q, investimento_outro: e.target.value }))}
+                        placeholder="0,00"
+                        autoFocus
+                      />
+                    </div>
+                    <button type="button" className="qz-btn-primary" onClick={goNext}>Continuar</button>
+                    <button type="button" className="qz-btn-skip" onClick={() => setQuiz((q) => ({ ...q, investimento: '' }))}>← Escolher uma faixa</button>
+                  </>
+                ) : (
+                  <>
+                    <div className="qz-tiers">
+                      {INVESTIMENTO_OPTIONS.map((o, i) => (
+                        <button key={o.value} type="button" className="qz-tier" onClick={() => selectOption('investimento', o.value)}>
+                          <LevelBars level={i + 1} max={INVESTIMENTO_OPTIONS.length} />
+                          <span className="qz-tier-text">
+                            <span className="qz-tier-label">{o.label}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                    <button type="button" className="qz-btn-skip" onClick={() => setQuiz((q) => ({ ...q, investimento: 'outro' }))}>Prefiro informar um valor exato</button>
+                    <button type="button" className="qz-btn-skip" onClick={goNext}>Prefiro não informar</button>
+                  </>
+                )}
               </div>
             )}
 
