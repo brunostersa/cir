@@ -3,7 +3,6 @@ import '../styles/cir-ds.css'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { WhatsAppModalProvider } from '../components/WhatsAppModalProvider'
 import { captureUtms } from '../lib/utm'
 
 function initReveal() {
@@ -33,9 +32,7 @@ export default function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="google-site-verification" content="ip0QC2xuodmc80u5Y291yiARaLWbF_-b9lWVHlrowFw" />
       </Head>
-      <WhatsAppModalProvider>
-        <Component {...pageProps} />
-      </WhatsAppModalProvider>
+      <Component {...pageProps} />
     </>
   )
 }
