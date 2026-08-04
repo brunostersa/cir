@@ -1,283 +1,209 @@
-import WhatsAppLink from './WhatsAppLink'
 import Link from 'next/link'
+import WhatsAppLink from './WhatsAppLink'
 
 const WA_MESSAGE = 'Olá! vim pelo site gostaria de mais informações!'
 
 export default function Footer() {
   return (
-    <footer className="cir-footer">
-      <div className="cir-footer__content">
-        {/* Brand & Contact */}
-        <div className="cir-footer__section cir-footer__brand">
-          <img src="/logo-cir.svg" alt="CIR Gráfica" className="cir-footer__logo" />
-          <p className="cir-footer__tagline">Qualidade para ser sentida.</p>
-          <div className="cir-footer__contact">
-            <div className="cir-footer__info">
-              <span className="cir-footer__label">Telefone</span>
-              <a href="tel:+556232021150" className="cir-footer__value">(62) 3202-1150</a>
-            </div>
-            <div className="cir-footer__info">
-              <span className="cir-footer__label">Email</span>
-              <a href="mailto:atendimento@cirgrafica.com.br" className="cir-footer__value">atendimento@cirgrafica.com.br</a>
-            </div>
-            <div className="cir-footer__info">
-              <span className="cir-footer__label">Localização</span>
-              <span className="cir-footer__value">Goiânia, GO</span>
-            </div>
+    <footer className="cf-root">
+      {/* CTA — mesma tonalidade clara usada em cir-section--light no resto do site */}
+      <div className="cf-cta">
+        <span className="cir-s-tag cf-cta-tag">Vamos conversar?</span>
+        <h2 className="cf-cta-title">Pronto para elevar sua próxima impressão?</h2>
+        <p className="cf-cta-sub">Atendimento 100% online, com entrega em mais de 478 cidades do Brasil.</p>
+        <WhatsAppLink message={WA_MESSAGE} source="footer_cta" className="cir-btn cir-btn--fill">
+          Solicitar Orçamento
+        </WhatsAppLink>
+      </div>
+
+      {/* Corpo escuro */}
+      <div className="cf-body">
+        <div className="cf-grid">
+          <div className="cf-col cf-brand">
+            <img src="/logo-cir.svg" alt="CIR Gráfica" className="cf-logo" />
+            <p className="cf-tagline">Qualidade para ser sentida.</p>
+            <address className="cf-address">
+              Av. Vereador José Monteiro, N1814<br />
+              Setor Negrão de Lima — Goiânia, GO
+            </address>
+          </div>
+
+          <div className="cf-col">
+            <h3 className="cf-col-title">Explorar</h3>
+            <ul className="cf-list">
+              <li><Link href="/" className="cf-link">Início</Link></li>
+              <li><Link href="/servicos" className="cf-link">Serviços Gráficos</Link></li>
+              <li><Link href="/acabamentos" className="cf-link">Acabamentos Gráficos</Link></li>
+              <li><Link href="/portfolio" className="cf-link">Portfólio</Link></li>
+              <li><Link href="/consultoria" className="cf-link">Consultoria Técnica</Link></li>
+            </ul>
+          </div>
+
+          <div className="cf-col">
+            <h3 className="cf-col-title">Contato</h3>
+            <ul className="cf-list">
+              <li><a href="tel:+556232021150" className="cf-link">(62) 3202-1150</a></li>
+              <li><a href="mailto:atendimento@cirgrafica.com.br" className="cf-link">atendimento@cirgrafica.com.br</a></li>
+              <li>
+                <WhatsAppLink message={WA_MESSAGE} source="footer_contato" className="cf-link cf-link--accent">
+                  Orçamento Rápido →
+                </WhatsAppLink>
+              </li>
+              <li>
+                <a href="https://www.cirgrafica.com.br" target="_blank" rel="noopener noreferrer" className="cf-link">
+                  Site Institucional ↗
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Projeto */}
-        <div className="cir-footer__section">
-          <h3 className="cir-footer__section-title">Projeto</h3>
-          <ul className="cir-footer__list">
-            <li>
-              <Link href="/servicos" className="cir-footer__link">
-                Serviços Gráficos
-              </Link>
-            </li>
-            <li>
-              <Link href="/acabamentos" className="cir-footer__link">
-                Acabamentos Gráficos
-              </Link>
-            </li>
-            <li>
-              <Link href="/portfolio" className="cir-footer__link">
-                Portfólio
-              </Link>
-            </li>
-            <li>
-              <Link href="/consultoria" className="cir-footer__link">
-                Consultoria Técnica
-              </Link>
-            </li>
-            <li>
-              <WhatsAppLink message={WA_MESSAGE} source="footer_projeto" className="cir-footer__link">
-                Orçamento Rápido
-              </WhatsAppLink>
-            </li>
-          </ul>
+        <div className="cf-bottom">
+          <span className="cf-copy">© {new Date().getFullYear()} CIR Gráfica e Editora Ltda. Todos os direitos reservados.</span>
+          <span className="cf-copy">
+            Desenvolvido por{' '}
+            <a href="https://customerhub.com.br/" target="_blank" rel="noopener noreferrer" className="cf-credit-link">
+              Customer Hub
+            </a>
+          </span>
         </div>
-
-        {/* Links Úteis */}
-        <div className="cir-footer__section">
-          <h3 className="cir-footer__section-title">Links</h3>
-          <ul className="cir-footer__list">
-            <li>
-              <a
-                href="https://www.cirgrafica.com.br"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cir-footer__link"
-              >
-                Site Institucional
-              </a>
-            </li>
-            <li>
-              <a
-                href="/"
-                className="cir-footer__link"
-              >
-                Início
-              </a>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div className="cir-footer__bottom">
-        <span className="cir-footer__copy">
-          © {new Date().getFullYear()} CIR Gráfica e Editora Ltda. Desenvolvido por Customer Hub.
-        </span>
       </div>
 
       <style jsx global>{`
-        .cir-footer {
-          background: #1a1814;
-          color: #ebe8e0;
-          padding: 3rem 2rem 1.5rem;
+        .cf-root {
           margin-top: 6rem;
-          border-top: 1px solid #2a2420;
         }
 
-        .cir-footer__content {
-          max-width: 1400px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 2fr 1fr 1fr;
-          gap: 3rem;
+        /* ── CTA (claro) ─────────────────────────────────────── */
+        .cf-cta {
+          background: var(--cir-l-bg);
+          padding: 5rem var(--cir-gutter);
+          text-align: center;
+        }
+        .cf-cta-tag {
+          color: var(--cir-l-fg2) !important;
+        }
+        .cf-cta-title {
+          font-family: var(--cir-serif);
+          font-size: clamp(1.6rem, 3vw, 2.4rem);
+          font-weight: 700;
+          color: var(--cir-l-fg);
+          max-width: 34ch;
+          margin: 0 auto .8rem;
+          line-height: 1.2;
+        }
+        .cf-cta-sub {
+          font-family: var(--cir-sans);
+          font-size: .92rem;
+          color: var(--cir-l-fg2);
           margin-bottom: 2rem;
         }
 
-        .cir-footer__section {
-          display: flex;
-          flex-direction: column;
+        /* ── Corpo (escuro) ──────────────────────────────────── */
+        .cf-body {
+          background: var(--cir-bg2);
+          border-top: 1px solid var(--cir-line);
+          padding: 4rem var(--cir-gutter) 2rem;
         }
-
-        .cir-footer__brand {
-          grid-column: span 1;
+        .cf-grid {
+          max-width: var(--cir-max);
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1.4fr 1fr 1fr;
+          gap: 1px;
+          background: var(--cir-line);
+          border: 1px solid var(--cir-line);
+          margin-bottom: 2.5rem;
         }
-
-        .cir-footer__logo {
-          width: 140px;
-          height: auto;
+        .cf-col {
+          background: var(--cir-bg2);
+          padding: 2.2rem 2rem;
+        }
+        .cf-logo {
+          height: 24px;
+          filter: brightness(0) invert(1);
           margin-bottom: 1rem;
         }
-
-        .cir-footer__tagline {
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: #e8613a;
-          margin-bottom: 1.5rem;
+        .cf-tagline {
+          font-family: var(--cir-serif);
           font-style: italic;
-        }
-
-        .cir-footer__contact {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .cir-footer__info {
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
-        }
-
-        .cir-footer__label {
-          font-size: 0.75rem;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          color: #a89a8f;
-          text-transform: uppercase;
-        }
-
-        .cir-footer__value {
-          font-size: 0.9rem;
-          color: #ebe8e0;
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-
-        .cir-footer__value:hover {
-          color: #e8613a;
-        }
-
-        .cir-footer__section-title {
-          font-size: 0.9rem;
-          font-weight: 700;
-          color: #ffffff;
+          font-size: .92rem;
+          color: var(--cir-gold);
           margin-bottom: 1.2rem;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          border-bottom: 2px solid #e8613a;
-          padding-bottom: 0.5rem;
         }
-
-        .cir-footer__list {
+        .cf-address {
+          font-family: var(--cir-sans);
+          font-style: normal;
+          font-size: .8rem;
+          line-height: 1.8;
+          color: var(--cir-fg2);
+        }
+        .cf-col-title {
+          font-family: var(--cir-sans);
+          font-size: .68rem;
+          font-weight: 600;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+          color: var(--cir-fg2);
+          margin-bottom: 1.3rem;
+        }
+        .cf-list {
           list-style: none;
           padding: 0;
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 0.7rem;
+          gap: .8rem;
         }
-
-        .cir-footer__link {
-          font-size: 0.85rem;
-          color: #d4cfc8;
+        .cf-link {
+          font-family: var(--cir-sans);
+          font-size: .85rem;
+          color: var(--cir-fg);
           text-decoration: none;
-          transition: all 0.2s;
+          transition: color .2s;
           display: inline-block;
         }
+        .cf-link:hover { color: var(--cir-accent) }
+        .cf-link--accent { color: var(--cir-accent); font-weight: 600 }
+        .cf-link--accent:hover { opacity: .8; color: var(--cir-accent) }
 
-        .cir-footer__link:hover {
-          color: #e8613a;
-          transform: translateX(4px);
-        }
-
-
-        .cir-footer__bottom {
-          max-width: 1400px;
+        /* ── Bottom bar ──────────────────────────────────────── */
+        .cf-bottom {
+          max-width: var(--cir-max);
           margin: 0 auto;
           padding-top: 1.5rem;
-          border-top: 1px solid #2a2420;
-          text-align: center;
+          border-top: 1px solid var(--cir-line);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+        .cf-copy {
+          font-family: var(--cir-sans);
+          font-size: .74rem;
+          color: var(--cir-fg2);
+        }
+        .cf-credit-link {
+          color: var(--cir-fg2);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          transition: color .2s;
+        }
+        .cf-credit-link:hover { color: var(--cir-accent) }
+
+        @media (max-width: 900px) {
+          .cf-grid { grid-template-columns: 1fr 1fr }
+          .cf-brand { grid-column: span 2 }
         }
 
-        .cir-footer__copy {
-          font-size: 0.75rem;
-          color: #ffffff;
-          line-height: 1.6;
-        }
-
-        @media (max-width: 1200px) {
-          .cir-footer__content {
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-          }
-
-          .cir-footer__brand {
-            grid-column: span 2;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .cir-footer {
-            padding: 2rem 1rem 1rem;
-            margin-top: 4rem;
-          }
-
-          .cir-footer__content {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-
-          .cir-footer__brand {
-            grid-column: span 1;
-            border-bottom: 1px solid #2a2420;
-            padding-bottom: 1.5rem;
-          }
-
-          .cir-footer__section-title {
-            font-size: 0.85rem;
-          }
-
-          .cir-footer__list {
-            gap: 0.5rem;
-          }
-
-          .cir-footer__link {
-            font-size: 0.8rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .cir-footer {
-            padding: 1.5rem 0.75rem 1rem;
-          }
-
-          .cir-footer__content {
-            gap: 1.5rem;
-          }
-
-          .cir-footer__logo {
-            width: 100px;
-          }
-
-          .cir-footer__section-title {
-            font-size: 0.75rem;
-            margin-bottom: 0.8rem;
-          }
-
-          .cir-footer__credit-item {
-            font-size: 0.75rem;
-          }
-
-          .cir-footer__copy {
-            font-size: 0.7rem;
-          }
+        @media (max-width: 640px) {
+          .cf-cta { padding: 3.5rem var(--cir-gutter) }
+          .cf-body { padding: 3rem var(--cir-gutter) 1.5rem }
+          .cf-grid { grid-template-columns: 1fr }
+          .cf-brand { grid-column: span 1 }
+          .cf-col { padding: 1.8rem 1.6rem }
+          .cf-bottom { flex-direction: column; align-items: flex-start; gap: .5rem }
         }
       `}</style>
     </footer>
