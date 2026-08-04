@@ -22,10 +22,6 @@ export default function Footer() {
           <div className="cf-col cf-brand">
             <img src="/logo-cir.svg" alt="CIR Gráfica" className="cf-logo" />
             <p className="cf-tagline">Qualidade para ser sentida.</p>
-            <address className="cf-address">
-              Av. Vereador José Monteiro, N1814<br />
-              Setor Negrão de Lima — Goiânia, GO
-            </address>
           </div>
 
           <div className="cf-col">
@@ -42,8 +38,6 @@ export default function Footer() {
           <div className="cf-col">
             <h3 className="cf-col-title">Contato</h3>
             <ul className="cf-list">
-              <li><a href="tel:+556232021150" className="cf-link">(62) 3202-1150</a></li>
-              <li><a href="mailto:atendimento@cirgrafica.com.br" className="cf-link">atendimento@cirgrafica.com.br</a></li>
               <li>
                 <WhatsAppLink message={WA_MESSAGE} source="footer_contato" className="cf-link cf-link--accent">
                   Orçamento Rápido →
@@ -130,13 +124,6 @@ export default function Footer() {
           font-size: .92rem;
           color: var(--cir-gold);
           margin-bottom: 1.2rem;
-        }
-        .cf-address {
-          font-family: var(--cir-sans);
-          font-style: normal;
-          font-size: .8rem;
-          line-height: 1.8;
-          color: var(--cir-fg2);
         }
         .cf-col-title {
           font-family: var(--cir-sans);
