@@ -16,6 +16,7 @@ import { galleryImages } from '../../../data/gallery'
 import cityContent from '../../../data/cityContent.json'
 import Head from 'next/head'
 import { normalizeText } from '../../../utils/normalize'
+import { getCityHeroImage } from '../../../lib/cityHeroImage'
 
 export async function getStaticPaths() {
   const paths = cidades.map(c => ({
@@ -74,6 +75,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas, content
   const pageTitle = `Gráfica em ${cidade} – Embalagens, Sacolas e Brindes | CIR Gráfica`;
   const pageDescription = copy.metaDescription;
   const canonicalUrl = `https://cidades.cirgrafica.com.br/grafica/${estado.toLowerCase()}/${normalizeText(cidade)}`;
+  const heroImage = getCityHeroImage(cidade, estado);
 
   // ✅ Schema.org JSON-LD LocalBusiness + FAQ
   const schemaData = {
@@ -195,8 +197,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas, content
 
       {/* Imagem */}
       <img
-        src="/grafica.jpeg"
-        alt={`embalagens e sacolas personalizadas em ${cidade}`}
+        src={heroImage}
+        alt={`Materiais gráficos personalizados em ${cidade}, ${estado} — CIR Gráfica`}
         className="cp-hero-img"
       />
 
