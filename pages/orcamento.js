@@ -30,7 +30,7 @@ const STEP_COPY = {
   arte_pronta: 'Você já tem a arte pronta para impressão?',
   acabamento: 'Qual o nível de acabamento desejado?',
   prazo: 'Qual o prazo desejado?',
-  investimento: 'Tem ideia do investimento por unidade?',
+  investimento: 'Qual o valor estimado total para sua demanda?',
   contato: 'Como podemos te chamar?',
   resumo: 'Seu projeto',
 }
