@@ -295,13 +295,10 @@ export default function Orcamento() {
                   </>
                 ) : (
                   <>
-                    <div className="qz-tiers">
-                      {INVESTIMENTO_OPTIONS.map((o, i) => (
-                        <button key={o.value} type="button" className="qz-tier" onClick={() => selectOption('investimento', o.value)}>
-                          <LevelBars level={i + 1} max={INVESTIMENTO_OPTIONS.length} />
-                          <span className="qz-tier-text">
-                            <span className="qz-tier-label">{o.label}</span>
-                          </span>
+                    <div className="qz-invest-grid">
+                      {INVESTIMENTO_OPTIONS.map((o) => (
+                        <button key={o.value} type="button" className="qz-invest-card" onClick={() => selectOption('investimento', o.value)}>
+                          {o.label}
                         </button>
                       ))}
                     </div>
@@ -505,6 +502,36 @@ export default function Orcamento() {
         .qz-tile:hover { background: #17150f; color: var(--cir-accent); }
         .qz-tile-icon { width: 26px; height: 26px; color: var(--cir-accent); flex-shrink: 0; }
 
+        /* investimento — cards soltos (não a grade hairline dos outros steps),
+           com lift no hover pra ficarem mais evidentes como opções tocáveis */
+        .qz-invest-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          margin-bottom: .5rem;
+        }
+        .qz-invest-card {
+          background: var(--cir-bg2);
+          border: 1px solid var(--cir-line);
+          padding: 2.3rem 1.2rem;
+          text-align: center;
+          font-family: var(--cir-serif);
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: var(--cir-fg);
+          cursor: pointer;
+          position: relative;
+          transition: transform .2s, box-shadow .2s, border-color .2s, background .2s, color .2s;
+        }
+        .qz-invest-card:hover {
+          border-color: var(--cir-accent);
+          color: var(--cir-accent);
+          background: #17150f;
+          transform: translateY(-4px);
+          box-shadow: 0 10px 28px rgba(0,0,0,.35);
+          z-index: 1;
+        }
+
         /* arte pronta list */
         .qz-list { display: flex; flex-direction: column; }
         .qz-list-item {
@@ -693,6 +720,10 @@ export default function Orcamento() {
           .qz-tile-icon { width: 22px; height: 22px; }
           .qz-tile span { font-size: .8rem; line-height: 1.35; }
           .qz-list-item, .qz-tier { padding: 1rem .2rem; }
+          .qz-invest-card { padding: 1.6rem 1rem; font-size: .9rem; }
+        }
+        @media (max-width: 360px) {
+          .qz-invest-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 340px) {
           .qz-grid--2col { grid-template-columns: 1fr; }
