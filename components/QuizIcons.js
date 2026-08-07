@@ -107,6 +107,15 @@ export function IconEdit(props) {
   )
 }
 
+export function IconSparkles(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 4l1.8 4.2L18 10l-4.2 1.8L12 16l-1.8-4.2L6 10l4.2-1.8z" />
+      <path d="M18 15l.8 1.9L20.7 18l-1.9.8L18 20.7l-.8-1.9L15.3 18l1.9-.8z" />
+    </svg>
+  )
+}
+
 export function IconInfinity(props) {
   return (
     <svg {...base} {...props}>
