@@ -20,7 +20,7 @@ import {
 } from '../lib/leadRouting'
 import {
   IconFolder, IconCalendar, IconTag, IconBag, IconBox, IconBook, IconEnvelope, IconSpark,
-  IconLogoMark, IconFileCheck, IconFileBlank, IconEdit, IconBolt, IconClock, IconInfinity,
+  IconLogoMark, IconFileCheck, IconFileBlank, IconEdit, IconSparkles, IconBolt, IconClock, IconInfinity,
   IconCheck, LevelBars,
 } from '../components/QuizIcons'
 
@@ -65,6 +65,7 @@ const ARTE_ICONS = {
   nao_tenho: IconFileBlank,
   so_logo: IconLogoMark,
   preciso_ajustes: IconEdit,
+  arte_ia: IconSparkles,
   tenho_tudo: IconFileCheck,
 }
 
