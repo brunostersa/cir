@@ -1,6 +1,7 @@
 import { supabase } from '../../lib/supabaseClient'
 import { recordAttempt } from '../../lib/rateLimit'
 import { getNameError, getPhoneError } from '../../lib/leadValidation'
+import { CLIENT_ID } from '../../lib/client'
 
 const RATE_LIMIT = { limit: 10, windowMs: 10 * 60 * 1000 } // 10 envios / 10 min por IP
 
@@ -46,6 +47,7 @@ export default async function handler(req, res) {
   }
 
   const { error } = await supabase.from('leads').insert({
+    client_id: CLIENT_ID,
     phone,
     message,
     source,

@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '../../../lib/supabaseAdmin'
+import { CLIENT_ID } from '../../../lib/client'
 
 const ALLOWED_COLUMNS = ['created_at','customer_name','customer_phone','estado','source','utm_source','destino']
 
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
   const col = ALLOWED_COLUMNS.includes(order_by) ? order_by : 'created_at'
   const asc = order_dir === 'asc'
 
-  let query = supabaseAdmin.from('leads').select('*', { count: 'exact' })
+  let query = supabaseAdmin.from('leads').select('*', { count: 'exact' }).eq('client_id', CLIENT_ID)
 
   if (source)     query = query.eq('source', source)
   if (estado)     query = query.eq('estado', estado)
