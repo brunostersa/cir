@@ -4,6 +4,7 @@ import ImageCarousel from '../components/ImageCarousel'
 import ProductsCarousel from '../components/ProductsCarousel'
 import AcabamentosSection from '../components/AcabamentosSection'
 import ServicosGrid from '../components/ServicosGrid'
+import ClientLogos from '../components/ClientLogos'
 import Favicon from '../components/Favicon'
 import WhatsAppLink from '../components/WhatsAppLink'
 import cidades from '../cidades.json'
@@ -148,6 +149,10 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <hr className="cir-divider" />
+
+      <ClientLogos light />
 
       {/* CTA */}
       <div className="cp-cta">
