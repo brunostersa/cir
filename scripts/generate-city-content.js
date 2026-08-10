@@ -53,9 +53,22 @@ function cityKey(c) {
   return `${c.estado.toLowerCase()}_${normalizeText(c.cidade)}`
 }
 
-function buildRequests() {
-  const limit = process.env.CITY_LIMIT ? parseInt(process.env.CITY_LIMIT, 10) : cidades.length
-  return cidades.slice(0, limit).map((c) => ({
+function loadExisting() {
+  try {
+    return JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf-8'))
+  } catch (e) {
+    return {}
+  }
+}
+
+// Só gera para cidades que ainda não têm entrada em data/cityContent.json —
+// roda de novo sem custo/risco depois que novas cidades são adicionadas a
+// cidades.json, sem regenerar (e potencialmente alterar) o conteúdo já
+// publicado das demais.
+function buildRequests(existing) {
+  const pending = cidades.filter((c) => !existing[cityKey(c)])
+  const limit = process.env.CITY_LIMIT ? parseInt(process.env.CITY_LIMIT, 10) : pending.length
+  return pending.slice(0, limit).map((c) => ({
     custom_id: cityKey(c),
     params: {
       model: MODEL,
@@ -75,7 +88,14 @@ async function main() {
   }
 
   const client = new Anthropic()
-  const requests = buildRequests()
+  const existing = loadExisting()
+  const requests = buildRequests(existing)
+
+  if (requests.length === 0) {
+    console.log('Nada pendente — todas as cidades já têm conteúdo gerado.')
+    return
+  }
+
   console.log(`Enviando batch com ${requests.length} requests (modelo: ${MODEL})...`)
 
   const batch = await client.messages.batches.create({ requests })
@@ -91,14 +111,16 @@ async function main() {
 
   console.log('Batch concluído. Coletando resultados...')
 
-  const output = {}
+  const output = { ...existing }
   const errors = []
+  let succeeded = 0
 
   for await (const result of await client.messages.batches.results(batch.id)) {
     if (result.result.type === 'succeeded') {
       const block = result.result.message.content.find((b) => b.type === 'text')
       try {
         output[result.custom_id] = JSON.parse(block.text)
+        succeeded++
       } catch (e) {
         errors.push({ custom_id: result.custom_id, error: `JSON parse failed: ${e.message}` })
       }
@@ -108,7 +130,7 @@ async function main() {
   }
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2))
-  console.log(`Escrito ${Object.keys(output).length}/${cidades.length} entradas em ${OUTPUT_PATH}`)
+  console.log(`Escrito ${succeeded}/${requests.length} entradas novas em ${OUTPUT_PATH} (total agora: ${Object.keys(output).length})`)
 
   if (errors.length) {
     console.error(`${errors.length} erro(s):`)

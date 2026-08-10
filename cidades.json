@@ -1296,6 +1296,14 @@
     "estado": "MA"
   },
   {
+    "cidade": "Araguari",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Araxá",
+    "estado": "MG"
+  },
+  {
     "cidade": "Belo Horizonte",
     "estado": "MG"
   },
@@ -1312,7 +1320,15 @@
     "estado": "MG"
   },
   {
+    "cidade": "Frutal",
+    "estado": "MG"
+  },
+  {
     "cidade": "Ipatinga",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Ituiutaba",
     "estado": "MG"
   },
   {
@@ -1320,7 +1336,19 @@
     "estado": "MG"
   },
   {
+    "cidade": "Monte Carmelo",
+    "estado": "MG"
+  },
+  {
     "cidade": "Montes Claros",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Patos de Minas",
+    "estado": "MG"
+  },
+  {
+    "cidade": "Patrocínio",
     "estado": "MG"
   },
   {
