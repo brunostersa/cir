@@ -460,7 +460,7 @@ export default function LeadsDashboard() {
     const cols = [
       'id','created_at','customer_name','customer_phone','customer_email','estado','source','destino',
       'quiz_tipo_produto','quiz_quantidade','quiz_arte_pronta','quiz_acabamento','quiz_prazo','quiz_investimento',
-      'utm_source','utm_medium','utm_campaign','page_url',
+      'utm_source','utm_medium','utm_campaign','utm_term','utm_content','page_url','referrer',
     ]
     const csv  = [cols.join(','), ...rows.map(r=>cols.map(c=>`"${(r[c]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n')
     const a = document.createElement('a')
@@ -867,6 +867,8 @@ export default function LeadsDashboard() {
                 <dt>UTM Source</dt><dd>{detailLead.utm_source || '—'}</dd>
                 <dt>UTM Medium</dt><dd>{detailLead.utm_medium || '—'}</dd>
                 <dt>UTM Campaign</dt><dd>{detailLead.utm_campaign || '—'}</dd>
+                <dt>UTM Term</dt><dd>{detailLead.utm_term || '—'}</dd>
+                <dt>UTM Content</dt><dd>{detailLead.utm_content || '—'}</dd>
                 <dt>Página</dt><dd className="db-detail-break">{detailLead.page_url || '—'}</dd>
                 <dt>Referrer</dt><dd className="db-detail-break">{detailLead.referrer || '—'}</dd>
               </dl>
