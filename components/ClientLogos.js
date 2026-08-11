@@ -13,9 +13,9 @@ const CLIENTS = [
   { slug: 'rio-quente-resorts', name: 'Rio Quente Resorts' },
 ]
 
-// Carrossel com 3 colunas visíveis (responsivo até mobile) que avança sozinho
-// e volta pro início ao chegar no fim — pausa no hover/toque.
-export default function ClientLogos({ light = false, title = 'Marcas que confiam na CIR' }) {
+// Carrossel de fundo branco — 6 colunas visíveis na web, 3 no mobile — que
+// avança sozinho e volta pro início ao chegar no fim; pausa no hover/toque.
+export default function ClientLogos({ title = 'Marcas que confiam na CIR' }) {
   const track = useRef(null)
   const [paused, setPaused] = useState(false)
 
@@ -42,7 +42,7 @@ export default function ClientLogos({ light = false, title = 'Marcas que confiam
 
   return (
     <div
-      className={`cir-section cl-section ${light ? 'cir-section--light' : ''}`}
+      className="cir-section cir-section--light cl-section"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={() => setPaused(true)}
@@ -70,7 +70,7 @@ export default function ClientLogos({ light = false, title = 'Marcas que confiam
       </div>
 
       <style jsx global>{`
-        .cl-section { padding-top: 4rem; padding-bottom: 4rem }
+        .cl-section { background: #fff; padding-top: 4rem; padding-bottom: 4rem }
         .cl-carousel { position: relative; margin-top: 3rem }
         .cl-track {
           display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -78,25 +78,23 @@ export default function ClientLogos({ light = false, title = 'Marcas que confiam
         }
         .cl-track::-webkit-scrollbar { display: none }
         .cl-card {
-          flex: 0 0 calc(33.333% - .7rem); scroll-snap-align: start; height: 110px;
-          background: #fff; border: 1px solid var(--cir-line); display: flex; align-items: center;
+          flex: 0 0 calc(16.666% - .84rem); scroll-snap-align: start; height: 110px;
+          background: #fff; border: 1px solid var(--cir-l-line); display: flex; align-items: center;
           justify-content: center; padding: 1.2rem 1.6rem; transition: transform .3s, border-color .3s;
         }
-        .cir-section--light .cl-card { border-color: var(--cir-l-line) }
         .cl-card:hover { transform: translateY(-3px); border-color: var(--cir-accent) }
         .cl-card img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain }
         .cl-nav { display: flex; justify-content: flex-end; gap: .5rem; margin-top: 1rem }
         .cl-arrow {
-          width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.12); background: transparent;
-          color: var(--cir-fg2); cursor: pointer; display: flex; align-items: center; justify-content: center;
+          width: 38px; height: 38px; border: 1px solid var(--cir-l-line); background: transparent;
+          color: var(--cir-l-fg2); cursor: pointer; display: flex; align-items: center; justify-content: center;
           transition: border-color .2s, color .2s; padding: 0;
         }
-        .cir-section--light .cl-arrow { border-color: var(--cir-l-line); color: var(--cir-l-fg2) }
         .cl-arrow:hover { border-color: var(--cir-accent); color: var(--cir-accent) }
         .cl-arrow svg { width: 14px; height: 14px }
         @media (max-width: 640px) {
-          .cl-card { flex: 0 0 calc(33.333% - .5rem); height: 78px; padding: .7rem .8rem }
-          .cl-track { gap: .5rem }
+          .cl-card { flex: 0 0 calc(33.333% - .7rem); height: 78px; padding: .7rem .8rem }
+          .cl-track { gap: 1rem }
         }
       `}</style>
     </div>
