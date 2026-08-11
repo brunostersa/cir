@@ -5,6 +5,7 @@ import ImageCarousel from '../../../components/ImageCarousel'
 import ProductsCarousel from '../../../components/ProductsCarousel'
 import AcabamentosSection from '../../../components/AcabamentosSection'
 import ServicosGrid from '../../../components/ServicosGrid'
+import ClientLogos from '../../../components/ClientLogos'
 import Favicon from '../../../components/Favicon'
 import StickyMobileCTA from '../../../components/StickyMobileCTA'
 import LeadPopup from '../../../components/LeadPopup'
@@ -201,6 +202,8 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas, content
         alt={`Materiais gráficos personalizados em ${cidade}, ${estado} — CIR Gráfica`}
         className="cp-hero-img"
       />
+
+      <ClientLogos />
 
       {/* Quem somos */}
       <div className="cir-section cir-section--light">

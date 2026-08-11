@@ -73,6 +73,8 @@ export default function Home() {
         </div>
       </div>
 
+      <ClientLogos />
+
       {/* Estados */}
       <div className="cir-section cir-section--light">
         <span className="cir-s-tag">Cobertura nacional</span>
@@ -151,8 +153,6 @@ export default function Home() {
       </div>
 
       <hr className="cir-divider" />
-
-      <ClientLogos light />
 
       {/* CTA */}
       <div className="cp-cta">
