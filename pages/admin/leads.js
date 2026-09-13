@@ -49,6 +49,77 @@ const SRC_FALLBACK_PALETTE = [
 ]
 function colorForSrc(s, i) { return SRC_COLORS[s] || SRC_FALLBACK_PALETTE[i % SRC_FALLBACK_PALETTE.length] }
 function labelForSrc(s) { return SRC_LABELS[s] || s }
+
+// ── Traffic classification ──────────────────────────────────────────────
+// Ported from clientes/brasilianeuroclinica/src/lib/leadStats.ts, where this
+// same logic already went through two rounds of bug-fixing: "Navegação
+// interna" (referrer = the site's own previous page) was being shown as a
+// channel in Top canal, but it only means the visitor browsed more than one
+// page before converting — it says nothing about where the session actually
+// started, so it's folded into "Direto" here. Also excludes Google's own
+// ad-serving domains from the "google." search-engine match (a paid click
+// that lost its gclid/UTM in transit would otherwise count as organic).
+// This is greenfield for CIR Gráfica — no prior channel classification
+// existed here — so it's kept identical to the other clients' version
+// rather than folding in this client's own estado/cidade/destino/quiz
+// fields, which are an orthogonal dimension to add later if useful.
+const SEARCH_ENGINE_HOSTS = ['google.', 'bing.', 'duckduckgo.', 'yahoo.']
+const GOOGLE_AD_HOSTS = ['googleadservices.com', 'googlesyndication.com']
+const SOCIAL_HOSTS = {
+  'instagram.com': 'Instagram (sem rastreio)',
+  'l.instagram.com': 'Instagram (sem rastreio)',
+  'facebook.com': 'Facebook (sem rastreio)',
+  'l.facebook.com': 'Facebook (sem rastreio)',
+}
+const KNOWN_UTM_SOURCE_LABELS = {
+  ig: 'Instagram (bio)',
+  google: 'Google Ads',
+  facebook: 'Facebook Ads',
+  bing: 'Bing Ads',
+  tiktok: 'TikTok Ads',
+  'chatgpt.com': 'ChatGPT',
+  perplexity: 'Perplexity',
+}
+function bareHost(hostname) { return hostname.replace(/^www\./, '') }
+function channelLabel(lead) {
+  if (lead.utm_source) return KNOWN_UTM_SOURCE_LABELS[lead.utm_source] || lead.utm_source
+  if (!lead.referrer) return 'Direto'
+  let host
+  try { host = new URL(lead.referrer).hostname } catch { return 'Direto' }
+  if (lead.page_url) {
+    try {
+      if (bareHost(host) === bareHost(new URL(lead.page_url).hostname)) return 'Direto'
+    } catch { /* ignore malformed page_url */ }
+  }
+  if (!GOOGLE_AD_HOSTS.some((h) => host.includes(h)) && SEARCH_ENGINE_HOSTS.some((h) => host.includes(h))) return 'Orgânico (busca)'
+  for (const [needle, label] of Object.entries(SOCIAL_HOSTS)) {
+    if (host.includes(needle)) return label
+  }
+  return host
+}
+const PAID_MEDIUMS = new Set(['cpc', 'paid_social'])
+const SOCIAL_UTM_SOURCES = new Set(['ig'])
+const AI_REFERRAL_UTM_SOURCES = new Set(['chatgpt.com', 'perplexity'])
+function trafficBucket(lead) {
+  if (lead.utm_medium && PAID_MEDIUMS.has(lead.utm_medium)) return 'paid'
+  if (lead.utm_source) {
+    if (SOCIAL_UTM_SOURCES.has(lead.utm_source)) return 'social'
+    if (AI_REFERRAL_UTM_SOURCES.has(lead.utm_source)) return 'ai_referral'
+    return 'organic_search'
+  }
+  const label = channelLabel(lead)
+  if (label === 'Orgânico (busca)') return 'organic_search'
+  if (label.includes('sem rastreio')) return 'social'
+  return 'direct'
+}
+const TRAFFIC_CARDS = [
+  { key: 'paid', label: 'Mídia paga', sub: 'Google/Facebook Ads via UTM', color: '#e8613a' },
+  { key: 'organic_search', label: 'Orgânico (busca)', sub: 'Google/Bing sem clicar em anúncio', color: '#5d9c6e' },
+  { key: 'social', label: 'Social', sub: 'Instagram (bio ou link sem tag), Facebook', color: '#9b6ba8' },
+  { key: 'ai_referral', label: 'Assistentes de IA', sub: 'ChatGPT, Perplexity, etc.', color: '#4a90e2' },
+  { key: 'direct', label: 'Direto / interno', sub: 'WhatsApp direto, URL digitada, ou navegando no site', color: '#8a8175' },
+]
+
 const DESTINO_LABELS = { cirgrafica: 'CIR Gráfica', carbono: 'Carbono' }
 const DESTINO_COLORS = { cirgrafica: '#5d9c6e', carbono: '#c8813a' }
 const SORT_COLS = ['customer_name','customer_phone','estado','source','utm_source','destino','created_at']
@@ -494,6 +565,13 @@ export default function LeadsDashboard() {
     .sort((a,b)=>b[1]-a[1])
     .map(([key,count]) => ({ key, count, pct: Math.round(count/destinoTotal*100) }))
 
+  const trafficCounts = { paid: 0, organic_search: 0, social: 0, ai_referral: 0, direct: 0 }
+  chartRows.forEach((r) => { trafficCounts[trafficBucket(r)]++ })
+  const trafficTotal = chartRows.length || 1
+  const trafficPct = (n) => Math.round(n / trafficTotal * 100)
+  const cCounts = {}; chartRows.forEach((r) => { const c = channelLabel(r); cCounts[c] = (cCounts[c] || 0) + 1 })
+  const topCanais = Object.entries(cCounts).sort((a, b) => b[1] - a[1]).slice(0, 8)
+
   // active chips
   const chipMap = {
     date_from: filters.date_from ? `De: ${filters.date_from.slice(0,7)}` : '',
@@ -628,6 +706,28 @@ export default function LeadsDashboard() {
         </div>
 
         {/* Daily chart — destaque */}
+        <div className="db-traffic-split">
+          {TRAFFIC_CARDS.map((c) => (
+            <div key={c.key} className="db-kpi db-traffic-card" style={{ borderLeftColor: c.color }}>
+              <p className="db-kpi-label">{c.label}</p>
+              <p className="db-kpi-val">{trafficCounts[c.key]}</p>
+              <p className="db-kpi-sub">{trafficPct(trafficCounts[c.key])}% dos leads · {c.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="db-chart-card" style={{ marginBottom: '1rem' }}>
+          <p className="db-chart-title">Top canal</p>
+          <div className="db-stat-list db-stat-list-grid">
+            {topCanais.length ? topCanais.map(([label, count]) => (
+              <div key={label} className="db-stat-row">
+                <span className="db-stat-label">{label}</span>
+                <span className="db-stat-val">{count}</span>
+              </div>
+            )) : <p className="db-empty-inline">Sem dados</p>}
+          </div>
+        </div>
+
         <div className="db-charts-hero">
           <div className="db-chart-card" style={{gridColumn:'1 / -1'}}>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'.5rem'}}>
@@ -927,6 +1027,11 @@ export default function LeadsDashboard() {
         .db-kpi-sub-delta .pos { color:#4caf7d; }
         .db-kpi-sub-delta .neg { color:#e34948; }
 
+        .db-traffic-split { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--cir-line); margin-bottom:1rem; }
+        .db-traffic-card { border-left:3px solid transparent; }
+        .db-empty-inline { font-size:.75rem; color:var(--cir-fg2); padding:.5rem 0; }
+        .db-stat-list-grid { display:grid; grid-template-columns:repeat(2,1fr); column-gap:1.5rem; }
+
         /* charts */
         .db-charts-hero { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
         .db-charts { display:grid; grid-template-columns:3fr 2fr; gap:1px; background:var(--cir-line); margin-bottom:1rem; }
@@ -989,8 +1094,8 @@ export default function LeadsDashboard() {
         .db-day-btn.active { background:var(--cir-accent); color:#fff; border-color:var(--cir-accent); }
         .db-day-btn:hover:not(.active) { background:var(--cir-bg); color:var(--cir-fg); }
 
-        @media(max-width:1000px) { .db-charts-hero{grid-template-columns:1fr} .db-charts{grid-template-columns:1fr} .db-charts-3col{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} }
-        @media(max-width:640px)  { .db-charts-hero{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(2,1fr)} .db-body{padding:.75rem .75rem 2rem} }
+        @media(max-width:1000px) { .db-charts-hero{grid-template-columns:1fr} .db-charts{grid-template-columns:1fr} .db-charts-3col{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(3,1fr)} .db-traffic-split{grid-template-columns:repeat(2,1fr)} }
+        @media(max-width:640px)  { .db-charts-hero{grid-template-columns:1fr} .db-kpis{grid-template-columns:repeat(2,1fr)} .db-traffic-split{grid-template-columns:1fr} .db-stat-list-grid{grid-template-columns:1fr} .db-body{padding:.75rem .75rem 2rem} }
 
         .db-charts-3col { grid-template-columns:repeat(3,1fr); margin-top:1px; }
 
