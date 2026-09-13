@@ -9,7 +9,7 @@ import WhatsAppLink from '../components/WhatsAppLink'
 import GoogleTestimonials from '../components/GoogleTestimonials'
 import { galleryImages } from '../data/gallery'
 import { formatPhoneInput } from '../lib/phone'
-import { getStoredUtms } from '../lib/utm'
+import { getStoredUtms, getEntryReferrer } from '../lib/utm'
 
 const SPECIALTIES = [
   'Promocional', 'Moda', 'Publicações e Editorial',
@@ -74,6 +74,7 @@ export default function Portfolio() {
           customer_email: email.trim(),
           customer_company: company.trim(),
           page_url: window.location.href,
+          referrer: getEntryReferrer(),
           ...utms,
         }),
       })

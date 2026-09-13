@@ -3,7 +3,7 @@ import '../styles/cir-ds.css'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { captureUtms } from '../lib/utm'
+import { captureUtms, captureEntryReferrer } from '../lib/utm'
 
 function initReveal() {
   const obs = new IntersectionObserver(
@@ -20,6 +20,13 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
 
   useEffect(() => {
+    // Only on the initial mount — this is the one moment document.referrer
+    // still reflects the page the visitor arrived from (Google, Instagram,
+    // another site). Client-side route changes below don't reload the page,
+    // so document.referrer never changes on them; calling this again there
+    // would just be a no-op given captureEntryReferrer()'s own guard, but
+    // keeping it here makes the "only the true entry point" intent explicit.
+    captureEntryReferrer()
     captureUtms()
     let obs = initReveal()
     const onRouteChange = () => { captureUtms(); obs.disconnect(); obs = initReveal() }

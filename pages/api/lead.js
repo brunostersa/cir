@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   }
 
   const {
-    phone, message, source, cidade, estado, page_url, customer_name, customer_phone,
+    phone, message, source, cidade, estado, page_url, referrer, customer_name, customer_phone,
     customer_email, customer_company,
     utm_source, utm_medium, utm_campaign, utm_term, utm_content,
     quiz_tipo_produto, quiz_quantidade, quiz_arte_pronta, quiz_acabamento, quiz_prazo, quiz_investimento, destino,
@@ -54,7 +54,17 @@ export default async function handler(req, res) {
     cidade: cidade || null,
     estado: estado || null,
     page_url: page_url || req.headers.referer || null,
-    referrer: req.headers.referer || null,
+    // req.headers.referer is the HTTP Referer of THIS API request, which for
+    // a fetch/sendBeacon call fired from /orcamento is always /orcamento
+    // itself — never the page the visitor actually arrived from. document.referrer
+    // (captured client-side in logLead.js/portfolio.js, before this request
+    // is made) is the only field that can carry real origin (Google,
+    // Instagram, a city landing page). `referrer === ''` is a genuine "no
+    // referrer" signal from the client (typed URL, browser stripped it) —
+    // distinct from the field being entirely absent (older cached bundle
+    // mid-deploy that hasn't shipped this fix yet), which is the only case
+    // that should still fall back to the old (less accurate) header behavior.
+    referrer: referrer !== undefined ? (referrer || null) : (req.headers.referer || null),
     user_agent: req.headers['user-agent'] || null,
     customer_name: customer_name || null,
     customer_phone: customer_phone || null,
