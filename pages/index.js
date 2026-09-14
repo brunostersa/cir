@@ -5,6 +5,7 @@ import ProductsCarousel from '../components/ProductsCarousel'
 import AcabamentosSection from '../components/AcabamentosSection'
 import ServicosGrid from '../components/ServicosGrid'
 import ClientLogos from '../components/ClientLogos'
+import InstagramFeed from '../components/InstagramFeed'
 import Favicon from '../components/Favicon'
 import WhatsAppLink from '../components/WhatsAppLink'
 import cidades from '../cidades.json'
@@ -74,6 +75,8 @@ export default function Home() {
       </div>
 
       <ClientLogos />
+
+      <InstagramFeed />
 
       {/* Estados */}
       <div className="cir-section cir-section--light">

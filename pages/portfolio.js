@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Favicon from '../components/Favicon'
 import ImageCarousel from '../components/ImageCarousel'
+import InstagramFeed from '../components/InstagramFeed'
 import WhatsAppLink from '../components/WhatsAppLink'
 import GoogleTestimonials from '../components/GoogleTestimonials'
 import { galleryImages } from '../data/gallery'
@@ -167,6 +168,8 @@ export default function Portfolio() {
           interval={5000}
         />
       </div>
+
+      <InstagramFeed />
 
       <div className="cir-section cir-section--light">
         <GoogleTestimonials />
