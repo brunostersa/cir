@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Favicon from '../components/Favicon'
 import ImageCarousel from '../components/ImageCarousel'
-import InstagramFeed from '../components/InstagramFeed'
+// import InstagramFeed from '../components/InstagramFeed' // oculto: fotos do CDN do Instagram expiraram, ver components/InstagramFeed.js
 import WhatsAppLink from '../components/WhatsAppLink'
 import GoogleTestimonials from '../components/GoogleTestimonials'
 import { galleryImages } from '../data/gallery'
@@ -169,7 +169,7 @@ export default function Portfolio() {
         />
       </div>
 
-      <InstagramFeed />
+      {/* <InstagramFeed /> oculto: fotos do CDN do Instagram expiraram, ver components/InstagramFeed.js */}
 
       <div className="cir-section cir-section--light">
         <GoogleTestimonials />

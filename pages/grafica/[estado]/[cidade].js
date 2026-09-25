@@ -6,7 +6,7 @@ import ProductsCarousel from '../../../components/ProductsCarousel'
 import AcabamentosSection from '../../../components/AcabamentosSection'
 import ServicosGrid from '../../../components/ServicosGrid'
 import ClientLogos from '../../../components/ClientLogos'
-import InstagramFeed from '../../../components/InstagramFeed'
+// import InstagramFeed from '../../../components/InstagramFeed' // oculto: fotos do CDN do Instagram expiraram, ver components/InstagramFeed.js
 import Favicon from '../../../components/Favicon'
 import StickyMobileCTA from '../../../components/StickyMobileCTA'
 import LeadPopup from '../../../components/LeadPopup'
@@ -206,7 +206,7 @@ export default function GraficaCidade({ cidade, estado, cidadesProximas, content
 
       <ClientLogos />
 
-      <InstagramFeed />
+      {/* <InstagramFeed /> oculto: fotos do CDN do Instagram expiraram, ver components/InstagramFeed.js */}
 
       {/* Quem somos */}
       <div className="cir-section cir-section--light">
